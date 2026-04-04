@@ -191,6 +191,7 @@ window.addEventListener("pjax:success", () => {
   });
 });
 window.addEventListener("pjax:complete", () => {
+  document.body.classList.remove("is-pjax-loading");
   _$("#header-nav")?.classList.remove("header-nav-hidden");
   const mode = window.localStorage.getItem("dark_mode");
   document.body.dispatchEvent(
@@ -211,11 +212,15 @@ window.addEventListener("pjax:complete", () => {
   }
 });
 window.addEventListener("pjax:send", () => {
+  document.body.classList.add("is-pjax-loading");
   // destroy panZoom
   if (window.__panZoomList) {
     window.__panZoomList.forEach((panZoom) => panZoom.destroy());
     window.__panZoomList = [];
   }
+});
+window.addEventListener("pjax:success", () => {
+  document.body.classList.remove("is-pjax-loading");
 });
 if (window.startLoading) window.addEventListener("pjax:send", startLoading!);
 if (window.endLoading) window.addEventListener("pjax:complete", endLoading!);
