@@ -1,4 +1,5 @@
 {{- define "main" -}}
+  {{- $ctx := . -}}
   {{- $cover := .Params.banner | default .Params.cover | default .Site.Params.banner -}}
   <article class="career-page project-detail">
     <section class="project-detail__hero" data-aos="{{ .Site.Params.animation.options.article.whole }}">
@@ -44,7 +45,7 @@
     </section>
 
     {{- with .Params.highlights -}}
-      <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
+      <section class="career-section" data-aos="{{ $ctx.Site.Params.animation.options.article.whole }}">
         <div class="section-heading">
           <h3>亮点成果</h3>
         </div>
@@ -58,9 +59,9 @@
       </section>
     {{- end -}}
 
-    <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
+    <section class="career-section" data-aos="{{ $ctx.Site.Params.animation.options.article.whole }}">
       <div class="content-panel article-entry">
-        {{ .Content }}
+        {{ $ctx.Content }}
       </div>
     </section>
   </article>
