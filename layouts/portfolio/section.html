@@ -1,0 +1,25 @@
+{{- define "main" -}}
+  {{- $pageSize := 0 -}}
+  {{- with $.Site.Params.paginate.archive -}}
+    {{- $pageSize = . -}}
+  {{- end -}}
+  {{- $pages := .RegularPages.ByDate.Reverse -}}
+  {{- $paginator := "" -}}
+  {{- if gt $pageSize 0 -}}
+    {{- $paginator = .Paginate $pages $pageSize -}}
+  {{- else -}}
+    {{- $paginator = .Paginate $pages -}}
+  {{- end -}}
+  <div
+    class="archives-outer-wrap"
+    data-aos="{{ .Site.Params.animation.options.archive.whole }}"
+  >
+    {{- if .Content -}}
+      <article class="article-entry" style="margin-bottom: 2rem;">
+        {{ .Content }}
+      </article>
+    {{- end -}}
+    {{- partial "list.html" (dict "paginator" $paginator.Pages "ctx" .) -}}
+  </div>
+  {{- partial "pagination.html" . -}}
+{{- end -}}

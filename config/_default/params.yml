@@ -7,16 +7,16 @@
 menu:
   - name: home
     url: ""
-    icon: # default use taichi icon, you can use a hexadecimal representation of fontawesome or icon_font, like 'f0c1'
+    icon: false
+  - name: portfolio
+    url: "portfolio"
+    icon: false
   - name: archives
     url: "archives"
-    icon:
+    icon: false
   - name: about
     url: "about"
-    icon:
-  - name: friend
-    url: "friend"
-    icon:
+    icon: false
 
 mainSections: ["post"]
 # 年，月，日及时间的格式化样式
@@ -26,9 +26,9 @@ monthFormat: "2006-01"
 dateFormat: "2006-01-02"
 timeFormat: "2006-01-02 15:04:05"
 
-author: D-Sketon
-email: xxx@example.com
-description: "一个新的远方，一个充满爱与善良的博客"
+author: Nideswshi
+email: ""
+description: "记录学习、展示作品、沉淀观点的个人站点。"
 # subtitle: "少女祈祷中..."
 subtitle:
   typing:
@@ -47,14 +47,14 @@ subtitle:
     showCursor: true            # 是否显示闪烁的字符
     cursorChar: "|"             # 字符
     smartBackspace: false       # 智能退格，只删除不同的部分
-  text: "一个新的远方，一个充满爱与善良的博客"        # 当 typing.enable = false 时使用
+  text: "记录学习，展示作品，也表达观点。"        # 当 typing.enable = false 时使用
 
-banner: "images/banner.webp"
+banner: "images/site-banner.jpg"   #设置背景图，可使用图片API
 # You can also write it in the form of the following url
 # banner: "https://example.com"
 
 # If you want to use the srcset attribute, please enable it
-banner_srcset:
+banner_srcset:      #自定义背景图
   enable: false
   srcset:
     - src: "images/banner-600w.webp"
@@ -64,7 +64,7 @@ banner_srcset:
     - src: "images/banner.webp"
       media: "(min-width: 800px)"
 
-avatar: "avatar.webp"
+avatar: "profile.jpg"
 
 # Control the display of the post cover
 # If not set, the banner image will be displayed by default
@@ -121,7 +121,7 @@ sidebar:
 
 social:
   # email: mailto:xxx@gmail.com
-  # github: https://github.com/yourname
+  github: https://github.com/Nideswshi
   # google: https://plus.google.com/yourname
   # twitter: https://twitter.com/yourname
   # facebook: https://www.facebook.com/yourname
@@ -150,8 +150,6 @@ social:
   # tiktok:
 
 widgets:
-  - category
-  - tag
   - tagcloud
   - recent_posts
 
@@ -165,11 +163,11 @@ tagcloud_limits: 20
 only_show_capsule_in_index: false # If you have hugo amounts of tags and categories, you can set this to true to only show the capsule in the index page for better performance
 uppercase_capsule: true # If you want to keep taxonomic capsule unchanged, please set this to false
 
-show_update_time: false # If you want to show the update time, please set this to true
+show_update_time: true # If you want to show the update time, please set this to true
 
 # Summary content
 summary:
-  enable: false
+  enable: true
   style: 'subtitle' # 'subtitle' or 'blockquote'
 
 # RSS output
@@ -190,12 +188,12 @@ sort_order:
     category: date-reverse # controlled by categories_weight
     tag: date-reverse # controlled by tags_weight
   archive: date-reverse # controlled by weight
-  home: default # controlled by weight
+  home: date-reverse # controlled by weight
 
 # Pagination
 paginate:
-  archive: # Number of posts per page in archive and taxonomy pages
-  post: # Number of posts per page in home and other list pages
+  archive: 15 # Number of posts per page in archive and taxonomy pages
+  post: 6 # Number of posts per page in home and other list pages
 
 ########################################
 # CSS
@@ -211,8 +209,8 @@ triangle_badge:
 
 anchor_icon: # default use '#' icon, you can use a hexadecimal representation of fontawesome or icon_font, like 'f0c1', you can also use false to hide anchor icon
 
-reimu_cursor:
-  enable: true
+reimu_cursor:  #配置页面内的鼠标样式
+  enable: false
   cursor:
     default: ../images/cursor/reimu-cursor-default.png  # this path is relative to the css/main.css, so it needs to go up one level to reach the images folder
     pointer: ../images/cursor/reimu-cursor-pointer.png
@@ -224,7 +222,7 @@ icon_font: 4552607_a0oqhord1y
 # Custom Font -> Google Fonts -> Local FallBack Font
 
 # Custom Font
-custom_font:
+custom_font: #设置字体
   enable: false
   article:
     # - css: https://fontsapi.zeoseven.com/292/main/result.css # font css
@@ -233,7 +231,7 @@ custom_font:
 
 # https://fonts.google.com/
 # Google Fonts, higher priority than local_font
-font:
+font: #设置字体，但是google的文字库
   enable: true
   article:
     - Mulish
@@ -304,7 +302,7 @@ clipboard:
     count: 50 # The number of characters when the copyright is displayed
     license_type: by-nc-sa # https://creativecommons.org/licenses
 
-math:
+math:          #配置数学公式显示
   katex:
     enable: true
   mathjax:
@@ -455,46 +453,46 @@ algolia_search:
 # Animation
 ########################################
 
-preloader:
-  enable: true
+preloader:    #预加载界面配置，图片及显示的文章
+  enable: false
   text:
-    zh-CN: 少女祈祷中...
-    zh-TW: 少女祈禱中...
-    en: Loading...
-    ja: 少女祈祷中...
+    zh-CN: 正在载入作品与文章...
+    zh-TW: 正在載入作品與文章...
+    en: Loading portfolio and notes...
+    ja: 作品と記事を読み込み中...
     pt-BR: Carregando...
   icon: # default use inline svg for fast speed, you can use a image url, like '/images/taichi.png'
   rotate: true # whether to rotate the icon
 
 # see https://github.com/D-Sketon/aos.js
-animation:
+animation:    #配置动画，需要修改，需在对应代码文件处配置对应的代码，否则不显示
   enable: true
   options:
     header:
-      title: slide-up
-      subTitle: slide-down
+      title: fade-up
+      subTitle: fade-up
     home:
       post: fade-up
-      widget: fade-up
+      widget: fade-left
       sidebar: fade-up
     article:
       whole: fade-up
-      date: zoom-in
-      category: zoom-in
-      tag: zoom-in
-      comment: zoom-in
-      reading: zoom-in
+      date: fade-up
+      category: fade-up
+      tag: fade-up
+      comment: fade-up
+      reading: fade-up
       nav: fade-up
     archive:
       whole: fade-up
-      tag: zoom-in
-      category: zoom-in
+      tag: fade-up
+      category: fade-up
       section: fade-up
       nav: fade-up
 
 # see https://github.com/D-Sketon/mouse-firework
-firework:
-  enable: true
+firework:               #鼠标点击时的动画效果
+  enable: false
   disable_on_mobile: false
   options:
     excludeElements: ["a", "button"]
@@ -523,19 +521,19 @@ firework:
 # Extended features
 ########################################
 
-# show the copyright below each article
-article_copyright:
-  enable: false
+# show the copyright below each article，显示在文章最下方
+article_copyright:                  
+  enable: true
   content:
     author: true
     link: true
-    title: false
-    date: false
-    updated: false
+    title: true
+    date: true
+    updated: true
     license: true
     license_type: by-nc-sa # https://creativecommons.org/licenses
 
-# Back To Top
+# Back To Top #配置返回顶部的按钮
 top:
   enable: true
   position: right # left or right
@@ -545,7 +543,7 @@ top:
     mask: true # whether to use the images as a mask
 
 # whether to display the notification when the article is outdated
-outdate:
+outdate:      #设置过期时间的提示语
   enable: false
   daysAgo: 180 # The number of days after which the article is considered outdated
   message:
@@ -585,7 +583,7 @@ sponsor:
     #   src: "sponsor/wechat.png"
 
 # Share
-share:
+share:    #分享功能，启用时需删除#号，官方作者说这部分有bug
   # - facebook
   # - twitter
   # - linkedin
@@ -595,7 +593,7 @@ share:
   # - weixin
 
 # show categories card on home page
-home_categories:
+home_categories:            #主页目录卡片，
   enable: false
   content:
     - categories: # string (single-layer category) or array (multi-layer category)
@@ -619,7 +617,7 @@ injector:
 
 # Experimental, may have a lot of bugs, open with caution!
 pjax:
-  enable: false
+  enable: true
 
 # Experimental
 # https://github.com/GoogleChromeLabs/quicklink
@@ -654,7 +652,7 @@ pace:
 
 # Experimental
 # Please turn on pjax to use this feature
-player:
+player:   #音乐播放器，按下方给的链接配置即可
   disable_on_mobile: false
   position: before_sidebar # before_sidebar | after_sidebar | after_widget
   # if you enable meting, you must enable aplayer first
@@ -703,7 +701,7 @@ material_theme:
   # so make sure your custom covers will not be blocked by the browser's CORS policy
   enable: false # enable material_theme to generate dynamic color schemes based on the banner image
 
-internal_theme:
+internal_theme:  #修改主题颜色
   light:
     --red-0: '#ff0000'
     --red-1: '#ff5252'
