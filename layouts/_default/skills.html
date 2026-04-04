@@ -1,12 +1,13 @@
 {{- define "main" -}}
-  {{- $skills := .Site.Data.skills -}}
+  {{- $skills := hugo.Data.skills -}}
+  {{- $lang := .Site.Language.Lang -}}
   <div class="career-page">
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="section-heading">
         <div>
-          <span class="section-kicker">Skill Matrix</span>
+          <span class="section-kicker">{{ i18n "skill_matrix_kicker" }}</span>
           <h2>{{ .Title }}</h2>
-          <p>{{ $skills.note }}</p>
+          <p>{{ partial "helpers/lang-data.html" (dict "value" $skills.note "lang" $lang) }}</p>
         </div>
       </div>
       <article class="content-panel article-entry">
@@ -19,19 +20,21 @@
         <article class="skill-category-card" data-aos="{{ $.Site.Params.animation.options.article.whole }}">
           <div class="section-heading">
             <div>
-              <span class="section-kicker">{{ .name }}</span>
-              <h3>{{ .name }}</h3>
-              <p>{{ .description }}</p>
+              {{- $categoryName := partial "helpers/lang-data.html" (dict "value" .name "lang" $lang) -}}
+              <span class="section-kicker">{{ $categoryName }}</span>
+              <h3>{{ $categoryName }}</h3>
+              <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) }}</p>
             </div>
           </div>
           <div class="skill-list">
             {{- range .items -}}
               <div class="skill-item">
                 <div class="skill-item__head">
-                  <strong>{{ .name }}</strong>
-                  <span class="skill-level skill-level--{{ .level_key }}">{{ .level }}</span>
+                  {{- $skillName := partial "helpers/lang-data.html" (dict "value" .name "lang" $lang) -}}
+                  <strong>{{ $skillName }}</strong>
+                  <span class="skill-level skill-level--{{ .level_key }}">{{ partial "helpers/lang-data.html" (dict "value" .level "lang" $lang) }}</span>
                 </div>
-                <div class="skill-progress" aria-label="{{ .name }} {{ .percent }}%">
+                <div class="skill-progress" aria-label="{{ $skillName }} {{ .percent }}%">
                   <span style="width: {{ .percent }}%;"></span>
                 </div>
               </div>

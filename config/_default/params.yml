@@ -6,25 +6,25 @@
 # for more icon information, please visit https://github.com/D-Sketon/hexo-theme-reimu/issues/30
 menu:
   - name: home
-    url: ""
+    url: "/"
     icon: false
   - name: portfolio
-    url: "portfolio"
+    url: "/portfolio/"
     icon: false
   - name: skills
-    url: "skills"
+    url: "/skills/"
     icon: false
   - name: learning
-    url: "learning"
+    url: "/learning/"
     icon: false
   - name: blog
-    url: "archives"
+    url: "/archives/"
     icon: false
   - name: about
-    url: "about"
+    url: "/about/"
     icon: false
   - name: contact
-    url: "contact"
+    url: "/contact/"
     icon: false
 
 mainSections: ["post"]
@@ -37,7 +37,10 @@ timeFormat: "2006-01-02 15:04:05"
 
 author: Nideswshi
 email: ""
-description: "一个偏冷色调、极简且长期主义的个人技术作品集与博客网站，用于展示项目、学习历程与公开表达。"
+description:
+  zh-cn: "一个偏冷色调、极简且长期主义的个人技术作品集与博客网站，用于展示项目、学习历程与公开表达。"
+  en: "A restrained personal portfolio and blog for showcasing projects, learning milestones, and long-form thoughts."
+  ja: "プロジェクト、学習履歴、考え方を発信するための、落ち着いた個人ポートフォリオ兼ブログ。"
 keywords:
   - 个人技术作品集
   - 技术博客
@@ -63,7 +66,10 @@ subtitle:
     showCursor: true            # 是否显示闪烁的字符
     cursorChar: "|"             # 字符
     smartBackspace: false       # 智能退格，只删除不同的部分
-  text: "冷静、克制、长期主义的个人技术主页。"        # 当 typing.enable = false 时使用
+  text:
+    zh-cn: "冷静、克制、长期主义的个人技术主页。"
+    en: "A calm, restrained, long-term personal tech portfolio."
+    ja: "落ち着きと節度を大切にした、長期運用の個人技術ポートフォリオ。"
 
 banner: "images/site-banner-aurora.svg"   #设置背景图，可使用图片API
 # You can also write it in the form of the following url

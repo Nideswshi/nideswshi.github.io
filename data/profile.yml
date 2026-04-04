@@ -1,24 +1,83 @@
 name: Nideswshi
-headline: 以作品、文字与持续迭代，构建可靠的个人技术名片
-summary: 这个网站被重新定义为一座兼具作品集、技术博客、学习档案与线上简历功能的个人站点。它强调冷静的视觉表达、清晰的信息层级与长期可维护的内容体系，让每一个项目、每一篇文章都能服务于未来的职业发展与公开表达。
-status: 持续迭代中，面向求职展示、技术表达与长期个人品牌建设
-location: China / Remote Friendly
+headline:
+  zh-cn: 以作品、文字与持续迭代，构建可靠的个人技术名片
+  en: Build a reliable personal tech identity through projects, writing, and continuous iteration.
+  ja: 作品、文章、継続的な改善を通じて、信頼できる個人技術ブランドを築く。
+summary:
+  zh-cn: 这个网站被重新定义为一座兼具作品集、技术博客、学习档案与线上简历功能的个人站点。它强调冷静的视觉表达、清晰的信息层级与长期可维护的内容体系，让每一个项目、每一篇文章都能服务于未来的职业发展与公开表达。
+  en: This site is designed as a personal portfolio, technical blog, learning archive, and resume hub. It focuses on restrained visual language, clear information hierarchy, and a maintainable content system so that every project and article can support future career growth and public expression.
+  ja: このサイトは、ポートフォリオ、技術ブログ、学習アーカイブ、オンライン履歴書を兼ねた個人サイトとして設計されている。落ち着いたビジュアル、明確な情報階層、長期運用しやすい構成を重視している。
+status:
+  zh-cn: 持续迭代中，面向求职展示、技术表达与长期个人品牌建设
+  en: Continuously evolving for career presentation, technical writing, and long-term personal branding.
+  ja: 就職活動、技術発信、長期的な個人ブランディングに向けて継続的に改善中。
+location:
+  zh-cn: 中国 / 可远程协作
+  en: China / Remote Friendly
+  ja: 中国 / リモート対応可
 focus:
-  - Frontend Experience
-  - Design Systems
-  - Content Architecture
-  - GitHub Workflow
+  zh-cn:
+    - 前端体验
+    - 设计系统
+    - 内容架构
+    - GitHub 工作流
+  en:
+    - Frontend Experience
+    - Design Systems
+    - Content Architecture
+    - GitHub Workflow
+  ja:
+    - フロントエンド体験
+    - デザインシステム
+    - コンテンツ設計
+    - GitHub ワークフロー
 stats:
-  - value: Selected Projects
-    label: 聚焦最能代表能力的项目案例
-  - value: Technical Writing
-    label: 持续输出学习记录与复盘文章
-  - value: Deployable System
-    label: 保持可发布、可扩展、可迭代
+  - value:
+      zh-cn: 精选项目
+      en: Selected Projects
+      ja: 代表プロジェクト
+    label:
+      zh-cn: 聚焦最能代表能力的项目案例
+      en: Focus on the projects that best represent core strengths.
+      ja: 実力を最もよく表すプロジェクトを厳選して紹介。
+  - value:
+      zh-cn: 技术写作
+      en: Technical Writing
+      ja: 技術ライティング
+    label:
+      zh-cn: 持续输出学习记录与复盘文章
+      en: Publish learning notes, breakdowns, and reflective writing.
+      ja: 学習記録、技術記事、振り返りを継続的に発信。
+  - value:
+      zh-cn: 可部署系统
+      en: Deployable System
+      ja: 運用可能な仕組み
+    label:
+      zh-cn: 保持可发布、可扩展、可迭代
+      en: Keep the site publishable, scalable, and easy to iterate on.
+      ja: 公開・拡張・改善を続けやすい構成を維持。
 strengths:
-  - title: 信息架构与表达
-    description: 擅长把零散的项目经历、技术笔记与个人观点整理成清晰、可读、可长期维护的内容结构。
-  - title: 前端实现与细节
-    description: 重视视觉节奏、排版层级、交互反馈与响应式体验，让界面既克制又有辨识度。
-  - title: 工程化与持续迭代
-    description: 关注 Git、自动部署、站点结构与发布链路，让作品展示不只停留在静态页面层面。
+  - title:
+      zh-cn: 信息架构与表达
+      en: Information Architecture
+      ja: 情報設計と表現
+    description:
+      zh-cn: 擅长把零散的项目经历、技术笔记与个人观点整理成清晰、可读、可长期维护的内容结构。
+      en: Turn fragmented project experience, notes, and opinions into clear, readable, and maintainable content structures.
+      ja: 断片的な経験やメモ、考えを、明快で読みやすく保守しやすい構成へ整理する。
+  - title:
+      zh-cn: 前端实现与细节
+      en: Frontend Craft
+      ja: フロントエンド実装と細部
+    description:
+      zh-cn: 重视视觉节奏、排版层级、交互反馈与响应式体验，让界面既克制又有辨识度。
+      en: Care about visual rhythm, typography, interaction feedback, and responsive behavior so interfaces feel restrained yet distinctive.
+      ja: ビジュアルのリズム、タイポグラフィ、反応の気持ちよさ、レスポンシブ体験を大切にしている。
+  - title:
+      zh-cn: 工程化与持续迭代
+      en: Workflow and Iteration
+      ja: ワークフローと継続改善
+    description:
+      zh-cn: 关注 Git、自动部署、站点结构与发布链路，让作品展示不只停留在静态页面层面。
+      en: Focus on Git, deployment, structure, and publishing workflows so the site remains more than a static showcase.
+      ja: Git、デプロイ、構成、公開フローまで含めて、静的な見せ場で終わらないサイトを目指す。

@@ -1,12 +1,59 @@
-home: Home / 主页
-portfolio: Portfolio / 作品集
-skills: Skills / 技能
-learning: Journey / 历程
-blog: Blog / 博客
-about: About / 关于
-contact: Contact / 联系
+home: Home
+portfolio: Portfolio
+skills: Skills
+learning: Journey
+blog: Blog
+about: About
+contact: Contact
 featured_projects: Featured Projects
 skills_snapshot: Capability Snapshot
 latest_notes: Latest Notes
 view_all: View All
 read_article: Read Article
+home_hero_kicker: Portfolio / Work / Notes
+home_hero_title: Nideswshi
+home_stage_label: Personal Edition
+home_stage_title: Designed for work, writing, and career clarity
+home_stage_desc: The first screen introduces identity, selected work, writing, and contact like a product page before leading deeper into the site.
+current_focus: Current Focus
+selected_work: Selected Work
+selected_work_desc: A small set of projects chosen to reflect technical judgment, structure, and execution quality.
+capability_snapshot: Capability Snapshot
+journey_kicker: Journey
+recent_journey: Recent Growth Journey
+writing_kicker: Writing
+latest_notes_desc: Project reflections, learning notes, and personal thinking are written as durable long-form content instead of fragmented updates.
+about_resume_kicker: About / Resume
+status: Status
+location: Location
+profile_kicker: Profile
+profile_overview: Overview
+strengths_kicker: Strengths
+strengths_title: Core Strengths
+highlights_kicker: Highlights
+quick_facts: Quick Facts
+skill_matrix_kicker: Skill Matrix
+learning_journey_kicker: Learning Journey
+learning_intro: A reverse-chronological timeline of milestones, project practice, and evolving technical perspective.
+contact_kicker: Contact
+availability: Availability
+availability_title: Open to career conversations, collaboration, and technical discussion
+availability_desc: If a public email is not available yet, GitHub and on-site content can serve as the first point of contact.
+portfolio_archive_kicker: Portfolio Archive
+view_site: View Site
+view_repo: View Repo
+project_highlights: Highlights
+view_details: View Details
+site_link: Site
+code_link: Code
+home_primary_cta: View Portfolio
+home_secondary_cta: Explore the Site
+scroll_discover: Scroll to Discover
+home_about_title: More than a blog, this is a long-term personal portfolio system
+learn_more: Learn More
+home_skills_title: Present current strengths and technical direction with a clearer structure
+explore_skills: Explore Skills
+home_notes_title: Turn learning, practice, and opinion into durable long-form writing
+home_journey_title: Record growth through a timeline instead of stacking fragmented experience
+home_contact_title: A clear public contact entry for career, collaboration, and conversation
+home_contact_desc: When the site is viewed like a portfolio, the contact page should feel just as natural, clear, and trustworthy as any product page section.

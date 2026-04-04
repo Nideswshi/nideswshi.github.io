@@ -34,10 +34,10 @@
         {{- with .Params.links -}}
           <div class="project-card__links">
             {{- with .demo -}}
-              <a href="{{ . }}" target="_blank" rel="noopener noreferrer">查看站点</a>
+              <a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "view_site" }}</a>
             {{- end -}}
             {{- with .repo -}}
-              <a href="{{ . }}" target="_blank" rel="noopener noreferrer">查看仓库</a>
+              <a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "view_repo" }}</a>
             {{- end -}}
           </div>
         {{- end -}}
@@ -48,8 +48,8 @@
       <section class="career-section" data-aos="{{ $ctx.Site.Params.animation.options.article.whole }}">
         <div class="section-heading">
           <div>
-            <span class="section-kicker">Highlights</span>
-            <h3>亮点成果</h3>
+            <span class="section-kicker">{{ i18n "highlights_kicker" }}</span>
+            <h3>{{ i18n "project_highlights" }}</h3>
           </div>
         </div>
         <div class="resume-grid">

@@ -1,12 +1,13 @@
 {{- define "main" -}}
-  {{- $journey := .Site.Data.journey.items -}}
+  {{- $journey := hugo.Data.journey.items -}}
+  {{- $lang := .Site.Language.Lang -}}
   <div class="career-page">
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="section-heading">
         <div>
-          <span class="section-kicker">Learning Journey</span>
+          <span class="section-kicker">{{ i18n "learning_journey_kicker" }}</span>
           <h2>{{ .Title }}</h2>
-          <p>用倒序时间线记录关键节点、项目实践与技术视野的演进过程。</p>
+          <p>{{ i18n "learning_intro" }}</p>
         </div>
       </div>
       <article class="content-panel article-entry">
@@ -19,12 +20,13 @@
         <article class="timeline-item" data-aos="{{ $.Site.Params.animation.options.archive.section }}">
           <div class="timeline-item__date">{{ .date }}</div>
           <div class="timeline-item__content">
-            <span class="section-kicker">{{ .stage }}</span>
-            <h3>{{ .title }}</h3>
-            <p>{{ .description }}</p>
+            <span class="section-kicker">{{ partial "helpers/lang-data.html" (dict "value" .stage "lang" $lang) }}</span>
+            <h3>{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) }}</h3>
+            <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) }}</p>
             {{- with .tags -}}
+              {{- $tags := partial "helpers/lang-data.html" (dict "value" . "lang" $lang) -}}
               <div class="tag-list">
-                {{- range . -}}
+                {{- range $tags -}}
                   <span class="tag">{{ . }}</span>
                 {{- end -}}
               </div>

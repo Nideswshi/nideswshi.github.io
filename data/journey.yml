@@ -1,33 +1,105 @@
 items:
   - date: 2026.04
-    title: 完成个人技术站第二轮视觉与结构升级
-    stage: Site Redesign
-    description: 从普通博客模板继续迭代为更偏作品集与职业展示的个人网站，强化了首页叙事、项目展示和信息层级。
+    title:
+      zh-cn: 完成个人技术站第二轮视觉与结构升级
+      en: Completed the second major redesign of the personal tech site
+      ja: 個人技術サイトの第二次デザイン改修を完了
+    stage:
+      zh-cn: 站点改版
+      en: Site Redesign
+      ja: Site Redesign
+    description:
+      zh-cn: 从普通博客模板继续迭代为更偏作品集与职业展示的个人网站，强化了首页叙事、项目展示和信息层级。
+      en: Iterated from a generic blog template into a portfolio-oriented personal site with a stronger homepage narrative, project presentation, and information hierarchy.
+      ja: 一般的なブログテンプレートから、ポートフォリオ寄りの個人サイトへ改善し、トップページの構成と情報階層を強化した。
     tags:
-      - Hugo
-      - Portfolio
-      - UI System
+      zh-cn:
+        - Hugo
+        - 作品集
+        - 设计系统
+      en:
+        - Hugo
+        - Portfolio
+        - Design System
+      ja:
+        - Hugo
+        - Portfolio
+        - Design System
   - date: 2026.04
-    title: 打通 GitHub Pages 自动部署链路
-    stage: Engineering
-    description: 修复 Hugo 配置、工作流与模板问题，使本地提交可以稳定触发 GitHub Actions 并自动发布。
+    title:
+      zh-cn: 打通 GitHub Pages 自动部署链路
+      en: Stabilized the GitHub Pages deployment workflow
+      ja: GitHub Pages 自動デプロイの流れを安定化
+    stage:
+      zh-cn: 工程化
+      en: Engineering
+      ja: Engineering
+    description:
+      zh-cn: 修复 Hugo 配置、工作流与模板问题，使本地提交可以稳定触发 GitHub Actions 并自动发布。
+      en: Fixed Hugo configuration, workflows, and template issues so local changes can reliably trigger GitHub Actions and automatic deployment.
+      ja: Hugo 設定、ワークフロー、テンプレートの問題を修正し、GitHub Actions による自動公開を安定化させた。
     tags:
-      - GitHub Actions
-      - Pages
-      - Deployment
+      zh-cn:
+        - GitHub Actions
+        - 自动部署
+        - Pages
+      en:
+        - GitHub Actions
+        - Deployment
+        - Pages
+      ja:
+        - GitHub Actions
+        - Deployment
+        - Pages
   - date: 2026.04
-    title: 建立技能矩阵与内容分类结构
-    stage: Structure
-    description: 把作品集、学习记录、技术文章和联系信息统一进同一套信息架构，形成可持续更新的展示体系。
+    title:
+      zh-cn: 建立技能矩阵与内容分类结构
+      en: Built a skill matrix and content architecture
+      ja: スキルマトリクスとコンテンツ構造を整備
+    stage:
+      zh-cn: 结构整理
+      en: Structure
+      ja: Structure
+    description:
+      zh-cn: 把作品集、学习记录、技术文章和联系信息统一进同一套信息架构，形成可持续更新的展示体系。
+      en: Unified portfolio entries, study logs, blog posts, and contact information into a single information architecture for long-term maintenance.
+      ja: ポートフォリオ、学習記録、記事、連絡先を一つの情報構造に統合し、継続更新しやすくした。
     tags:
-      - Skills
-      - Content Design
-      - Information Architecture
+      zh-cn:
+        - 技能
+        - 内容设计
+        - 信息架构
+      en:
+        - Skills
+        - Content Design
+        - Information Architecture
+      ja:
+        - Skills
+        - Content Design
+        - Information Architecture
   - date: Next
-    title: 补充真实项目、实习经历与求职版内容
-    stage: Next Step
-    description: 下一步会继续替换示例内容，补齐真实项目复盘、技能细节、联系方式与更完整的职业经历。
+    title:
+      zh-cn: 补充真实项目、实习经历与求职版内容
+      en: Add real projects, internship details, and job-ready content
+      ja: 実際のプロジェクトや就職向け情報を追加
+    stage:
+      zh-cn: 下一步
+      en: Next Step
+      ja: Next Step
+    description:
+      zh-cn: 下一步会继续替换示例内容，补齐真实项目复盘、技能细节、联系方式与更完整的职业经历。
+      en: The next step is to replace examples with real project breakdowns, clearer skill details, contact information, and more complete career experience.
+      ja: 次はサンプル内容を実体験に置き換え、プロジェクト復盤やスキル詳細、連絡先、経歴を充実させる。
     tags:
-      - Resume
-      - Projects
-      - Career
+      zh-cn:
+        - 简历
+        - 项目
+        - 求职
+      en:
+        - Resume
+        - Projects
+        - Career
+      ja:
+        - Resume
+        - Projects
+        - Career

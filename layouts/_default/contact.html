@@ -1,12 +1,13 @@
 {{- define "main" -}}
-  {{- $contact := .Site.Data.contact -}}
+  {{- $contact := hugo.Data.contact -}}
+  {{- $lang := .Site.Language.Lang -}}
   <div class="career-page">
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="section-heading">
         <div>
-          <span class="section-kicker">Contact</span>
+          <span class="section-kicker">{{ i18n "contact_kicker" }}</span>
           <h2>{{ .Title }}</h2>
-          <p>{{ $contact.intro }}</p>
+          <p>{{ partial "helpers/lang-data.html" (dict "value" $contact.intro "lang" $lang) }}</p>
         </div>
       </div>
       <article class="content-panel article-entry">
@@ -18,21 +19,21 @@
       {{- range $contact.methods -}}
         {{- $method := . -}}
         <article class="info-card" data-aos="{{ $.Site.Params.animation.options.article.whole }}">
-          <span class="info-card__label">{{ .title }}</span>
+          <span class="info-card__label">{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) }}</span>
           <h3>
             {{- with .link -}}
-              <a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ $method.value }}</a>
+              <a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ partial "helpers/lang-data.html" (dict "value" $method.value "lang" $lang) }}</a>
             {{- else -}}
-              {{ $method.value }}
+              {{ partial "helpers/lang-data.html" (dict "value" $method.value "lang" $lang) }}
             {{- end -}}
           </h3>
-          <p>{{ .note }}</p>
+          <p>{{ partial "helpers/lang-data.html" (dict "value" .note "lang" $lang) }}</p>
         </article>
       {{- end -}}
       <article class="info-card contact-note" data-aos="{{ .Site.Params.animation.options.article.whole }}">
-        <span class="info-card__label">Availability</span>
-        <h3>欢迎交流合作、求职机会与技术讨论</h3>
-        <p>如果暂时没有公开邮箱，可先通过 GitHub 与站内内容建立联系，后续再补充更完整的联系方式。</p>
+        <span class="info-card__label">{{ i18n "availability" }}</span>
+        <h3>{{ i18n "availability_title" }}</h3>
+        <p>{{ i18n "availability_desc" }}</p>
       </article>
     </section>
   </div>

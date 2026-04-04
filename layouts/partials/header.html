@@ -1,4 +1,11 @@
 {{- $params := .Site.Params -}}
+{{- $lang := .Site.Language.Lang -}}
+{{- $profile := hugo.Data.profile -}}
+{{- $homeHeadline := partial "helpers/lang-data.html" (dict "value" $profile.headline "lang" $lang) -}}
+{{- $homeStatus := partial "helpers/lang-data.html" (dict "value" $profile.status "lang" $lang) -}}
+{{- $homeLocation := partial "helpers/lang-data.html" (dict "value" $profile.location "lang" $lang) -}}
+{{- $homeFocus := partial "helpers/lang-data.html" (dict "value" $profile.focus "lang" $lang) -}}
+{{- $avatar := printf "avatar/%s" .Site.Params.avatar -}}
 <div id="header-nav">
   <nav id="main-nav" aria-label="Primary navigation">
     {{- range .Site.Params.menu -}}
@@ -35,7 +42,7 @@
   </nav>
   {{- if and hugo.IsMultilingual (ne "404" .Type) -}}
     {{- $i18nMap := dict -}}
-    {{- range .Site.Languages -}}
+    {{- range site.Languages -}}
       {{- $i18nMap = merge $i18nMap (dict .Lang .LanguageName) -}}
     {{- end -}}
     <nav id="i18n-nav" aria-label="Language selection">
@@ -45,7 +52,7 @@
           <span id="selected-lang">{{ index $i18nMap $.Language.Lang }}</span>
         </div>
         <ul class="select-items" id="select-items" role="listbox" aria-label="Languages">
-          {{- range .Site.Languages -}}
+          {{- range site.Languages -}}
             <li data-value="{{ .Lang }}" role="option" {{ if eq $.Language.Lang .Lang }}class="selected" aria-selected="true"{{ else }}aria-selected="false"{{ end }} >{{ .LanguageName }}</li>
           {{- end -}}
         </ul>
@@ -105,7 +112,7 @@
     </a>
   {{- end -}}
 </div>
-<header id="header" aria-label="Site header">
+<header id="header" class="{{ if .IsHome }}header--home{{ end }}" aria-label="Site header">
   {{- $headerImage := .Params.banner | default .Params.cover -}}
   {{- if and $headerImage (strings.HasPrefix $headerImage "rgb") -}}
     <picture></picture>
@@ -179,6 +186,62 @@
         <a href="{{ "" | relLangURL }}" id="logo">
           <h1 data-aos="{{ .Site.Params.animation.options.header.title }}">{{ i18n "not_found.title" }}</h1>
         </a>
+      {{- else if .IsHome -}}
+        <div class="home-product-hero">
+          <div class="home-product-hero__copy">
+            <span class="home-hero-kicker" data-aos="{{ .Site.Params.animation.options.header.subTitle }}">{{ i18n "home_hero_kicker" }}</span>
+            <span id="logo">
+              <h1 data-aos="{{ .Site.Params.animation.options.header.title }}">{{ .Site.Title }}</h1>
+            </span>
+            <h2 id="subtitle-wrap" data-aos="{{ .Site.Params.animation.options.header.subTitle }}">
+              <span id="subtitle">{{ partial "helpers/lang-data.html" (dict "value" .Site.Params.subtitle.text "lang" $lang) }}</span>
+            </h2>
+            <p class="home-hero-summary" data-aos="{{ .Site.Params.animation.options.header.subTitle }}">{{ $homeHeadline }}</p>
+            <div class="home-hero-meta" data-aos="{{ .Site.Params.animation.options.header.subTitle }}">
+              <article class="home-spec-card">
+                <span>{{ i18n "status" }}</span>
+                <strong>{{ $homeStatus }}</strong>
+              </article>
+              <article class="home-spec-card">
+                <span>{{ i18n "location" }}</span>
+                <strong>{{ $homeLocation }}</strong>
+              </article>
+            </div>
+            <div class="home-hero-actions" data-aos="{{ .Site.Params.animation.options.header.subTitle }}">
+              <a class="home-hero-button home-hero-button--primary" href="{{ "portfolio/" | relLangURL }}">{{ i18n "home_primary_cta" }}</a>
+              <a class="home-hero-button" href="#home-sections">{{ i18n "home_secondary_cta" }}</a>
+            </div>
+            <a class="home-hero-scroll" data-aos="{{ .Site.Params.animation.options.header.subTitle }}" href="#home-sections">{{ i18n "scroll_discover" }}</a>
+          </div>
+
+          <div class="home-product-hero__stage" data-aos="{{ .Site.Params.animation.options.header.subTitle }}">
+            <article class="home-stage-panel">
+              <div class="home-stage-panel__copy">
+                <span class="home-stage-panel__eyebrow">{{ i18n "home_stage_label" }}</span>
+                <h3>{{ i18n "home_stage_title" }}</h3>
+                <p>{{ i18n "home_stage_desc" }}</p>
+              </div>
+
+              <div class="home-stage-panel__visual">
+                <div class="home-stage-panel__portrait">
+                  <img src="{{ $avatar | relURL }}" alt="{{ .Site.Title }}">
+                </div>
+              </div>
+
+              <div class="home-stage-panel__dock">
+                <a class="home-stage-link" href="{{ "portfolio/" | relLangURL }}">{{ i18n "portfolio" }}</a>
+                <a class="home-stage-link" href="{{ "archives/" | relLangURL }}">{{ i18n "blog" }}</a>
+                <a class="home-stage-link" href="{{ "about/" | relLangURL }}">{{ i18n "about" }}</a>
+              </div>
+
+              <div class="home-stage-panel__tags">
+                {{- range first 4 $homeFocus -}}
+                  <span>{{ . }}</span>
+                {{- end -}}
+              </div>
+            </article>
+          </div>
+        </div>
       {{- else -}}
         {{- $title := "" -}}
         {{- if .IsHome -}}
@@ -206,18 +269,10 @@
         <h2 id="subtitle-wrap" data-aos="{{ .Site.Params.animation.options.header.subTitle }}">
           <a href="{{ "" | relLangURL }}" id="subtitle">{{ i18n "not_found.subtitle" }}</a>
         </h2>
-      {{- else -}}
+      {{- else if not .IsHome -}}
         {{- $subtitle := "" -}}
         {{- $useTyping := false -}}
-        {{- if .IsHome -}}
-          {{- if and (reflect.IsMap .Site.Params.subtitle) .Site.Params.subtitle.typing.enable -}}
-            {{- $useTyping = true -}}
-          {{- else if and (reflect.IsMap .Site.Params.subtitle) .Site.Params.subtitle.text -}}
-            {{- $subtitle = .Site.Params.subtitle.text -}}
-          {{- else if .Site.Params.subtitle -}}
-            {{- $subtitle = .Site.Params.subtitle -}}
-          {{- end -}}
-        {{- else if and (eq .Type "categories") (not (eq .Title "Categories")) -}}
+        {{- if and (eq .Type "categories") (not (eq .Title "Categories")) -}}
           {{- $subtitle = .Title -}}
         {{- else if and (eq .Type "tags") (not (eq .Title "Tags")) -}}
           {{- $subtitle = .Title -}}

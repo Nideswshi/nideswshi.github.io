@@ -32,14 +32,14 @@
       </ul>
     {{- end -}}
     <div class="project-card__footer">
-      <a class="project-card__readmore" href="{{ $page.RelPermalink }}">查看详情</a>
+      <a class="project-card__readmore" href="{{ $page.RelPermalink }}">{{ i18n "view_details" }}</a>
       {{- with $page.Params.links -}}
         <div class="project-card__links">
           {{- with .demo -}}
-            <a href="{{ . }}" target="_blank" rel="noopener noreferrer">站点</a>
+            <a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "site_link" }}</a>
           {{- end -}}
           {{- with .repo -}}
-            <a href="{{ . }}" target="_blank" rel="noopener noreferrer">代码</a>
+            <a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "code_link" }}</a>
           {{- end -}}
         </div>
       {{- end -}}

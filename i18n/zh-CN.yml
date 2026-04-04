@@ -1,12 +1,59 @@
-home: 主页 / Home
-portfolio: 作品集 / Portfolio
-skills: 技能 / Skills
-learning: 历程 / Journey
-blog: 博客 / Blog
-about: 关于 / About
-contact: 联系 / Contact
+home: 主页
+portfolio: 作品集
+skills: 技能
+learning: 学习历程
+blog: 博客
+about: 关于
+contact: 联系
 featured_projects: 精选项目
 skills_snapshot: 能力快照
 latest_notes: 最新文章
 view_all: 查看全部
 read_article: 阅读文章
+home_hero_kicker: 个人主页 / 作品 / 笔记
+home_hero_title: Nideswshi
+home_stage_label: Personal Edition
+home_stage_title: 为作品、写作与职业表达而设计
+home_stage_desc: 用更像产品页的方式组织名字、项目、文章与联系入口，让首页先建立气质，再引导深入浏览。
+current_focus: 当前状态
+selected_work: 精选作品
+selected_work_desc: 挑选最能体现技术判断、信息组织与实现能力的项目，作为这座站点的门面。
+capability_snapshot: 能力概览
+journey_kicker: 成长历程
+recent_journey: 近期学习成长轨迹
+writing_kicker: 写作与记录
+latest_notes_desc: 把项目复盘、学习记录和个人观点写成长期可复用的文章，而不是碎片化的信息。
+about_resume_kicker: 关于 / 简历首页
+status: 状态
+location: 地点
+profile_kicker: 概览
+profile_overview: 个人概览
+strengths_kicker: 优势
+strengths_title: 能力侧重点
+highlights_kicker: 亮点
+quick_facts: 快速信息
+skill_matrix_kicker: 技能矩阵
+learning_journey_kicker: 学习历程
+learning_intro: 用倒序时间线记录关键节点、项目实践与技术视野的演进过程。
+contact_kicker: 联系方式
+availability: 当前可沟通
+availability_title: 欢迎交流合作、求职机会与技术讨论
+availability_desc: 如果暂时没有公开邮箱，可先通过 GitHub 与站内内容建立联系，后续再补充更完整的联系方式。
+portfolio_archive_kicker: 作品归档
+view_site: 查看站点
+view_repo: 查看仓库
+project_highlights: 亮点成果
+view_details: 查看详情
+site_link: 站点
+code_link: 代码
+home_primary_cta: 查看作品集
+home_secondary_cta: 浏览页面
+scroll_discover: 继续向下探索
+home_about_title: 不是普通博客，而是一座长期维护的个人技术作品集
+learn_more: 了解更多
+home_skills_title: 以更清晰的结构展示当前能力矩阵与技术方向
+explore_skills: 查看技能
+home_notes_title: 把学习、实践与观点整理成长期可复用的文章
+home_journey_title: 用时间线记录成长路径，而不是零散地堆叠经历
+home_contact_title: 为求职、合作与交流准备的公开联系入口
+home_contact_desc: 当这座网站像作品集一样被浏览时，联系页也应该像产品页面的一部分那样自然、清晰、可信。

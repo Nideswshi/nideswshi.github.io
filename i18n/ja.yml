@@ -1,12 +1,59 @@
-home: ホーム / Home
-portfolio: ポートフォリオ / Portfolio
-skills: スキル / Skills
-learning: 学習履歴 / Journey
-blog: ブログ / Blog
-about: 私について / About
-contact: 連絡先 / Contact
+home: ホーム
+portfolio: ポートフォリオ
+skills: スキル
+learning: 学習履歴
+blog: ブログ
+about: 私について
+contact: 連絡先
 featured_projects: 注目プロジェクト
 skills_snapshot: スキル概要
 latest_notes: 最新ノート
 view_all: すべて見る
 read_article: 記事を読む
+home_hero_kicker: Portfolio / Work / Notes
+home_hero_title: Nideswshi
+home_stage_label: Personal Edition
+home_stage_title: 作品、発信、キャリアの見通しのために設計
+home_stage_desc: 最初の画面で名前、作品、記事、連絡導線をプロダクトページのように整理し、その後に各ページへ自然につなげます。
+current_focus: Current Focus
+selected_work: Selected Work
+selected_work_desc: 技術的な判断力、構成力、実装力を最もよく表すプロジェクトを厳選して掲載しています。
+capability_snapshot: Capability Snapshot
+journey_kicker: Journey
+recent_journey: Recent Growth Journey
+writing_kicker: Writing
+latest_notes_desc: プロジェクトの振り返り、学習記録、考え方を、後からも読み返せる長文コンテンツとして整理しています。
+about_resume_kicker: About / Resume
+status: Status
+location: Location
+profile_kicker: Profile
+profile_overview: Overview
+strengths_kicker: Strengths
+strengths_title: Core Strengths
+highlights_kicker: Highlights
+quick_facts: Quick Facts
+skill_matrix_kicker: Skill Matrix
+learning_journey_kicker: Learning Journey
+learning_intro: 重要な節目、プロジェクト実践、技術的な視野の変化を逆時系列で記録しています。
+contact_kicker: Contact
+availability: Availability
+availability_title: キャリア相談、協業、技術的な交流を歓迎します
+availability_desc: 公開メールが未設定の場合は、まず GitHub やサイト内の内容から連絡のきっかけを作ることができます。
+portfolio_archive_kicker: Portfolio Archive
+view_site: View Site
+view_repo: View Repo
+project_highlights: Highlights
+view_details: View Details
+site_link: Site
+code_link: Code
+home_primary_cta: Portfolio を見る
+home_secondary_cta: サイトを見る
+scroll_discover: 下へスクロール
+home_about_title: ただのブログではなく、長期運用を前提にした個人技術ポートフォリオ
+learn_more: 詳しく見る
+home_skills_title: 現在の強みと技術的な方向性を、より明快な構成で示す
+explore_skills: スキルを見る
+home_notes_title: 学習、実践、考えを、後からも使える長文コンテンツとして整理する
+home_journey_title: 断片的な経歴ではなく、時間軸で成長の流れを示す
+home_contact_title: 就職、協業、交流のための公開された連絡導線
+home_contact_desc: このサイトがポートフォリオとして見られるなら、連絡導線も製品ページの一部のように自然で明快であるべきです。

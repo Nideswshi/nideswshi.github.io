@@ -29,7 +29,8 @@
 <title>
   {{ $title | safeHTML }}
 </title>
-<meta name="description" content="{{ .Params.description | default .Site.Params.description | safeHTML }}"/>
+{{- $siteDescription := partial "helpers/lang-data.html" (dict "value" .Site.Params.description "lang" .Site.Language.Lang) -}}
+<meta name="description" content="{{ .Params.description | default $siteDescription | safeHTML }}"/>
 {{- $keywords := default .Site.Params.keywords .Params.keywords -}}
 {{- with $keywords }}
   {{- if reflect.IsSlice . }}
@@ -50,8 +51,8 @@
   {{- partialCached "helpers/vendorGoogleFont.html" . -}}
 {{- end -}}
 
-{{- $js := .Site.Data.vendor.js -}}
-{{- $css := .Site.Data.vendor.css -}}
+{{- $js := hugo.Data.vendor.js -}}
+{{- $css := hugo.Data.vendor.css -}}
 <!-- icon -->
 {{- if .Site.Params.icon_font -}}
   <link
@@ -88,7 +89,7 @@
   <meta property="og:title" content="{{ $title | safeHTML }}" />
   <meta
     property="og:description"
-    content="{{ .Params.description | default .Site.Params.description | safeHTML }}"
+    content="{{ .Params.description | default $siteDescription | safeHTML }}"
   />
   <meta property="og:url" content="{{ .Permalink }}" />
   <meta

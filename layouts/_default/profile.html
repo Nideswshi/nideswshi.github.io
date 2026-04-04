@@ -1,15 +1,21 @@
 {{- define "main" -}}
-  {{- $profile := .Site.Data.profile -}}
+  {{- $profile := hugo.Data.profile -}}
   {{- $avatar := printf "avatar/%s" .Site.Params.avatar -}}
+  {{- $lang := .Site.Language.Lang -}}
+  {{- $headline := partial "helpers/lang-data.html" (dict "value" $profile.headline "lang" $lang) -}}
+  {{- $summary := partial "helpers/lang-data.html" (dict "value" $profile.summary "lang" $lang) -}}
+  {{- $focus := partial "helpers/lang-data.html" (dict "value" $profile.focus "lang" $lang) -}}
+  {{- $status := partial "helpers/lang-data.html" (dict "value" $profile.status "lang" $lang) -}}
+  {{- $location := partial "helpers/lang-data.html" (dict "value" $profile.location "lang" $lang) -}}
   <div class="career-page">
     <section class="resume-hero" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="resume-hero__copy">
-        <span class="section-kicker">About / Resume</span>
+        <span class="section-kicker">{{ i18n "about_resume_kicker" }}</span>
         <h2>{{ $profile.name }}</h2>
-        <p class="career-lead">{{ $profile.headline }}</p>
-        <p>{{ $profile.summary }}</p>
+        <p class="career-lead">{{ $headline }}</p>
+        <p>{{ $summary }}</p>
         <div class="tag-list">
-          {{- range $profile.focus -}}
+          {{- range $focus -}}
             <span class="tag">{{ . }}</span>
           {{- end -}}
         </div>
@@ -20,12 +26,12 @@
         </div>
         <div class="detail-facts">
           <div class="info-card">
-            <span class="info-card__label">Status</span>
-            <strong>{{ $profile.status }}</strong>
+            <span class="info-card__label">{{ i18n "status" }}</span>
+            <strong>{{ $status }}</strong>
           </div>
           <div class="info-card">
-            <span class="info-card__label">Location</span>
-            <strong>{{ $profile.location }}</strong>
+            <span class="info-card__label">{{ i18n "location" }}</span>
+            <strong>{{ $location }}</strong>
           </div>
         </div>
       </div>
@@ -34,8 +40,8 @@
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="section-heading">
         <div>
-          <span class="section-kicker">Profile</span>
-          <h3>个人概览</h3>
+          <span class="section-kicker">{{ i18n "profile_kicker" }}</span>
+          <h3>{{ i18n "profile_overview" }}</h3>
         </div>
       </div>
       <article class="content-panel article-entry">
@@ -46,15 +52,15 @@
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="section-heading">
         <div>
-          <span class="section-kicker">Strengths</span>
-          <h3>能力侧重点</h3>
+          <span class="section-kicker">{{ i18n "strengths_kicker" }}</span>
+          <h3>{{ i18n "strengths_title" }}</h3>
         </div>
       </div>
       <div class="resume-grid">
         {{- range $profile.strengths -}}
           <article class="info-card">
-            <h4>{{ .title }}</h4>
-            <p>{{ .description }}</p>
+            <h4>{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) }}</h4>
+            <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) }}</p>
           </article>
         {{- end -}}
       </div>
@@ -63,15 +69,15 @@
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="section-heading">
         <div>
-          <span class="section-kicker">Highlights</span>
-          <h3>快速信息</h3>
+          <span class="section-kicker">{{ i18n "highlights_kicker" }}</span>
+          <h3>{{ i18n "quick_facts" }}</h3>
         </div>
       </div>
       <div class="resume-grid">
         {{- range $profile.stats -}}
           <article class="info-card">
-            <span class="info-card__label">{{ .label }}</span>
-            <h4>{{ .value }}</h4>
+            <span class="info-card__label">{{ partial "helpers/lang-data.html" (dict "value" .label "lang" $lang) }}</span>
+            <h4>{{ partial "helpers/lang-data.html" (dict "value" .value "lang" $lang) }}</h4>
           </article>
         {{- end -}}
       </div>

@@ -1,0 +1,13 @@
+{{- $value := .value -}}
+{{- $lang := lower (or .lang site.Language.Lang) -}}
+{{- if reflect.IsMap $value -}}
+  {{- $result := "" -}}
+  {{- $candidates := slice $lang (replace $lang "_" "-") "zh-cn" "en" "ja" "default" -}}
+  {{- range $candidates -}}
+    {{- if and (eq $result "") (isset $value .) -}}
+      {{- $result = index $value . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- return $result -}}
+{{- end -}}
+{{- return $value -}}

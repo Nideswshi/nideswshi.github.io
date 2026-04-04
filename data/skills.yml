@@ -1,59 +1,152 @@
-note: 这里展示的是面向个人技术主页的能力矩阵。当前内容以你的方向为基础进行了更职业化的表达，后续可以按真实项目经验继续替换和细化。
+note:
+  zh-cn: 这里展示的是面向个人技术主页的能力矩阵。当前内容以你的方向为基础进行了更职业化的表达，后续可以按真实项目经验继续替换和细化。
+  en: This matrix presents the current capability structure of the site. It is written in a portfolio-ready way and can later be refined based on real projects and experience.
+  ja: ここでは個人技術サイト向けのスキル構成を示している。今後、実際の経験に合わせて調整・更新できる。
 categories:
-  - name: Frontend
-    description: 聚焦界面实现、组件化开发、交互体验与视觉还原能力。
+  - name:
+      zh-cn: 前端
+      en: Frontend
+      ja: Frontend
+    description:
+      zh-cn: 聚焦界面实现、组件化开发、交互体验与视觉还原能力。
+      en: Focus on UI implementation, component-based development, interaction quality, and visual accuracy.
+      ja: UI 実装、コンポーネント設計、操作体験、見た目の再現性に関する能力。
     items:
-      - name: HTML / Semantic Markup
-        level: 熟练
+      - name:
+          zh-cn: HTML / 语义化标记
+          en: HTML / Semantic Markup
+          ja: HTML / Semantic Markup
+        level:
+          zh-cn: 熟练
+          en: Proficient
+          ja: Proficient
         level_key: proficient
         percent: 84
-      - name: CSS / SCSS / Responsive Design
-        level: 熟练
+      - name:
+          zh-cn: CSS / SCSS / 响应式设计
+          en: CSS / SCSS / Responsive Design
+          ja: CSS / SCSS / Responsive Design
+        level:
+          zh-cn: 熟练
+          en: Proficient
+          ja: Proficient
         level_key: proficient
         percent: 82
-      - name: JavaScript / TypeScript
-        level: 熟练
+      - name:
+          zh-cn: JavaScript / TypeScript
+          en: JavaScript / TypeScript
+          ja: JavaScript / TypeScript
+        level:
+          zh-cn: 熟练
+          en: Proficient
+          ja: Proficient
         level_key: proficient
         percent: 76
-      - name: Motion / UI Polish
-        level: 了解
+      - name:
+          zh-cn: 动效 / 界面细节
+          en: Motion / UI Polish
+          ja: Motion / UI Polish
+        level:
+          zh-cn: 了解
+          en: Familiar
+          ja: Familiar
         level_key: familiar
         percent: 66
-  - name: Backend
-    description: 聚焦接口协作、内容建模、脚本工具与基础数据处理能力。
+  - name:
+      zh-cn: 后端
+      en: Backend
+      ja: Backend
+    description:
+      zh-cn: 聚焦接口协作、内容建模、脚本工具与基础数据处理能力。
+      en: Focus on API collaboration, content modeling, tooling scripts, and basic data handling.
+      ja: API 連携、コンテンツ設計、ツールスクリプト、基礎的なデータ処理。
     items:
-      - name: Node.js / Tooling Scripts
-        level: 了解
+      - name:
+          zh-cn: Node.js / 工具脚本
+          en: Node.js / Tooling Scripts
+          ja: Node.js / Tooling Scripts
+        level:
+          zh-cn: 了解
+          en: Familiar
+          ja: Familiar
         level_key: familiar
         percent: 61
-      - name: API Integration
-        level: 了解
+      - name:
+          zh-cn: API 集成
+          en: API Integration
+          ja: API Integration
+        level:
+          zh-cn: 了解
+          en: Familiar
+          ja: Familiar
         level_key: familiar
         percent: 59
-      - name: Content Modeling
-        level: 熟练
+      - name:
+          zh-cn: 内容建模
+          en: Content Modeling
+          ja: Content Modeling
+        level:
+          zh-cn: 熟练
+          en: Proficient
+          ja: Proficient
         level_key: proficient
         percent: 74
-      - name: Documentation Workflow
-        level: 熟练
+      - name:
+          zh-cn: 文档工作流
+          en: Documentation Workflow
+          ja: Documentation Workflow
+        level:
+          zh-cn: 熟练
+          en: Proficient
+          ja: Proficient
         level_key: proficient
         percent: 78
-  - name: DevOps
-    description: 聚焦版本管理、自动部署、站点维护与迭代效率。
+  - name:
+      zh-cn: DevOps
+      en: DevOps
+      ja: DevOps
+    description:
+      zh-cn: 聚焦版本管理、自动部署、站点维护与迭代效率。
+      en: Focus on version control, automated deployment, site maintenance, and iteration efficiency.
+      ja: バージョン管理、自動デプロイ、運用、改善効率に関する能力。
     items:
-      - name: Git / GitHub
-        level: 熟练
+      - name:
+          zh-cn: Git / GitHub
+          en: Git / GitHub
+          ja: Git / GitHub
+        level:
+          zh-cn: 熟练
+          en: Proficient
+          ja: Proficient
         level_key: proficient
         percent: 82
-      - name: GitHub Actions
-        level: 了解
+      - name:
+          zh-cn: GitHub Actions
+          en: GitHub Actions
+          ja: GitHub Actions
+        level:
+          zh-cn: 了解
+          en: Familiar
+          ja: Familiar
         level_key: familiar
         percent: 68
-      - name: Static Site Deployment
-        level: 熟练
+      - name:
+          zh-cn: 静态站点部署
+          en: Static Site Deployment
+          ja: Static Site Deployment
+        level:
+          zh-cn: 熟练
+          en: Proficient
+          ja: Proficient
         level_key: proficient
         percent: 75
-      - name: Workflow Maintenance
-        level: 了解
+      - name:
+          zh-cn: 工作流维护
+          en: Workflow Maintenance
+          ja: Workflow Maintenance
+        level:
+          zh-cn: 了解
+          en: Familiar
+          ja: Familiar
         level_key: familiar
         percent: 63

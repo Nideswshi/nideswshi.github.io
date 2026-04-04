@@ -1,17 +1,56 @@
-intro: 欢迎围绕求职机会、项目合作、技术交流、内容讨论或学习分享联系我。
+intro:
+  zh-cn: 欢迎围绕求职机会、项目合作、技术交流、内容讨论或学习分享联系我。
+  en: Feel free to reach out for career opportunities, project collaboration, technical discussion, or learning exchange.
+  ja: 求職の相談、プロジェクト協力、技術交流、学習共有について気軽に連絡してください。
 methods:
-  - title: GitHub
-    value: github.com/Nideswshi
+  - title:
+      zh-cn: GitHub
+      en: GitHub
+      ja: GitHub
+    value:
+      zh-cn: github.com/Nideswshi
+      en: github.com/Nideswshi
+      ja: github.com/Nideswshi
     link: https://github.com/Nideswshi
-    note: 查看项目仓库、提交记录与工程化实践
-  - title: Website
-    value: nideswshi.github.io
+    note:
+      zh-cn: 查看项目仓库、提交记录与工程化实践
+      en: Explore repositories, commit history, and workflow-related practice.
+      ja: リポジトリ、コミット履歴、運用フローを確認できます。
+  - title:
+      zh-cn: 网站
+      en: Website
+      ja: Website
+    value:
+      zh-cn: nideswshi.github.io
+      en: nideswshi.github.io
+      ja: nideswshi.github.io
     link: https://nideswshi.github.io/
-    note: 浏览作品集、文章与学习记录
-  - title: Blog Archive
-    value: 技术文章与复盘
+    note:
+      zh-cn: 浏览作品集、文章与学习记录
+      en: Browse portfolio projects, articles, and learning notes.
+      ja: ポートフォリオ、記事、学習記録を閲覧できます。
+  - title:
+      zh-cn: 博客归档
+      en: Blog Archive
+      ja: Blog Archive
+    value:
+      zh-cn: 技术文章与复盘
+      en: Articles and breakdowns
+      ja: Articles and breakdowns
     link: https://nideswshi.github.io/archives/
-    note: 适合快速了解近期输出与思考方式
-  - title: Email
-    value: 暂未公开
-    note: 如果你后续补充真实邮箱，建议直接替换这里
+    note:
+      zh-cn: 适合快速了解近期输出与思考方式
+      en: A quick way to understand recent output and thinking style.
+      ja: 最近の発信内容や考え方を把握するのに適しています。
+  - title:
+      zh-cn: 邮箱
+      en: Email
+      ja: Email
+    value:
+      zh-cn: 暂未公开
+      en: Not public yet
+      ja: Not public yet
+    note:
+      zh-cn: 如果你后续补充真实邮箱，建议直接替换这里
+      en: Replace this field once a real public contact email is ready.
+      ja: 公開用のメールアドレスが決まったらここを差し替えてください。
