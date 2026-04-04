@@ -2,11 +2,11 @@
   {{- $profile := hugo.Data.profile -}}
   {{- $avatar := printf "avatar/%s" .Site.Params.avatar -}}
   {{- $lang := .Site.Language.Lang -}}
-  {{- $headline := partial "helpers/lang-data.html" (dict "value" $profile.headline "lang" $lang) | transform.Unmarshal -}}
-  {{- $summary := partial "helpers/lang-data.html" (dict "value" $profile.summary "lang" $lang) | transform.Unmarshal -}}
-  {{- $focus := partial "helpers/lang-data.html" (dict "value" $profile.focus "lang" $lang) | transform.Unmarshal -}}
-  {{- $status := partial "helpers/lang-data.html" (dict "value" $profile.status "lang" $lang) | transform.Unmarshal -}}
-  {{- $location := partial "helpers/lang-data.html" (dict "value" $profile.location "lang" $lang) | transform.Unmarshal -}}
+  {{- $headline := partial "helpers/lang-data.html" (dict "value" $profile.headline "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}
+  {{- $summary := partial "helpers/lang-data.html" (dict "value" $profile.summary "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}
+  {{- $focus := partial "helpers/lang-data.html" (dict "value" $profile.focus "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}
+  {{- $status := partial "helpers/lang-data.html" (dict "value" $profile.status "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}
+  {{- $location := partial "helpers/lang-data.html" (dict "value" $profile.location "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}
   {{- $portfolioPages := where .Site.RegularPages "Section" "portfolio" -}}
   {{- $featuredProjects := where $portfolioPages "Params.featured" true -}}
   {{- if gt (len $featuredProjects) 0 -}}
@@ -93,8 +93,8 @@
       <div class="resume-grid">
         {{- range $profile.strengths -}}
           <article class="info-card about-strength-card">
-            <h4>{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) | transform.Unmarshal }}</h4>
-            <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) | transform.Unmarshal }}</p>
+            <h4>{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</h4>
+            <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</p>
           </article>
         {{- end -}}
       </div>
@@ -140,8 +140,8 @@
       <div class="resume-grid">
         {{- range $profile.stats -}}
           <article class="info-card">
-            <span class="info-card__label">{{ partial "helpers/lang-data.html" (dict "value" .label "lang" $lang) | transform.Unmarshal }}</span>
-            <h4>{{ partial "helpers/lang-data.html" (dict "value" .value "lang" $lang) | transform.Unmarshal }}</h4>
+            <span class="info-card__label">{{ partial "helpers/lang-data.html" (dict "value" .label "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</span>
+            <h4>{{ partial "helpers/lang-data.html" (dict "value" .value "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</h4>
           </article>
         {{- end -}}
       </div>

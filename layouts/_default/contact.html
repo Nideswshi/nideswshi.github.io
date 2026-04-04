@@ -7,7 +7,7 @@
         <div>
           <span class="section-kicker">{{ i18n "contact_kicker" }}</span>
           <h2>{{ .Title }}</h2>
-          <p>{{ partial "helpers/lang-data.html" (dict "value" $contact.intro "lang" $lang) | transform.Unmarshal }}</p>
+          <p>{{ partial "helpers/lang-data.html" (dict "value" $contact.intro "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</p>
         </div>
       </div>
       <article class="content-panel article-entry">
@@ -19,15 +19,15 @@
       {{- range $contact.methods -}}
         {{- $method := . -}}
         <article class="info-card" data-aos="{{ $.Site.Params.animation.options.article.whole }}">
-          <span class="info-card__label">{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) | transform.Unmarshal }}</span>
+          <span class="info-card__label">{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</span>
           <h3>
             {{- with .link -}}
-              <a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ partial "helpers/lang-data.html" (dict "value" $method.value "lang" $lang) | transform.Unmarshal }}</a>
+              <a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ partial "helpers/lang-data.html" (dict "value" $method.value "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</a>
             {{- else -}}
-              {{ partial "helpers/lang-data.html" (dict "value" $method.value "lang" $lang) | transform.Unmarshal }}
+              {{ partial "helpers/lang-data.html" (dict "value" $method.value "lang" $lang) | transform.Unmarshal (dict "format" "json") }}
             {{- end -}}
           </h3>
-          <p>{{ partial "helpers/lang-data.html" (dict "value" .note "lang" $lang) | transform.Unmarshal }}</p>
+          <p>{{ partial "helpers/lang-data.html" (dict "value" .note "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</p>
         </article>
       {{- end -}}
       <article class="info-card contact-note" data-aos="{{ .Site.Params.animation.options.article.whole }}">

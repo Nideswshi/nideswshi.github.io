@@ -7,7 +7,7 @@
         <div>
           <span class="section-kicker">{{ i18n "skill_matrix_kicker" }}</span>
           <h2>{{ .Title }}</h2>
-          <p>{{ partial "helpers/lang-data.html" (dict "value" $skills.note "lang" $lang) | transform.Unmarshal }}</p>
+          <p>{{ partial "helpers/lang-data.html" (dict "value" $skills.note "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</p>
         </div>
       </div>
       <article class="content-panel article-entry">
@@ -20,19 +20,19 @@
         <article class="skill-category-card" data-aos="{{ $.Site.Params.animation.options.article.whole }}">
           <div class="section-heading">
             <div>
-              {{- $categoryName := partial "helpers/lang-data.html" (dict "value" .name "lang" $lang) | transform.Unmarshal -}}
+              {{- $categoryName := partial "helpers/lang-data.html" (dict "value" .name "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}
               <span class="section-kicker">{{ $categoryName }}</span>
               <h3>{{ $categoryName }}</h3>
-              <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) | transform.Unmarshal }}</p>
+              <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</p>
             </div>
           </div>
           <div class="skill-list">
             {{- range .items -}}
               <div class="skill-item">
                 <div class="skill-item__head">
-                  {{- $skillName := partial "helpers/lang-data.html" (dict "value" .name "lang" $lang) | transform.Unmarshal -}}
+                  {{- $skillName := partial "helpers/lang-data.html" (dict "value" .name "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}
                   <strong>{{ $skillName }}</strong>
-                  <span class="skill-level skill-level--{{ .level_key }}">{{ partial "helpers/lang-data.html" (dict "value" .level "lang" $lang) | transform.Unmarshal }}</span>
+                  <span class="skill-level skill-level--{{ .level_key }}">{{ partial "helpers/lang-data.html" (dict "value" .level "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</span>
                 </div>
                 <div class="skill-progress" aria-label="{{ $skillName }} {{ .percent }}%">
                   <span style="width: {{ .percent }}%;"></span>

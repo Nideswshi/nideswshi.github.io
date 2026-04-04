@@ -20,11 +20,11 @@
         <article class="timeline-item" data-aos="{{ $.Site.Params.animation.options.archive.section }}">
           <div class="timeline-item__date">{{ .date }}</div>
           <div class="timeline-item__content">
-            <span class="section-kicker">{{ partial "helpers/lang-data.html" (dict "value" .stage "lang" $lang) | transform.Unmarshal }}</span>
-            <h3>{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) | transform.Unmarshal }}</h3>
-            <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) | transform.Unmarshal }}</p>
+            <span class="section-kicker">{{ partial "helpers/lang-data.html" (dict "value" .stage "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</span>
+            <h3>{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</h3>
+            <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</p>
             {{- with .tags -}}
-              {{- $tags := partial "helpers/lang-data.html" (dict "value" . "lang" $lang) | transform.Unmarshal -}}
+              {{- $tags := partial "helpers/lang-data.html" (dict "value" . "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}
               <div class="tag-list">
                 {{- range $tags -}}
                   <span class="tag">{{ . }}</span>
