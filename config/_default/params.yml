@@ -290,7 +290,13 @@ clipboard:
     zh-TW: 複製成功 (*^▽^*)
     ja: コピー成�?(*^▽^*)
     pt-BR: Copiado com sucesso (*^▽^*)
-  fail:`n      en: Copy failed (ﾟ⊿ﾟ)ﾂ`n      zh-CN: 复制失败 (ﾟ⊿ﾟ)ﾂ`n      zh-TW: 複製失敗 (ﾟ⊿ﾟ)ﾂ`n      ja: コピー失敗 (ﾟ⊿ﾟ)ﾂ`n      pt-BR: Falha ao copiar (ﾟ⊿ﾟ)ﾂ`ncopyright:
+  fail:
+    en: Copy failed (ﾟ⊿ﾟ)ﾂ
+    zh-CN: 复制失败 (ﾟ⊿ﾟ)ﾂ
+    zh-TW: 複製失敗 (ﾟ⊿ﾟ)ﾂ
+    ja: コピー失敗 (ﾟ⊿ﾟ)ﾂ
+    pt-BR: Falha ao copiar (ﾟ⊿ﾟ)ﾂ
+  copyright:
     enable: false
     count: 50 # The number of characters when the copyright is displayed
     license_type: by-nc-sa # https://creativecommons.org/licenses
