@@ -1,5 +1,4 @@
 {{- define "main" -}}
-  {{- $sort_config := .Site.Params.sort_order.archive -}}
   {{- $pageSize := 0 -}}
   {{- with $.Site.Params.paginate.archive -}}
     {{- $pageSize = . -}}
@@ -10,29 +9,66 @@
   {{- else -}}
     {{- $paginator = .Paginate (where .Page.Site.RegularPages "Section" "in" .Site.Params.mainSections) -}}
   {{- end -}}
-  
-  {{- $sortedPages := $paginator.Pages.GroupByDate .Site.Params.yearFormat "desc" -}}
-  {{- if eq $sort_config "weight" -}}
-    {{- $sortedPages = $paginator.Pages.ByWeight -}}
-  {{- else if eq $sort_config "weight-reverse" -}}
-    {{- $sortedPages = $paginator.Pages.ByWeight.Reverse -}}
-  {{- else if eq $sort_config "date" -}}
-    {{- $sortedPages = $paginator.Pages.GroupByDate .Site.Params.yearFormat "asc" -}}
-  {{- else if eq $sort_config "default" -}}
-    {{- $sortedPages = $paginator.Pages -}}
-  {{- end -}}
-  <div
-    class="archives-outer-wrap"
-    data-aos="{{ .Site.Params.animation.options.archive.whole }}"
-  >
-    {{- if .Site.Params.only_show_capsule_in_index -}}
-      {{- if eq .Paginator.PageNumber 1 -}}
+  {{- $pages := $paginator.Pages.ByDate.Reverse -}}
+  {{- $featured := first 1 $pages -}}
+  <div class="career-page archive-shell" data-aos="{{ .Site.Params.animation.options.archive.whole }}">
+    <section class="career-section archive-hero">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">{{ i18n "notes_archive_kicker" }}</span>
+          <h2>{{ i18n "blog" }}</h2>
+          <p>{{ i18n "notes_archive_intro" }}</p>
+        </div>
+      </div>
+      {{- if .Site.Params.only_show_capsule_in_index -}}
+        {{- if eq .Paginator.PageNumber 1 -}}
+          {{- partialCached "archives.html" . -}}
+        {{- end -}}
+      {{- else -}}
         {{- partialCached "archives.html" . -}}
       {{- end -}}
-    {{- else -}}
-      {{- partialCached "archives.html" . -}}
+    </section>
+
+    {{- range first 1 $featured -}}
+      {{- $cover := .Params.cover | default .Params.banner | default $.Site.Params.banner -}}
+      <section class="archive-feature" data-aos="{{ $.Site.Params.animation.options.archive.section }}">
+        <div class="archive-feature__copy">
+          <span class="section-kicker">{{ i18n "article_latest_label" }}</span>
+          <h3>{{ .Title }}</h3>
+          <p>{{ .Params.description | default (.Summary | plainify | truncate 180) }}</p>
+          <div class="detail-meta">
+            <span>{{ .Date.Format $.Site.Params.dateFormat }}</span>
+            <span>{{ .Lastmod.Format $.Site.Params.dateFormat }}</span>
+          </div>
+          <a class="career-button career-button--primary" href="{{ .RelPermalink }}">{{ i18n "read_article" }}</a>
+        </div>
+        <a class="archive-feature__cover" href="{{ .RelPermalink }}" aria-label="{{ .Title }}">
+          <img data-src="{{ $cover | relURL }}" data-sizes="auto" alt="{{ .Title }}" class="lazyload" />
+        </a>
+      </section>
     {{- end -}}
-    {{- partial "list.html" (dict "paginator" $sortedPages "ctx" .) -}}
+
+    <section class="note-grid note-grid--editorial">
+      {{- range after 1 $pages -}}
+        {{- $cover := .Params.cover | default .Params.banner | default $.Site.Params.banner -}}
+        <article class="note-card" data-aos="{{ $.Site.Params.animation.options.archive.section }}">
+          <a class="note-card__cover" href="{{ .RelPermalink }}" aria-label="{{ .Title }}">
+            <img data-src="{{ $cover | relURL }}" data-sizes="auto" alt="{{ .Title }}" class="lazyload" />
+          </a>
+          <div class="note-card__body">
+            <span class="note-card__eyebrow">{{ .Date.Format $.Site.Params.monthFormat }}</span>
+            <div class="note-card__meta">
+              <span>{{ .Date.Format $.Site.Params.dateFormat }}</span>
+            </div>
+            <h3 class="note-card__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+            <p class="note-card__desc">{{ .Params.description | default (.Summary | plainify | truncate 120) }}</p>
+            <div class="note-card__footer">
+              <a class="project-card__readmore" href="{{ .RelPermalink }}">{{ i18n "read_article" }}</a>
+            </div>
+          </div>
+        </article>
+      {{- end -}}
+    </section>
   </div>
   {{- partial "pagination.html" . -}}
 {{- end -}}

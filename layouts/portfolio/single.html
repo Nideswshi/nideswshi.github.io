@@ -1,16 +1,8 @@
 {{- define "main" -}}
   {{- $ctx := . -}}
   {{- $cover := .Params.banner | default .Params.cover | default .Site.Params.banner -}}
-  <article class="career-page project-detail">
-    <section class="project-detail__hero" data-aos="{{ .Site.Params.animation.options.article.whole }}">
-      <div class="project-detail__cover">
-        <img
-          data-src="{{ $cover | relURL }}"
-          data-sizes="auto"
-          alt="{{ .Title }}"
-          class="lazyload"
-        />
-      </div>
+  <article class="career-page project-detail project-detail--apple">
+    <section class="project-detail__hero project-detail__hero--apple" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="project-detail__intro">
         <span class="section-kicker">{{ .Params.period | default (.Date.Format .Site.Params.dateFormat) }}</span>
         <h2>{{ .Title }}</h2>
@@ -32,7 +24,7 @@
           </div>
         {{- end -}}
         {{- with .Params.links -}}
-          <div class="project-card__links">
+          <div class="project-card__links project-detail__actions">
             {{- with .demo -}}
               <a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "view_site" }}</a>
             {{- end -}}
@@ -42,6 +34,30 @@
           </div>
         {{- end -}}
       </div>
+
+      <div class="project-detail__cover">
+        <img
+          data-src="{{ $cover | relURL }}"
+          data-sizes="auto"
+          alt="{{ .Title }}"
+          class="lazyload"
+        />
+      </div>
+    </section>
+
+    <section class="project-detail__summary-grid" data-aos="{{ .Site.Params.animation.options.article.whole }}">
+      <article class="project-detail__stat-card info-card">
+        <span class="info-card__label">{{ i18n "project_role" }}</span>
+        <h4>{{ .Params.role | default "-" }}</h4>
+      </article>
+      <article class="project-detail__stat-card info-card">
+        <span class="info-card__label">{{ i18n "project_published" }}</span>
+        <h4>{{ .Date.Format .Site.Params.dateFormat }}</h4>
+      </article>
+      <article class="project-detail__stat-card info-card">
+        <span class="info-card__label">{{ i18n "project_updated" }}</span>
+        <h4>{{ .Lastmod.Format .Site.Params.dateFormat }}</h4>
+      </article>
     </section>
 
     {{- with .Params.highlights -}}
@@ -63,7 +79,13 @@
     {{- end -}}
 
     <section class="career-section" data-aos="{{ $ctx.Site.Params.animation.options.article.whole }}">
-      <div class="content-panel article-entry">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">{{ i18n "project_story" }}</span>
+          <h3>{{ i18n "project_story" }}</h3>
+        </div>
+      </div>
+      <div class="content-panel article-entry project-detail__story">
         {{ $ctx.Content }}
       </div>
     </section>

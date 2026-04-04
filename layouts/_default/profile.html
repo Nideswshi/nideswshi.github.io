@@ -2,13 +2,21 @@
   {{- $profile := hugo.Data.profile -}}
   {{- $avatar := printf "avatar/%s" .Site.Params.avatar -}}
   {{- $lang := .Site.Language.Lang -}}
-  {{- $headline := partial "helpers/lang-data.html" (dict "value" $profile.headline "lang" $lang) -}}
-  {{- $summary := partial "helpers/lang-data.html" (dict "value" $profile.summary "lang" $lang) -}}
-  {{- $focus := partial "helpers/lang-data.html" (dict "value" $profile.focus "lang" $lang) -}}
-  {{- $status := partial "helpers/lang-data.html" (dict "value" $profile.status "lang" $lang) -}}
-  {{- $location := partial "helpers/lang-data.html" (dict "value" $profile.location "lang" $lang) -}}
-  <div class="career-page">
-    <section class="resume-hero" data-aos="{{ .Site.Params.animation.options.article.whole }}">
+  {{- $headline := partial "helpers/lang-data.html" (dict "value" $profile.headline "lang" $lang) | transform.Unmarshal -}}
+  {{- $summary := partial "helpers/lang-data.html" (dict "value" $profile.summary "lang" $lang) | transform.Unmarshal -}}
+  {{- $focus := partial "helpers/lang-data.html" (dict "value" $profile.focus "lang" $lang) | transform.Unmarshal -}}
+  {{- $status := partial "helpers/lang-data.html" (dict "value" $profile.status "lang" $lang) | transform.Unmarshal -}}
+  {{- $location := partial "helpers/lang-data.html" (dict "value" $profile.location "lang" $lang) | transform.Unmarshal -}}
+  {{- $portfolioPages := where .Site.RegularPages "Section" "portfolio" -}}
+  {{- $featuredProjects := where $portfolioPages "Params.featured" true -}}
+  {{- if gt (len $featuredProjects) 0 -}}
+    {{- $featuredProjects = first 1 ($featuredProjects.ByDate.Reverse) -}}
+  {{- else -}}
+    {{- $featuredProjects = first 1 ($portfolioPages.ByDate.Reverse) -}}
+  {{- end -}}
+  {{- $latestNotes := first 1 ((where .Site.RegularPages "Section" "post").ByDate.Reverse) -}}
+  <div class="career-page about-apple">
+    <section class="resume-hero resume-hero--about" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="resume-hero__copy">
         <span class="section-kicker">{{ i18n "about_resume_kicker" }}</span>
         <h2>{{ $profile.name }}</h2>
@@ -19,33 +27,59 @@
             <span class="tag">{{ . }}</span>
           {{- end -}}
         </div>
+        <div class="hero-actions">
+          <a class="career-button career-button--primary" href="{{ "portfolio/" | relLangURL }}">{{ i18n "home_primary_cta" }}</a>
+          <a class="career-button" href="{{ "contact/" | relLangURL }}">{{ i18n "contact" }}</a>
+        </div>
       </div>
       <div class="resume-hero__panel">
-        <div class="portrait-card">
-          <img src="{{ $avatar | relURL }}" alt="{{ $profile.name }}" />
-        </div>
-        <div class="detail-facts">
-          <div class="info-card">
-            <span class="info-card__label">{{ i18n "status" }}</span>
-            <strong>{{ $status }}</strong>
+        <article class="about-stage-card">
+          <div class="about-stage-card__portrait portrait-card">
+            <img src="{{ $avatar | relURL }}" alt="{{ $profile.name }}" />
           </div>
-          <div class="info-card">
-            <span class="info-card__label">{{ i18n "location" }}</span>
-            <strong>{{ $location }}</strong>
+          <div class="about-stage-card__facts detail-facts">
+            <div class="info-card">
+              <span class="info-card__label">{{ i18n "status" }}</span>
+              <strong>{{ $status }}</strong>
+            </div>
+            <div class="info-card">
+              <span class="info-card__label">{{ i18n "location" }}</span>
+              <strong>{{ $location }}</strong>
+            </div>
           </div>
-        </div>
+        </article>
       </div>
     </section>
 
-    <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
-      <div class="section-heading">
-        <div>
-          <span class="section-kicker">{{ i18n "profile_kicker" }}</span>
-          <h3>{{ i18n "profile_overview" }}</h3>
+    <section class="about-split-grid" data-aos="{{ .Site.Params.animation.options.article.whole }}">
+      <article class="content-panel article-entry about-overview-panel">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">{{ i18n "profile_kicker" }}</span>
+            <h3>{{ i18n "profile_overview" }}</h3>
+          </div>
         </div>
-      </div>
-      <article class="content-panel article-entry">
         {{ .Content }}
+      </article>
+
+      <article class="editorial-panel about-system-panel">
+        <span class="section-kicker">{{ i18n "current_focus" }}</span>
+        <h3>{{ i18n "about_value_title" }}</h3>
+        <p>{{ i18n "about_value_desc" }}</p>
+        <div class="about-link-list">
+          <a class="about-link-item" href="{{ "portfolio/" | relLangURL }}">
+            <span>{{ i18n "about_recent_project" }}</span>
+            <strong>{{ i18n "portfolio" }}</strong>
+          </a>
+          <a class="about-link-item" href="{{ "archives/" | relLangURL }}">
+            <span>{{ i18n "about_recent_note" }}</span>
+            <strong>{{ i18n "blog" }}</strong>
+          </a>
+          <a class="about-link-item" href="{{ "learning/" | relLangURL }}">
+            <span>{{ i18n "journey_kicker" }}</span>
+            <strong>{{ i18n "learning" }}</strong>
+          </a>
+        </div>
       </article>
     </section>
 
@@ -58,12 +92,42 @@
       </div>
       <div class="resume-grid">
         {{- range $profile.strengths -}}
-          <article class="info-card">
-            <h4>{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) }}</h4>
-            <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) }}</p>
+          <article class="info-card about-strength-card">
+            <h4>{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) | transform.Unmarshal }}</h4>
+            <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) | transform.Unmarshal }}</p>
           </article>
         {{- end -}}
       </div>
+    </section>
+
+    <section class="about-proof-grid" data-aos="{{ .Site.Params.animation.options.article.whole }}">
+      {{- range first 1 $featuredProjects -}}
+        <article class="about-proof-card about-proof-card--project">
+          <span class="section-kicker">{{ i18n "about_recent_project" }}</span>
+          <h3>{{ .Title }}</h3>
+          <p>{{ .Params.description }}</p>
+          {{- with .Params.tech_stack -}}
+            <div class="tag-list">
+              {{- range first 4 . -}}
+                <span class="tag">{{ . }}</span>
+              {{- end -}}
+            </div>
+          {{- end -}}
+          <a class="section-link" href="{{ .RelPermalink }}">{{ i18n "view_details" }}</a>
+        </article>
+      {{- end -}}
+
+      {{- range first 1 $latestNotes -}}
+        <article class="about-proof-card about-proof-card--note">
+          <span class="section-kicker">{{ i18n "about_recent_note" }}</span>
+          <h3>{{ .Title }}</h3>
+          <p>{{ .Params.description | default (.Summary | plainify | truncate 130) }}</p>
+          <div class="detail-meta">
+            <span>{{ .Date.Format $.Site.Params.dateFormat }}</span>
+          </div>
+          <a class="section-link" href="{{ .RelPermalink }}">{{ i18n "read_article" }}</a>
+        </article>
+      {{- end -}}
     </section>
 
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
@@ -76,8 +140,8 @@
       <div class="resume-grid">
         {{- range $profile.stats -}}
           <article class="info-card">
-            <span class="info-card__label">{{ partial "helpers/lang-data.html" (dict "value" .label "lang" $lang) }}</span>
-            <h4>{{ partial "helpers/lang-data.html" (dict "value" .value "lang" $lang) }}</h4>
+            <span class="info-card__label">{{ partial "helpers/lang-data.html" (dict "value" .label "lang" $lang) | transform.Unmarshal }}</span>
+            <h4>{{ partial "helpers/lang-data.html" (dict "value" .value "lang" $lang) | transform.Unmarshal }}</h4>
           </article>
         {{- end -}}
       </div>

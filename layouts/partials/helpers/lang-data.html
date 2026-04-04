@@ -1,13 +1,14 @@
 {{- $value := .value -}}
 {{- $lang := lower (or .lang site.Language.Lang) -}}
+{{- $result := $value -}}
 {{- if reflect.IsMap $value -}}
-  {{- $result := "" -}}
+  {{- $found := false -}}
   {{- $candidates := slice $lang (replace $lang "_" "-") "zh-cn" "en" "ja" "default" -}}
   {{- range $candidates -}}
-    {{- if and (eq $result "") (isset $value .) -}}
+    {{- if and (not $found) (isset $value .) -}}
       {{- $result = index $value . -}}
+      {{- $found = true -}}
     {{- end -}}
   {{- end -}}
-  {{- return $result -}}
 {{- end -}}
-{{- return $value -}}
+{{- $result | jsonify -}}

@@ -1,10 +1,10 @@
 {{- $params := .Site.Params -}}
 {{- $lang := .Site.Language.Lang -}}
 {{- $profile := hugo.Data.profile -}}
-{{- $homeHeadline := partial "helpers/lang-data.html" (dict "value" $profile.headline "lang" $lang) -}}
-{{- $homeStatus := partial "helpers/lang-data.html" (dict "value" $profile.status "lang" $lang) -}}
-{{- $homeLocation := partial "helpers/lang-data.html" (dict "value" $profile.location "lang" $lang) -}}
-{{- $homeFocus := partial "helpers/lang-data.html" (dict "value" $profile.focus "lang" $lang) -}}
+{{- $homeHeadline := partial "helpers/lang-data.html" (dict "value" $profile.headline "lang" $lang) | transform.Unmarshal -}}
+{{- $homeStatus := partial "helpers/lang-data.html" (dict "value" $profile.status "lang" $lang) | transform.Unmarshal -}}
+{{- $homeLocation := partial "helpers/lang-data.html" (dict "value" $profile.location "lang" $lang) | transform.Unmarshal -}}
+{{- $homeFocus := partial "helpers/lang-data.html" (dict "value" $profile.focus "lang" $lang) | transform.Unmarshal -}}
 {{- $avatar := printf "avatar/%s" .Site.Params.avatar -}}
 <div id="header-nav">
   <nav id="main-nav" aria-label="Primary navigation">
@@ -194,7 +194,7 @@
               <h1 data-aos="{{ .Site.Params.animation.options.header.title }}">{{ .Site.Title }}</h1>
             </span>
             <h2 id="subtitle-wrap" data-aos="{{ .Site.Params.animation.options.header.subTitle }}">
-              <span id="subtitle">{{ partial "helpers/lang-data.html" (dict "value" .Site.Params.subtitle.text "lang" $lang) }}</span>
+              <span id="subtitle">{{ partial "helpers/lang-data.html" (dict "value" .Site.Params.subtitle.text "lang" $lang) | transform.Unmarshal }}</span>
             </h2>
             <p class="home-hero-summary" data-aos="{{ .Site.Params.animation.options.header.subTitle }}">{{ $homeHeadline }}</p>
             <div class="home-hero-meta" data-aos="{{ .Site.Params.animation.options.header.subTitle }}">

@@ -57,3 +57,14 @@ home_notes_title: 把学习、实践与观点整理成长期可复用的文章
 home_journey_title: 用时间线记录成长路径，而不是零散地堆叠经历
 home_contact_title: 为求职、合作与交流准备的公开联系入口
 home_contact_desc: 当这座网站像作品集一样被浏览时，联系页也应该像产品页面的一部分那样自然、清晰、可信。
+about_value_title: 一座长期可维护的个人表达系统
+about_value_desc: 它不是单页简历，也不是只写文章的博客，而是一套围绕项目、写作、学习与职业展示持续扩展的个人站点结构。
+about_recent_project: 最近项目
+about_recent_note: 最新文章
+notes_archive_kicker: 博客归档
+notes_archive_intro: 把项目复盘、学习记录和个人观点整理成更耐读、更易检索、更适合长期沉淀的文章集合。
+article_latest_label: 最新发布
+project_role: 角色
+project_published: 发布时间
+project_updated: 最近更新
+project_story: 项目说明

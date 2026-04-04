@@ -7,8 +7,8 @@
     <img data-src="{{ $cover | relURL }}" data-sizes="auto" alt="{{ $page.Title }}" class="lazyload" />
   </a>
   <div class="project-card__body">
+    <span class="project-card__eyebrow">{{ $page.Params.period | default ($page.Date.Format "2006-01") }}</span>
     <div class="project-card__meta">
-      <span>{{ $page.Params.period | default ($page.Date.Format "2006-01") }}</span>
       {{- with $page.Params.role -}}
         <span>{{ . }}</span>
       {{- end -}}

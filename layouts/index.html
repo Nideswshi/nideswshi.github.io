@@ -15,8 +15,8 @@
   {{- $skillCategories := first 3 hugo.Data.skills.categories -}}
   {{- $journeyPreview := first 3 hugo.Data.journey.items -}}
   {{- $lang := .Site.Language.Lang -}}
-  {{- $summary := partial "helpers/lang-data.html" (dict "value" $profile.summary "lang" $lang) -}}
-  {{- $focus := partial "helpers/lang-data.html" (dict "value" $profile.focus "lang" $lang) -}}
+  {{- $summary := partial "helpers/lang-data.html" (dict "value" $profile.summary "lang" $lang) | transform.Unmarshal -}}
+  {{- $focus := partial "helpers/lang-data.html" (dict "value" $profile.focus "lang" $lang) | transform.Unmarshal -}}
   {{- $primaryProject := false -}}
   {{- if gt (len $featuredProjects) 0 -}}
     {{- $primaryProject = index $featuredProjects 0 -}}
@@ -63,8 +63,8 @@
         <div class="apple-skill-groups">
           {{- range $skillCategories -}}
             <div class="apple-skill-group">
-              <h4>{{ partial "helpers/lang-data.html" (dict "value" .name "lang" $lang) }}</h4>
-              <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) }}</p>
+              <h4>{{ partial "helpers/lang-data.html" (dict "value" .name "lang" $lang) | transform.Unmarshal }}</h4>
+              <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) | transform.Unmarshal }}</p>
             </div>
           {{- end -}}
         </div>
@@ -98,8 +98,8 @@
           {{- range $journeyPreview -}}
             <article class="apple-journey-item">
               <span>{{ .date }}</span>
-              <h4>{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) }}</h4>
-              <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) }}</p>
+              <h4>{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) | transform.Unmarshal }}</h4>
+              <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) | transform.Unmarshal }}</p>
             </article>
           {{- end -}}
         </div>

@@ -29,7 +29,7 @@
 <title>
   {{ $title | safeHTML }}
 </title>
-{{- $siteDescription := partial "helpers/lang-data.html" (dict "value" .Site.Params.description "lang" .Site.Language.Lang) -}}
+{{- $siteDescription := partial "helpers/lang-data.html" (dict "value" .Site.Params.description "lang" .Site.Language.Lang) | transform.Unmarshal -}}
 <meta name="description" content="{{ .Params.description | default $siteDescription | safeHTML }}"/>
 {{- $keywords := default .Site.Params.keywords .Params.keywords -}}
 {{- with $keywords }}
