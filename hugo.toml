@@ -1,0 +1,35 @@
+baseURL = "https://nideswshi.github.io/"
+languageCode = "zh-CN"
+defaultContentLanguage = "zh-cn"
+title = "个人博客"
+enableRobotsTXT = true
+
+[outputs]
+home = ["Algolia", "HTML", "RSS"]
+
+[outputFormats.Algolia]
+baseName = "algolia"
+isPlainText = true
+mediaType = "application/json"
+notAlternative = true
+
+[languages]
+  [languages.zh-cn]
+    languageCode = "zh-CN"
+    languageName = "简体中文"
+    title = "个人博客"
+    weight = 1
+    hasCJKLanguage = true
+
+  [languages.en]
+    languageCode = "en"
+    languageName = "English"
+    title = "Personal Blog"
+    weight = 2
+
+  [languages.ja]
+    languageCode = "ja"
+    languageName = "日本語"
+    title = "個人ブログ"
+    weight = 3
+    hasCJKLanguage = true
