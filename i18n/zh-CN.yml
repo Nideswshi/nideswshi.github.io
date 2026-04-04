@@ -1,12 +1,12 @@
-home: 主页
-portfolio: 作品集
-skills: 技能
-learning: 学习历程
-blog: 博客
-about: 关于我
-contact: 联系
+home: 主页 / Home
+portfolio: 作品集 / Portfolio
+skills: 技能 / Skills
+learning: 历程 / Journey
+blog: 博客 / Blog
+about: 关于 / About
+contact: 联系 / Contact
 featured_projects: 精选项目
-skills_snapshot: 技能概览
-latest_notes: 最新笔记
+skills_snapshot: 能力快照
+latest_notes: 最新文章
 view_all: 查看全部
 read_article: 阅读文章

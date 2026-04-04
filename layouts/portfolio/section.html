@@ -13,8 +13,11 @@
   <div class="career-page">
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.archive.whole }}">
       <div class="section-heading">
-        <h2>{{ .Title }}</h2>
-        <p>{{ .Description }}</p>
+        <div>
+          <span class="section-kicker">Portfolio Archive</span>
+          <h2>{{ .Title }}</h2>
+          <p>{{ .Description }}</p>
+        </div>
       </div>
       {{- if .Content -}}
         <article class="content-panel article-entry">

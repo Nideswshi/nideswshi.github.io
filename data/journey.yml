@@ -1,33 +1,33 @@
 items:
   - date: 2026.04
-    title: 完成个人技术作品集网站第一轮重构
-    stage: 站点升级
-    description: 从基础博客模板出发，补齐首页、作品集、技能、学习历程和联系页，形成面向求职和长期表达的完整结构。
+    title: 完成个人技术站第二轮视觉与结构升级
+    stage: Site Redesign
+    description: 从普通博客模板继续迭代为更偏作品集与职业展示的个人网站，强化了首页叙事、项目展示和信息层级。
     tags:
-      - 作品集
-      - 设计系统
       - Hugo
+      - Portfolio
+      - UI System
   - date: 2026.04
-    title: 打通 GitHub Actions 自动部署
-    stage: 工程化
-    description: 修复配置与工作流，让本地内容提交后可以自动部署到 GitHub Pages，形成稳定的更新链路。
+    title: 打通 GitHub Pages 自动部署链路
+    stage: Engineering
+    description: 修复 Hugo 配置、工作流与模板问题，使本地提交可以稳定触发 GitHub Actions 并自动发布。
     tags:
       - GitHub Actions
-      - 自动部署
       - Pages
+      - Deployment
   - date: 2026.04
-    title: 开始系统整理学习记录与技术笔记
-    stage: 内容沉淀
-    description: 将零散的学习过程转成可检索、可复盘、可公开表达的文章结构，逐步形成长期知识资产。
+    title: 建立技能矩阵与内容分类结构
+    stage: Structure
+    description: 把作品集、学习记录、技术文章和联系信息统一进同一套信息架构，形成可持续更新的展示体系。
     tags:
-      - 博客
-      - 学习记录
-      - 复盘
+      - Skills
+      - Content Design
+      - Information Architecture
   - date: Next
-    title: 补充真实项目案例与技能细节
-    stage: 持续迭代
-    description: 继续完善项目说明、求职方向、技能矩阵和联系方式，让网站逐步接近完整的线上简历状态。
+    title: 补充真实项目、实习经历与求职版内容
+    stage: Next Step
+    description: 下一步会继续替换示例内容，补齐真实项目复盘、技能细节、联系方式与更完整的职业经历。
     tags:
-      - 项目整理
-      - 求职准备
-      - 长期维护
+      - Resume
+      - Projects
+      - Career

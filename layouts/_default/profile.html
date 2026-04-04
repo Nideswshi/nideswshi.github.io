@@ -1,9 +1,10 @@
 {{- define "main" -}}
   {{- $profile := .Site.Data.profile -}}
+  {{- $avatar := printf "avatar/%s" .Site.Params.avatar -}}
   <div class="career-page">
     <section class="resume-hero" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="resume-hero__copy">
-        <span class="career-eyebrow">About / Resume</span>
+        <span class="section-kicker">About / Resume</span>
         <h2>{{ $profile.name }}</h2>
         <p class="career-lead">{{ $profile.headline }}</p>
         <p>{{ $profile.summary }}</p>
@@ -14,20 +15,28 @@
         </div>
       </div>
       <div class="resume-hero__panel">
-        <div class="info-card">
-          <span class="info-card__label">Status</span>
-          <strong>{{ $profile.status }}</strong>
+        <div class="portrait-card">
+          <img src="{{ $avatar | relURL }}" alt="{{ $profile.name }}" />
         </div>
-        <div class="info-card">
-          <span class="info-card__label">Location</span>
-          <strong>{{ $profile.location }}</strong>
+        <div class="detail-facts">
+          <div class="info-card">
+            <span class="info-card__label">Status</span>
+            <strong>{{ $profile.status }}</strong>
+          </div>
+          <div class="info-card">
+            <span class="info-card__label">Location</span>
+            <strong>{{ $profile.location }}</strong>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="section-heading">
-        <h3>个人概览</h3>
+        <div>
+          <span class="section-kicker">Profile</span>
+          <h3>个人概览</h3>
+        </div>
       </div>
       <article class="content-panel article-entry">
         {{ .Content }}
@@ -36,13 +45,33 @@
 
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="section-heading">
-        <h3>能力侧重点</h3>
+        <div>
+          <span class="section-kicker">Strengths</span>
+          <h3>能力侧重点</h3>
+        </div>
       </div>
       <div class="resume-grid">
         {{- range $profile.strengths -}}
           <article class="info-card">
             <h4>{{ .title }}</h4>
             <p>{{ .description }}</p>
+          </article>
+        {{- end -}}
+      </div>
+    </section>
+
+    <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">Highlights</span>
+          <h3>快速信息</h3>
+        </div>
+      </div>
+      <div class="resume-grid">
+        {{- range $profile.stats -}}
+          <article class="info-card">
+            <span class="info-card__label">{{ .label }}</span>
+            <h4>{{ .value }}</h4>
           </article>
         {{- end -}}
       </div>

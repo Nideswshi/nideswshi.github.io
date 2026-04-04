@@ -1,24 +1,24 @@
 name: Nideswshi
-headline: 用作品、文章与持续学习，构建长期职业资产
-summary: 这是一个围绕技术能力、项目经验、学习历程与个人观点构建的个人技术作品集网站，目标是让每一篇文章和每一个项目都能成为长期可复用的职业内容资产。
-status: 持续更新中，作为作品展示、学习沉淀与求职窗口同步使用
-location: 中国
+headline: 以作品、文字与持续迭代，构建可靠的个人技术名片
+summary: 这个网站被重新定义为一座兼具作品集、技术博客、学习档案与线上简历功能的个人站点。它强调冷静的视觉表达、清晰的信息层级与长期可维护的内容体系，让每一个项目、每一篇文章都能服务于未来的职业发展与公开表达。
+status: 持续迭代中，面向求职展示、技术表达与长期个人品牌建设
+location: China / Remote Friendly
 focus:
-  - 前端体验与交互表达
-  - 工程化与自动化部署
-  - 技术写作与知识沉淀
-  - 作品集与个人品牌建设
+  - Frontend Experience
+  - Design Systems
+  - Content Architecture
+  - GitHub Workflow
 stats:
-  - value: 作品
-    label: 项目与案例沉淀
-  - value: 博客
-    label: 学习记录与技术文章
-  - value: PWA
-    label: 自动部署与离线支持
+  - value: Selected Projects
+    label: 聚焦最能代表能力的项目案例
+  - value: Technical Writing
+    label: 持续输出学习记录与复盘文章
+  - value: Deployable System
+    label: 保持可发布、可扩展、可迭代
 strengths:
-  - title: 结构化表达
-    description: 将项目、学习记录和个人观点组织成清晰、长期可维护的内容体系。
-  - title: 工程化意识
-    description: 重视自动化部署、可持续迭代和前端工程结构的可维护性。
-  - title: 视觉与体验
-    description: 在简洁克制的前提下，兼顾信息层级、动效节奏与可读性。
+  - title: 信息架构与表达
+    description: 擅长把零散的项目经历、技术笔记与个人观点整理成清晰、可读、可长期维护的内容结构。
+  - title: 前端实现与细节
+    description: 重视视觉节奏、排版层级、交互反馈与响应式体验，让界面既克制又有辨识度。
+  - title: 工程化与持续迭代
+    description: 关注 Git、自动部署、站点结构与发布链路，让作品展示不只停留在静态页面层面。

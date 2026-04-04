@@ -4,8 +4,8 @@
   "description": "个人技术作品集、学习记录与技术博客",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#1a1a1a",
-  "theme_color": "#0066ff",
+  "background_color": "#0b1018",
+  "theme_color": "#0b1018",
   "icons": [
     {
       "src": "/avatar/profile.jpg",

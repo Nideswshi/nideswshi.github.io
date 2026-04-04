@@ -1,9 +1,13 @@
-note: 这里是一套适合个人技术主页展示的示例技能矩阵，请根据真实项目经验持续调整。
+note: 这里展示的是面向个人技术主页的能力矩阵。当前内容以你的方向为基础进行了更职业化的表达，后续可以按真实项目经验继续替换和细化。
 categories:
   - name: Frontend
-    description: 面向界面实现、组件化表达与交互体验的能力结构。
+    description: 聚焦界面实现、组件化开发、交互体验与视觉还原能力。
     items:
-      - name: HTML / CSS
+      - name: HTML / Semantic Markup
+        level: 熟练
+        level_key: proficient
+        percent: 84
+      - name: CSS / SCSS / Responsive Design
         level: 熟练
         level_key: proficient
         percent: 82
@@ -11,41 +15,45 @@ categories:
         level: 熟练
         level_key: proficient
         percent: 76
-      - name: 响应式布局 / 设计还原
-        level: 熟练
-        level_key: proficient
-        percent: 80
-      - name: 动效与交互细节
+      - name: Motion / UI Polish
         level: 了解
         level_key: familiar
-        percent: 65
+        percent: 66
   - name: Backend
-    description: 面向接口协作、服务部署与基础数据处理的能力结构。
+    description: 聚焦接口协作、内容建模、脚本工具与基础数据处理能力。
     items:
-      - name: Node.js / 脚本工具
+      - name: Node.js / Tooling Scripts
         level: 了解
         level_key: familiar
-        percent: 60
-      - name: API 协作与数据处理
+        percent: 61
+      - name: API Integration
         level: 了解
         level_key: familiar
-        percent: 58
-      - name: 内容建模与站点结构
+        percent: 59
+      - name: Content Modeling
         level: 熟练
         level_key: proficient
-        percent: 72
+        percent: 74
+      - name: Documentation Workflow
+        level: 熟练
+        level_key: proficient
+        percent: 78
   - name: DevOps
-    description: 面向版本管理、部署流程和持续迭代的能力结构。
+    description: 聚焦版本管理、自动部署、站点维护与迭代效率。
     items:
       - name: Git / GitHub
         level: 熟练
         level_key: proficient
-        percent: 78
+        percent: 82
       - name: GitHub Actions
         level: 了解
         level_key: familiar
-        percent: 62
-      - name: 自动部署 / 站点运维
+        percent: 68
+      - name: Static Site Deployment
+        level: 熟练
+        level_key: proficient
+        percent: 75
+      - name: Workflow Maintenance
         level: 了解
         level_key: familiar
-        percent: 64
+        percent: 63

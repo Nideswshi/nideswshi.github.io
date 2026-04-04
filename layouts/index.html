@@ -13,14 +13,15 @@
   {{- $sortedNotes := $notePages.ByDate.Reverse -}}
   {{- $latestNotes := first 4 $sortedNotes -}}
   {{- $skillCategories := first 3 .Site.Data.skills.categories -}}
+  {{- $journeyPreview := first 3 .Site.Data.journey.items -}}
 
   <div class="landing-shell">
-    <section class="career-hero" data-aos="{{ .Site.Params.animation.options.header.title }}">
-      <div class="hero-copy">
-        <span class="career-eyebrow">Tech Portfolio</span>
-        <h2>{{ $profile.name }}</h2>
-        <p class="career-lead">{{ $profile.headline }}</p>
-        <p>{{ $profile.summary }}</p>
+    <section class="studio-hero" data-aos="{{ .Site.Params.animation.options.header.title }}">
+      <div class="studio-hero__copy">
+        <span class="section-kicker">Nideswshi / Portfolio / Notes</span>
+        <h2>冷静、克制、长期主义的个人技术主页。</h2>
+        <p class="studio-hero__lead">{{ $profile.headline }}</p>
+        <p class="studio-hero__summary">{{ $profile.summary }}</p>
         <div class="tag-list">
           {{- range $profile.focus -}}
             <span class="tag">{{ . }}</span>
@@ -28,29 +29,34 @@
         </div>
         <div class="hero-actions">
           <a class="career-button career-button--primary" href="{{ "portfolio/" | relLangURL }}">{{ i18n "portfolio" }}</a>
-          <a class="career-button" href="{{ "contact/" | relLangURL }}">{{ i18n "contact" }}</a>
+          <a class="career-button" href="{{ "about/" | relLangURL }}">{{ i18n "about" }}</a>
           <a class="career-button" href="{{ "archives/" | relLangURL }}">{{ i18n "blog" }}</a>
         </div>
       </div>
-      <div class="hero-panel">
-        {{- range $profile.stats -}}
-          <article class="info-card">
-            <span class="info-card__label">{{ .label }}</span>
-            <h3>{{ .value }}</h3>
-          </article>
-        {{- end -}}
-        <article class="info-card">
-          <span class="info-card__label">Status</span>
-          <p>{{ $profile.status }}</p>
+
+      <div class="studio-hero__panel">
+        <article class="hero-card hero-card--statement">
+          <span class="info-card__label">Current Focus</span>
+          <h3>{{ $profile.status }}</h3>
+          <p>{{ $profile.location }}</p>
         </article>
+        <div class="hero-metrics">
+          {{- range $profile.stats -}}
+            <article class="metric-card">
+              <span class="info-card__label">{{ .label }}</span>
+              <strong>{{ .value }}</strong>
+            </article>
+          {{- end -}}
+        </div>
       </div>
     </section>
 
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.home.post }}">
       <div class="section-heading">
         <div>
+          <span class="section-kicker">Selected Work</span>
           <h3>{{ i18n "featured_projects" }}</h3>
-          <p>精选展示更能代表当前方向、思考方式与实现能力的项目。</p>
+          <p>挑选最能体现技术判断、信息组织与实现能力的项目，作为这座站点的门面。</p>
         </div>
         <a class="section-link" href="{{ "portfolio/" | relLangURL }}">{{ i18n "view_all" }}</a>
       </div>
@@ -61,42 +67,66 @@
       </div>
     </section>
 
-    <section class="career-section" data-aos="{{ .Site.Params.animation.options.home.widget }}">
-      <div class="section-heading">
-        <div>
-          <h3>{{ i18n "skills_snapshot" }}</h3>
-          <p>按前端、后端与 DevOps 拆分，方便快速判断当前能力结构。</p>
+    <section class="editorial-grid" data-aos="{{ .Site.Params.animation.options.home.widget }}">
+      <article class="editorial-panel">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Capability Snapshot</span>
+            <h3>{{ i18n "skills_snapshot" }}</h3>
+          </div>
+          <a class="section-link" href="{{ "skills/" | relLangURL }}">{{ i18n "skills" }}</a>
         </div>
-        <a class="section-link" href="{{ "skills/" | relLangURL }}">{{ i18n "skills" }}</a>
-      </div>
-      <div class="skill-category-grid">
-        {{- range $skillCategories -}}
-          <article class="skill-category-card">
-            <h4>{{ .name }}</h4>
-            <p>{{ .description }}</p>
-            <div class="skill-list">
-              {{- range first 2 .items -}}
-                <div class="skill-item">
-                  <div class="skill-item__head">
-                    <strong>{{ .name }}</strong>
-                    <span class="skill-level skill-level--{{ .level_key }}">{{ .level }}</span>
+        <div class="skill-category-grid skill-category-grid--compact">
+          {{- range $skillCategories -}}
+            <article class="skill-category-card">
+              <h4>{{ .name }}</h4>
+              <p>{{ .description }}</p>
+              <div class="skill-list">
+                {{- range first 3 .items -}}
+                  <div class="skill-item">
+                    <div class="skill-item__head">
+                      <strong>{{ .name }}</strong>
+                      <span class="skill-level skill-level--{{ .level_key }}">{{ .level }}</span>
+                    </div>
+                    <div class="skill-progress" aria-label="{{ .name }} {{ .percent }}%">
+                      <span style="width: {{ .percent }}%;"></span>
+                    </div>
                   </div>
-                  <div class="skill-progress" aria-label="{{ .name }} {{ .percent }}%">
-                    <span style="width: {{ .percent }}%;"></span>
-                  </div>
-                </div>
-              {{- end -}}
-            </div>
-          </article>
-        {{- end -}}
-      </div>
+                {{- end -}}
+              </div>
+            </article>
+          {{- end -}}
+        </div>
+      </article>
+
+      <article class="editorial-panel">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Journey</span>
+            <h3>近期成长轨迹</h3>
+          </div>
+          <a class="section-link" href="{{ "learning/" | relLangURL }}">{{ i18n "learning" }}</a>
+        </div>
+        <div class="journey-preview">
+          {{- range $journeyPreview -}}
+            <article class="journey-preview__item">
+              <span class="journey-preview__date">{{ .date }}</span>
+              <div>
+                <h4>{{ .title }}</h4>
+                <p>{{ .description }}</p>
+              </div>
+            </article>
+          {{- end -}}
+        </div>
+      </article>
     </section>
 
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.home.post }}">
       <div class="section-heading">
         <div>
+          <span class="section-kicker">Writing</span>
           <h3>{{ i18n "latest_notes" }}</h3>
-          <p>记录技术实践、站点迭代和阶段性复盘，沉淀成长期可复用内容。</p>
+          <p>把项目复盘、学习记录和个人观点写成长期可复用的文章，而不是碎片化的信息。</p>
         </div>
         <a class="section-link" href="{{ "archives/" | relLangURL }}">{{ i18n "blog" }}</a>
       </div>

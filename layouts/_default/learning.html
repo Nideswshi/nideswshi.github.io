@@ -3,8 +3,11 @@
   <div class="career-page">
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="section-heading">
-        <h2>{{ .Title }}</h2>
-        <p>用倒序时间线记录关键节点、项目实践和能力成长。</p>
+        <div>
+          <span class="section-kicker">Learning Journey</span>
+          <h2>{{ .Title }}</h2>
+          <p>用倒序时间线记录关键节点、项目实践与技术视野的演进过程。</p>
+        </div>
       </div>
       <article class="content-panel article-entry">
         {{ .Content }}
@@ -16,7 +19,7 @@
         <article class="timeline-item" data-aos="{{ $.Site.Params.animation.options.archive.section }}">
           <div class="timeline-item__date">{{ .date }}</div>
           <div class="timeline-item__content">
-            <span class="career-eyebrow">{{ .stage }}</span>
+            <span class="section-kicker">{{ .stage }}</span>
             <h3>{{ .title }}</h3>
             <p>{{ .description }}</p>
             {{- with .tags -}}

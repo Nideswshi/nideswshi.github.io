@@ -37,7 +37,7 @@ timeFormat: "2006-01-02 15:04:05"
 
 author: Nideswshi
 email: ""
-description: "一个用于展示技术能力、项目经验、学习历程与文字观点的个人技术作品集网站。"
+description: "一个偏冷色调、极简且长期主义的个人技术作品集与博客网站，用于展示项目、学习历程与公开表达。"
 keywords:
   - 个人技术作品集
   - 技术博客
@@ -63,9 +63,9 @@ subtitle:
     showCursor: true            # 是否显示闪烁的字符
     cursorChar: "|"             # 字符
     smartBackspace: false       # 智能退格，只删除不同的部分
-  text: "用作品、文章与持续学习，构建长期职业资产。"        # 当 typing.enable = false 时使用
+  text: "冷静、克制、长期主义的个人技术主页。"        # 当 typing.enable = false 时使用
 
-banner: "images/site-banner.jpg"   #设置背景图，可使用图片API
+banner: "images/site-banner-aurora.svg"   #设置背景图，可使用图片API
 # You can also write it in the form of the following url
 # banner: "https://example.com"
 
@@ -717,47 +717,47 @@ material_theme:
 
 internal_theme:  #修改主题颜色
   light:
-    --red-0: '#004acc'
-    --red-1: '#0066ff'
-    --red-2: '#3d84ff'
-    --red-3: '#8fb7ff'
-    --red-4: '#d9e6ff'
-    --red-5: '#eef4ff'
-    --red-5-5: '#f6f9ff'
-    --red-6: '#fbfcff'
-    --color-red-6-shadow: 'rgba(0, 102, 255, 0.24)'
-    --color-red-3-shadow: 'rgba(0, 102, 255, 0.16)'
+    --red-0: '#32455f'
+    --red-1: '#4a5f7f'
+    --red-2: '#6d7f9b'
+    --red-3: '#aeb8c8'
+    --red-4: '#dce3ec'
+    --red-5: '#eef2f7'
+    --red-5-5: '#f5f7fa'
+    --red-6: '#fbfcfd'
+    --color-red-6-shadow: 'rgba(74, 95, 127, 0.22)'
+    --color-red-3-shadow: 'rgba(74, 95, 127, 0.14)'
 
-    --highlight-nav: "#e9eef7"
-    --highlight-scrollbar: "#c6d4eb"
-    --highlight-background: "#f8fbff"
-    --highlight-selection: "#d9e6ff88"
-    --highlight-foreground: "#18212f"
-    --highlight-comment: "#637188"
-    --highlight-red: "#d73a49"
-    --highlight-orange: "#d97706"
-    --highlight-yellow: "#b58900"
-    --highlight-green: "#15803d"
-    --highlight-aqua: "#005cc5"
-    --highlight-blue: "#032f62"
-    --highlight-purple: "#6f42c1"
-    --highlight-deletion: "#b31d28"
-    --highlight-deletion-bg: "#ffeef0"
-    --highlight-addition: "#22863a"
-    --highlight-addition-bg: "#f0fff4"
+    --highlight-nav: "#ecf0f5"
+    --highlight-scrollbar: "#cad2de"
+    --highlight-background: "#f7f9fc"
+    --highlight-selection: "#d5deea88"
+    --highlight-foreground: "#17202d"
+    --highlight-comment: "#6e7888"
+    --highlight-red: "#b94b5d"
+    --highlight-orange: "#b97945"
+    --highlight-yellow: "#a48a44"
+    --highlight-green: "#4f7d68"
+    --highlight-aqua: "#4d6f8d"
+    --highlight-blue: "#334862"
+    --highlight-purple: "#72658f"
+    --highlight-deletion: "#954b57"
+    --highlight-deletion-bg: "#f7ecef"
+    --highlight-addition: "#4f7d68"
+    --highlight-addition-bg: "#edf6f1"
   dark:
-    --red-4: 'rgba(143, 183, 255, 0.40)'
-    --red-5: 'rgba(0, 102, 255, 0.18)'
-    --red-5-5: 'rgba(0, 102, 255, 0.10)'
-    --red-6: 'rgba(187, 212, 255, 0.20)'
+    --red-4: 'rgba(174, 184, 200, 0.34)'
+    --red-5: 'rgba(109, 127, 155, 0.22)'
+    --red-5-5: 'rgba(109, 127, 155, 0.12)'
+    --red-6: 'rgba(220, 227, 236, 0.20)'
 
-    --highlight-nav: "#101826"
-    --highlight-scrollbar: "#22304a"
-    --highlight-background: "#0f1624"
-    --highlight-selection: "#1f3a6f77"
-    --highlight-foreground: "#edf2ff"
-    --highlight-comment: "#7d8ca6"
-    --highlight-red: "#ff7b72"
+    --highlight-nav: "#101722"
+    --highlight-scrollbar: "#253246"
+    --highlight-background: "#0d131d"
+    --highlight-selection: "#30445f66"
+    --highlight-foreground: "#ebeff5"
+    --highlight-comment: "#8592a5"
+    --highlight-red: "#e08a98"
     --highlight-orange: "#ffa657"
     --highlight-yellow: "#f5c451"
     --highlight-green: "#7ee787"

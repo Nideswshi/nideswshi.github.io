@@ -3,8 +3,11 @@
   <div class="career-page">
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="section-heading">
-        <h2>{{ .Title }}</h2>
-        <p>{{ $contact.intro }}</p>
+        <div>
+          <span class="section-kicker">Contact</span>
+          <h2>{{ .Title }}</h2>
+          <p>{{ $contact.intro }}</p>
+        </div>
       </div>
       <article class="content-panel article-entry">
         {{ .Content }}
@@ -26,6 +29,11 @@
           <p>{{ .note }}</p>
         </article>
       {{- end -}}
+      <article class="info-card contact-note" data-aos="{{ .Site.Params.animation.options.article.whole }}">
+        <span class="info-card__label">Availability</span>
+        <h3>欢迎交流合作、求职机会与技术讨论</h3>
+        <p>如果暂时没有公开邮箱，可先通过 GitHub 与站内内容建立联系，后续再补充更完整的联系方式。</p>
+      </article>
     </section>
   </div>
 {{- end -}}

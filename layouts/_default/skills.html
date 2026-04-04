@@ -3,8 +3,11 @@
   <div class="career-page">
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="section-heading">
-        <h2>{{ .Title }}</h2>
-        <p>{{ $skills.note }}</p>
+        <div>
+          <span class="section-kicker">Skill Matrix</span>
+          <h2>{{ .Title }}</h2>
+          <p>{{ $skills.note }}</p>
+        </div>
       </div>
       <article class="content-panel article-entry">
         {{ .Content }}
@@ -15,8 +18,11 @@
       {{- range $skills.categories -}}
         <article class="skill-category-card" data-aos="{{ $.Site.Params.animation.options.article.whole }}">
           <div class="section-heading">
-            <h3>{{ .name }}</h3>
-            <p>{{ .description }}</p>
+            <div>
+              <span class="section-kicker">{{ .name }}</span>
+              <h3>{{ .name }}</h3>
+              <p>{{ .description }}</p>
+            </div>
           </div>
           <div class="skill-list">
             {{- range .items -}}

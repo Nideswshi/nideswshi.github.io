@@ -12,7 +12,7 @@
         />
       </div>
       <div class="project-detail__intro">
-        <span class="career-eyebrow">{{ .Params.period | default (.Date.Format .Site.Params.dateFormat) }}</span>
+        <span class="section-kicker">{{ .Params.period | default (.Date.Format .Site.Params.dateFormat) }}</span>
         <h2>{{ .Title }}</h2>
         <p class="career-lead">{{ .Params.description }}</p>
         <div class="detail-meta">
@@ -34,10 +34,10 @@
         {{- with .Params.links -}}
           <div class="project-card__links">
             {{- with .demo -}}
-              <a href="{{ . }}" target="_blank" rel="noopener noreferrer">在线预览</a>
+              <a href="{{ . }}" target="_blank" rel="noopener noreferrer">查看站点</a>
             {{- end -}}
             {{- with .repo -}}
-              <a href="{{ . }}" target="_blank" rel="noopener noreferrer">仓库地址</a>
+              <a href="{{ . }}" target="_blank" rel="noopener noreferrer">查看仓库</a>
             {{- end -}}
           </div>
         {{- end -}}
@@ -47,7 +47,10 @@
     {{- with .Params.highlights -}}
       <section class="career-section" data-aos="{{ $ctx.Site.Params.animation.options.article.whole }}">
         <div class="section-heading">
-          <h3>亮点成果</h3>
+          <div>
+            <span class="section-kicker">Highlights</span>
+            <h3>亮点成果</h3>
+          </div>
         </div>
         <div class="resume-grid">
           {{- range . -}}
