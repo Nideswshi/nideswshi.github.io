@@ -29,23 +29,26 @@ timeFormat: "2006-01-02 15:04:05"
 author: D-Sketon
 email: xxx@example.com
 description: "一个新的远方，一个充满爱与善良的博客"
-# subtitle: "少女祈祷�?.."
+# subtitle: "少女祈祷中..."
 subtitle:
   typing:
     enable: false
     strings:
-      
+      # - Sentence 1
       # - Sentence 2
       # - Sentence 3
       # - Sentence 4
-    typeSpeed: 100              # 打字速度（毫�?字符�?
-    backSpeed: 50               # 删除速度（毫�?字符�?    backDelay: 2000             # 打完一句话后，等待时间
+    typeSpeed: 100              # 打字速度（毫秒/字符）
+    backSpeed: 50               # 删除速度（毫秒/字符）
+    backDelay: 2000             # 打完一句话后，等待时间
     startDelay: 300             # 页面加载后，等待时间
     loop: true                  # 是否循环播放
     shuffle: true              # 是否随机输出句子
-    showCursor: true            # 是否显示闪烁的字�?    cursorChar: "|"             # 字符
+    showCursor: true            # 是否显示闪烁的字符
+    cursorChar: "|"             # 字符
     smartBackspace: false       # 智能退格，只删除不同的部分
   text: "一个新的远方，一个充满爱与善良的博客"        # 当 typing.enable = false 时使用
+
 banner: "images/banner.webp"
 # You can also write it in the form of the following url
 # banner: "https://example.com"
@@ -142,7 +145,7 @@ social:
   # telegram: https://t.me/yourname
   # discord: https://discordapp.com/users/yourname
   # steam: https://steamcommunity.com/id/yourname
-  # weixin: 
+  # weixin:
   # qq:
   # tiktok:
 
@@ -284,11 +287,11 @@ code_block:
 
 # Clipboard configuration
 clipboard:
-  success: 
+  success:
     en: Copy successfully (*^▽^*)
     zh-CN: 复制成功 (*^▽^*)
     zh-TW: 複製成功 (*^▽^*)
-    ja: コピー成�?(*^▽^*)
+    ja: コピー成功 (*^▽^*)
     pt-BR: Copiado com sucesso (*^▽^*)
   fail:
     en: Copy failed (ﾟ⊿ﾟ)ﾂ
@@ -344,7 +347,10 @@ comment:
   # comment system title
   title:
     en: Leave a comment
-    zh-CN: 说些什么吧�?    zh-TW: 說些什麼吧�?    ja: コメントを残�?    pt-BR: Deixe um comentário
+    zh-CN: 说些什么吧！
+    zh-TW: 說些什麼吧！
+    ja: コメントを残す
+    pt-BR: Deixe um comentário
   default: waline # default comment system, when you enable multiple comment systems
 
 # valine comment system. https://valine.js.org
@@ -391,7 +397,8 @@ waline:
 # https://twikoo.js.org
 twikoo:
   enable: false
-  envId: # 腾讯云环境填 envId；Vercel 环境填地址（https://xxx.vercel.app�?  region:
+  envId: # 腾讯云环境填 envId；Vercel 环境填地址（https://xxx.vercel.app）
+  region:
 
 # https://github.com/gitalk/gitalk/blob/master/readme-cn.md
 gitalk:
@@ -450,11 +457,11 @@ algolia_search:
 
 preloader:
   enable: true
-  text: 
-    zh-CN: 少女祈祷�?..
-    zh-TW: 少女祈禱�?..
+  text:
+    zh-CN: 少女祈祷中...
+    zh-TW: 少女祈禱中...
     en: Loading...
-    ja: 少女祈祷�?..
+    ja: 少女祈祷中...
     pt-BR: Carregando...
   icon: # default use inline svg for fast speed, you can use a image url, like '/images/taichi.png'
   rotate: true # whether to rotate the icon
@@ -543,19 +550,25 @@ outdate:
   daysAgo: 180 # The number of days after which the article is considered outdated
   message:
     en: This article was last updated on {time}. Please note that the content may no longer be applicable.
-    zh-CN: 本文最后更新于 {time}，请注意文中内容可能已不适用�?    zh-TW: 本文最後更新於 {time}，請注意文中內容可能已不適用�?    ja: この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください�?    pt-BR: Este artigo foi atualizado pela última vez em {time}. Observe que o conteúdo pode não ser mais aplicável.
+    zh-CN: 本文最后更新于 {time}，请注意文中内容可能已不适用。
+    zh-TW: 本文最後更新於 {time}，請注意文中內容可能已不適用。
+    ja: この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください。
+    pt-BR: Este artigo foi atualizado pela última vez em {time}. Observe que o conteúdo pode não ser mais aplicável.
 
 # ICP 备案
 icp:
-  icpnumber: # ICP备案�?  beian: # 网安备案�?  recordcode: # 网安备案链接中的recordcode参数
+  icpnumber: # ICP备案号
+  beian: # 网安备案号
+  recordcode: # 网安备案链接中的recordcode参数
 
 # 萌国 ICP 备案
 moe_icp:
-  icpnumber: # 萌国ICP备案�?
+  icpnumber: # 萌国ICP备案号
+
 # Sponsor
 sponsor:
   enable: false
-  tip: 
+  tip:
     zh-CN: 请作者喝杯咖啡吧
     zh-TW: 請作者喝杯咖啡吧
     en: Buy me a coffee
@@ -566,7 +579,8 @@ sponsor:
     rotate: true
     mask: true # whether to use the images as a mask
   qr:
-    # - name: 支付�?    #   src: "sponsor/alipay.jpg"
+    # - name: 支付宝
+    #   src: "sponsor/alipay.jpg"
     # - name: 微信
     #   src: "sponsor/wechat.png"
 
@@ -674,7 +688,7 @@ player:
 ########################################
 
 pangu:
-  # more information: https://github.com/vinta/pangu.js 
+  # more information: https://github.com/vinta/pangu.js
   enable: false  # enable pangu.js to add space between Chinese and English
 
 ########################################
