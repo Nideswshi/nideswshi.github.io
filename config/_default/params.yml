@@ -67,8 +67,8 @@ subtitle:
     cursorChar: "|"             # 字符
     smartBackspace: false       # 智能退格，只删除不同的部分
   text:
-    zh-cn: "冷静、克制、长期主义的个人技术主页。"
-    en: "A calm, restrained, long-term personal tech portfolio."
+    zh-cn: "一个新的远方，一个充满爱与善良的博客"
+    en: "A new horizon, a blog full of love and kindness"
     ja: "落ち着きと節度を大切にした、長期運用の個人技術ポートフォリオ。"
 
 banner: "images/site-banner-aurora.svg"   #设置背景图，可使用图片API
