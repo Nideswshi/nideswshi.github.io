@@ -130,7 +130,13 @@
 {{- end -}}
 <!-- favicon use default -->
 <link rel="shortcut icon" href="{{ "favicon.ico" | relURL }}">
+<link rel="manifest" href="{{ "manifest.webmanifest" | relURL }}">
+<meta name="theme-color" content="#0066ff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0066ff" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="{{ .Site.Title }}">
 {{- partial "helpers/scss.html" (dict "source" "css/main.scss" "temp" "main.scss" "target" "css/main.css" "ctx" .) -}}
+{{- partial "helpers/scss.html" (dict "source" "css/site-redesign.scss" "temp" "site-redesign.scss" "target" "css/site-redesign.css" "ctx" .) -}}
 <!-- photo-swipe -->
 {{- partial "helpers/cdnCss.html" (dict "name" "photoswipe" "ctx" . "async" true) -}}
 <!-- katex -->

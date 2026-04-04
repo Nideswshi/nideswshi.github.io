@@ -1,0 +1,17 @@
+{
+  "name": "Nideswshi",
+  "short_name": "Nideswshi",
+  "description": "个人技术作品集、学习记录与技术博客",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#0066ff",
+  "icons": [
+    {
+      "src": "/avatar/profile.jpg",
+      "sizes": "501x501",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}

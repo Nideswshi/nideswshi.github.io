@@ -2,9 +2,13 @@ const VERSION = "{{ time.Now.Unix }}";
 
 const preCache = [
   '{{ "images/taichi.png" | relURL }}',
+  {{- if .Site.Params.preloader.enable }}
   '{{ "css/loader.css" | relURL }}',
+  {{- end }}
   '{{ "css/main.css" | relURL }}',
+  '{{ "css/site-redesign.css" | relURL }}',
   '{{ "js/main.js" | relURL }}',
+  '{{ "manifest.webmanifest" | relURL }}',
   "{{ .Site.Params.banner | relURL }}",
 ];
 

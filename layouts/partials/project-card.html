@@ -1,0 +1,45 @@
+{{- $page := .page -}}
+{{- $cover := $page.Params.cover | default $page.Params.banner | default $.ctx.Site.Params.banner -}}
+{{- $summary := $page.Summary | plainify | truncate 120 -}}
+{{- $description := $page.Params.description | default $summary -}}
+<article class="project-card" data-aos="{{ $.ctx.Site.Params.animation.options.home.post }}">
+  <a class="project-card__cover" href="{{ $page.RelPermalink }}" aria-label="{{ $page.Title }}">
+    <img data-src="{{ $cover | relURL }}" data-sizes="auto" alt="{{ $page.Title }}" class="lazyload" />
+  </a>
+  <div class="project-card__body">
+    <div class="project-card__meta">
+      <span>{{ $page.Params.period | default ($page.Date.Format "2006-01") }}</span>
+      {{- with $page.Params.role -}}
+        <span>{{ . }}</span>
+      {{- end -}}
+    </div>
+    <h3 class="project-card__title">
+      <a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a>
+    </h3>
+    <p class="project-card__desc">{{ $description }}</p>
+    {{- with $page.Params.tech_stack -}}
+      <div class="tag-list">
+        {{- range . -}}
+          <span class="tag">{{ . }}</span>
+        {{- end -}}
+      </div>
+    {{- end -}}
+    {{- with $page.Params.highlights -}}
+      <ul class="project-card__highlights">
+        {{- range first 2 . -}}
+          <li>{{ . }}</li>
+        {{- end -}}
+      </ul>
+    {{- end -}}
+    {{- with $page.Params.links -}}
+      <div class="project-card__links">
+        {{- with .demo -}}
+          <a href="{{ . }}" target="_blank" rel="noopener noreferrer">Live</a>
+        {{- end -}}
+        {{- with .repo -}}
+          <a href="{{ . }}" target="_blank" rel="noopener noreferrer">Repo</a>
+        {{- end -}}
+      </div>
+    {{- end -}}
+  </div>
+</article>

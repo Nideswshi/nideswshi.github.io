@@ -24,7 +24,7 @@ echo Repository: %CD%
 echo Branch: %CURRENT_BRANCH%
 echo Commit message: %COMMIT_MESSAGE%
 echo.
-echo This will stage and push all current changes in this repository.
+echo This will stage and push source changes for this repository.
 echo.
 
 git status --short
@@ -39,7 +39,7 @@ if not defined HAS_CHANGES (
   exit /b 0
 )
 
-git add -A
+git add -A -- .github assets config content data i18n layouts static themes hugo.toml deploy.bat .gitignore
 if errorlevel 1 (
   echo git add failed.
   exit /b 1

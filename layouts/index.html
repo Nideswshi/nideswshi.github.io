@@ -1,76 +1,125 @@
 {{- define "main" -}}
-  {{- $ctx := . -}}
-  {{- $pageSize := 0 -}}
-  {{- with $.Site.Params.paginate.post -}}
-    {{- $pageSize = . -}}
-  {{- end -}}
-  {{- $paginator := "" -}}
-  {{- if gt $pageSize 0 -}}
-    {{- $paginator = .Paginate (where .Site.RegularPages "Section" "in" .Site.Params.mainSections) $pageSize -}}
+  {{- $profile := .Site.Data.profile -}}
+  {{- $portfolioPages := where .Site.RegularPages "Section" "portfolio" -}}
+  {{- $featuredProjects := where $portfolioPages "Params.featured" true -}}
+  {{- $sortedPortfolio := $portfolioPages.ByDate.Reverse -}}
+  {{- $sortedFeatured := $featuredProjects.ByDate.Reverse -}}
+  {{- if gt (len $featuredProjects) 0 -}}
+    {{- $featuredProjects = first 3 $sortedFeatured -}}
   {{- else -}}
-    {{- $paginator = .Paginate (where .Site.RegularPages "Section" "in" .Site.Params.mainSections) -}}
+    {{- $featuredProjects = first 3 $sortedPortfolio -}}
   {{- end -}}
-  {{- $sort_config := .Site.Params.sort_order.home -}}
-  {{- if and (eq 1 $paginator.PageNumber) ($ctx.Site.Params.home_categories.enable) -}}
-    <div class="post-categories-wrapper" data-aos="{{ $ctx.Site.Params.animation.options.home.post }}">
-      {{- range $k, $v := $ctx.Site.Params.home_categories.content -}}
-        {{- if $v.categories -}}
-          <div class="post-categories-wrap">
-            <a class="post-link" href="{{ (printf "%s%s" "categories/" (urlize $v.categories)) | relLangURL }}" aria-label="{{ $v.categories }}" title="{{ $v.categories }}"></a>
-            <div class="post-categories-cover">
-              {{- if $v.cover -}}
-                <img
-                  data-src="{{ $v.cover | relURL }}"
-                  data-sizes="auto"
-                  alt="{{ $v.categories }}"
-                  class="lazyload"
-                />
-              {{- else -}}
-                {{- $cover := partial "helpers/randomCover.html" $ctx -}}
-                {{- if $cover -}}
-                  <img
-                    data-src="{{ $cover | relURL }}"
-                    data-sizes="auto"
-                    alt="{{ $v.categories }}"
-                    class="lazyload"
-                  />
-                {{- else -}}
-                  <img
-                    data-src="{{ $ctx.Site.Params.banner | relURL }}"
-                    data-sizes="auto"
-                    alt="{{ $v.categories }}"
-                    class="lazyload"
-                  />
-                {{- end -}}
-              {{- end -}}
-              <h2>{{ $v.categories }}</h2>
-              <h3>{{ i18n "home_categories.count" (len (index $ctx.Site.Taxonomies.categories (lower $v.categories))) }}</h3>
-            </div>
-          </div>
+  {{- $notePages := where .Site.RegularPages "Section" "post" -}}
+  {{- $sortedNotes := $notePages.ByDate.Reverse -}}
+  {{- $latestNotes := first 4 $sortedNotes -}}
+  {{- $skillCategories := first 3 .Site.Data.skills.categories -}}
+
+  <div class="landing-shell">
+    <section class="career-hero" data-aos="{{ .Site.Params.animation.options.header.title }}">
+      <div class="hero-copy">
+        <span class="career-eyebrow">Tech Portfolio</span>
+        <h2>{{ $profile.name }}</h2>
+        <p class="career-lead">{{ $profile.headline }}</p>
+        <p>{{ $profile.summary }}</p>
+        <div class="tag-list">
+          {{- range $profile.focus -}}
+            <span class="tag">{{ . }}</span>
+          {{- end -}}
+        </div>
+        <div class="hero-actions">
+          <a class="career-button career-button--primary" href="{{ "portfolio/" | relLangURL }}">{{ i18n "portfolio" }}</a>
+          <a class="career-button" href="{{ "contact/" | relLangURL }}">{{ i18n "contact" }}</a>
+          <a class="career-button" href="{{ "archives/" | relLangURL }}">{{ i18n "blog" }}</a>
+        </div>
+      </div>
+      <div class="hero-panel">
+        {{- range $profile.stats -}}
+          <article class="info-card">
+            <span class="info-card__label">{{ .label }}</span>
+            <h3>{{ .value }}</h3>
+          </article>
         {{- end -}}
-      {{- end -}}
-    </div>
-  {{- end -}}
-  {{- if eq $sort_config "weight" -}}
-    {{- range $k, $v := $paginator.Pages.ByWeight -}}
-      {{- partial "post.html"  (dict "index" $k "ctx" . "page" $v ) -}}
-    {{- end -}}
-  {{- else if eq $sort_config "weight-reverse" -}}
-    {{- range $k, $v := $paginator.Pages.ByWeight.Reverse -}}
-      {{- partial "post.html"  (dict "index" $k "ctx" . "page" $v ) -}}
-    {{- end -}}
-  {{- else if eq $sort_config "date" -}}
-    {{- range $k, $v := $paginator.Pages.ByDate -}}
-      {{- partial "post.html" (dict "index" $k "ctx" . "page" $v ) -}}
-    {{- end -}}
-  {{- else if eq $sort_config "date-reverse" -}}
-    {{- range $k, $v := $paginator.Pages.ByDate.Reverse -}}
-      {{- partial "post.html" (dict "index" $k "ctx" . "page" $v ) -}}
-    {{- end -}}
-  {{- else if eq $sort_config "default" -}}
-    {{- range $k, $v := $paginator.Pages -}}
-      {{- partial "post.html"  (dict "index" $k "ctx" . "page" $v ) -}}
-    {{- end -}}
-  {{- end -}}
-  {{- partial "pagination.html" . -}}
+        <article class="info-card">
+          <span class="info-card__label">Status</span>
+          <p>{{ $profile.status }}</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="career-section" data-aos="{{ .Site.Params.animation.options.home.post }}">
+      <div class="section-heading">
+        <div>
+          <h3>{{ i18n "featured_projects" }}</h3>
+          <p>精选展示更能代表当前方向、思考方式与实现能力的项目。</p>
+        </div>
+        <a class="section-link" href="{{ "portfolio/" | relLangURL }}">{{ i18n "view_all" }}</a>
+      </div>
+      <div class="project-grid">
+        {{- range $featuredProjects -}}
+          {{- partial "project-card.html" (dict "page" . "ctx" $) -}}
+        {{- end -}}
+      </div>
+    </section>
+
+    <section class="career-section" data-aos="{{ .Site.Params.animation.options.home.widget }}">
+      <div class="section-heading">
+        <div>
+          <h3>{{ i18n "skills_snapshot" }}</h3>
+          <p>按前端、后端与 DevOps 拆分，方便快速判断当前能力结构。</p>
+        </div>
+        <a class="section-link" href="{{ "skills/" | relLangURL }}">{{ i18n "skills" }}</a>
+      </div>
+      <div class="skill-category-grid">
+        {{- range $skillCategories -}}
+          <article class="skill-category-card">
+            <h4>{{ .name }}</h4>
+            <p>{{ .description }}</p>
+            <div class="skill-list">
+              {{- range first 2 .items -}}
+                <div class="skill-item">
+                  <div class="skill-item__head">
+                    <strong>{{ .name }}</strong>
+                    <span class="skill-level skill-level--{{ .level_key }}">{{ .level }}</span>
+                  </div>
+                  <div class="skill-progress" aria-label="{{ .name }} {{ .percent }}%">
+                    <span style="width: {{ .percent }}%;"></span>
+                  </div>
+                </div>
+              {{- end -}}
+            </div>
+          </article>
+        {{- end -}}
+      </div>
+    </section>
+
+    <section class="career-section" data-aos="{{ .Site.Params.animation.options.home.post }}">
+      <div class="section-heading">
+        <div>
+          <h3>{{ i18n "latest_notes" }}</h3>
+          <p>记录技术实践、站点迭代和阶段性复盘，沉淀成长期可复用内容。</p>
+        </div>
+        <a class="section-link" href="{{ "archives/" | relLangURL }}">{{ i18n "blog" }}</a>
+      </div>
+      <div class="note-grid">
+        {{- range $latestNotes -}}
+          {{- $noteDescription := .Params.description | default (.Summary | plainify | truncate 120) -}}
+          <article class="note-card" data-aos="{{ $.Site.Params.animation.options.home.post }}">
+            <div class="note-card__meta">
+              <span>{{ .Date.Format $.Site.Params.dateFormat }}</span>
+              {{- if $.Site.Params.show_update_time -}}
+                <span>{{ .Lastmod.Format $.Site.Params.dateFormat }}</span>
+              {{- end -}}
+            </div>
+            <h3 class="note-card__title">
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </h3>
+            <p class="note-card__desc">{{ $noteDescription }}</p>
+            <div class="project-card__links">
+              <a href="{{ .RelPermalink }}">{{ i18n "read_article" }}</a>
+            </div>
+          </article>
+        {{- end -}}
+      </div>
+    </section>
+  </div>
 {{- end -}}

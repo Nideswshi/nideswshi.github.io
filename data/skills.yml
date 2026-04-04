@@ -1,0 +1,51 @@
+note: 这里是一套适合个人技术主页展示的示例技能矩阵，请根据真实项目经验持续调整。
+categories:
+  - name: Frontend
+    description: 面向界面实现、组件化表达与交互体验的能力结构。
+    items:
+      - name: HTML / CSS
+        level: 熟练
+        level_key: proficient
+        percent: 82
+      - name: JavaScript / TypeScript
+        level: 熟练
+        level_key: proficient
+        percent: 76
+      - name: 响应式布局 / 设计还原
+        level: 熟练
+        level_key: proficient
+        percent: 80
+      - name: 动效与交互细节
+        level: 了解
+        level_key: familiar
+        percent: 65
+  - name: Backend
+    description: 面向接口协作、服务部署与基础数据处理的能力结构。
+    items:
+      - name: Node.js / 脚本工具
+        level: 了解
+        level_key: familiar
+        percent: 60
+      - name: API 协作与数据处理
+        level: 了解
+        level_key: familiar
+        percent: 58
+      - name: 内容建模与站点结构
+        level: 熟练
+        level_key: proficient
+        percent: 72
+  - name: DevOps
+    description: 面向版本管理、部署流程和持续迭代的能力结构。
+    items:
+      - name: Git / GitHub
+        level: 熟练
+        level_key: proficient
+        percent: 78
+      - name: GitHub Actions
+        level: 了解
+        level_key: familiar
+        percent: 62
+      - name: 自动部署 / 站点运维
+        level: 了解
+        level_key: familiar
+        percent: 64

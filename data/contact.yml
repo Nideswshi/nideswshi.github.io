@@ -1,0 +1,14 @@
+intro: 欢迎围绕项目合作、技术交流、学习分享或求职机会联系我。
+methods:
+  - title: GitHub
+    value: Nideswshi
+    link: https://github.com/Nideswshi
+    note: 查看项目仓库、提交记录与代码实践
+  - title: Website
+    value: nideswshi.github.io
+    link: https://nideswshi.github.io/
+    note: 浏览作品集、学习记录与技术文章
+  - title: Email
+    value: your@email.com
+    link: mailto:your@email.com
+    note: 这里是示例邮箱，建议替换为你的真实联系邮箱

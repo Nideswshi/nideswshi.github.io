@@ -1,0 +1,67 @@
+{{- define "main" -}}
+  {{- $cover := .Params.banner | default .Params.cover | default .Site.Params.banner -}}
+  <article class="career-page project-detail">
+    <section class="project-detail__hero" data-aos="{{ .Site.Params.animation.options.article.whole }}">
+      <div class="project-detail__cover">
+        <img
+          data-src="{{ $cover | relURL }}"
+          data-sizes="auto"
+          alt="{{ .Title }}"
+          class="lazyload"
+        />
+      </div>
+      <div class="project-detail__intro">
+        <span class="career-eyebrow">{{ .Params.period | default (.Date.Format .Site.Params.dateFormat) }}</span>
+        <h2>{{ .Title }}</h2>
+        <p class="career-lead">{{ .Params.description }}</p>
+        <div class="detail-meta">
+          {{- with .Params.role -}}
+            <span>{{ . }}</span>
+          {{- end -}}
+          <span>{{ .Date.Format .Site.Params.dateFormat }}</span>
+          {{- if .Site.Params.show_update_time -}}
+            <span>{{ .Lastmod.Format .Site.Params.dateFormat }}</span>
+          {{- end -}}
+        </div>
+        {{- with .Params.tech_stack -}}
+          <div class="tag-list">
+            {{- range . -}}
+              <span class="tag">{{ . }}</span>
+            {{- end -}}
+          </div>
+        {{- end -}}
+        {{- with .Params.links -}}
+          <div class="project-card__links">
+            {{- with .demo -}}
+              <a href="{{ . }}" target="_blank" rel="noopener noreferrer">在线预览</a>
+            {{- end -}}
+            {{- with .repo -}}
+              <a href="{{ . }}" target="_blank" rel="noopener noreferrer">仓库地址</a>
+            {{- end -}}
+          </div>
+        {{- end -}}
+      </div>
+    </section>
+
+    {{- with .Params.highlights -}}
+      <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
+        <div class="section-heading">
+          <h3>亮点成果</h3>
+        </div>
+        <div class="resume-grid">
+          {{- range . -}}
+            <article class="info-card">
+              <p>{{ . }}</p>
+            </article>
+          {{- end -}}
+        </div>
+      </section>
+    {{- end -}}
+
+    <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
+      <div class="content-panel article-entry">
+        {{ .Content }}
+      </div>
+    </section>
+  </article>
+{{- end -}}

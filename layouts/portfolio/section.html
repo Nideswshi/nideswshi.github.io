@@ -10,16 +10,23 @@
   {{- else -}}
     {{- $paginator = .Paginate $pages -}}
   {{- end -}}
-  <div
-    class="archives-outer-wrap"
-    data-aos="{{ .Site.Params.animation.options.archive.whole }}"
-  >
-    {{- if .Content -}}
-      <article class="article-entry" style="margin-bottom: 2rem;">
-        {{ .Content }}
-      </article>
-    {{- end -}}
-    {{- partial "list.html" (dict "paginator" $paginator.Pages "ctx" .) -}}
+  <div class="career-page">
+    <section class="career-section" data-aos="{{ .Site.Params.animation.options.archive.whole }}">
+      <div class="section-heading">
+        <h2>{{ .Title }}</h2>
+        <p>{{ .Description }}</p>
+      </div>
+      {{- if .Content -}}
+        <article class="content-panel article-entry">
+          {{ .Content }}
+        </article>
+      {{- end -}}
+    </section>
+    <section class="project-grid">
+      {{- range $paginator.Pages -}}
+        {{- partial "project-card.html" (dict "page" . "ctx" $) -}}
+      {{- end -}}
+    </section>
+    {{- partial "pagination.html" . -}}
   </div>
-  {{- partial "pagination.html" . -}}
 {{- end -}}

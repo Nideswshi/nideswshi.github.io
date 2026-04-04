@@ -1,0 +1,38 @@
+{{- define "main" -}}
+  {{- $skills := .Site.Data.skills -}}
+  <div class="career-page">
+    <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
+      <div class="section-heading">
+        <h2>{{ .Title }}</h2>
+        <p>{{ $skills.note }}</p>
+      </div>
+      <article class="content-panel article-entry">
+        {{ .Content }}
+      </article>
+    </section>
+
+    <section class="skill-category-grid">
+      {{- range $skills.categories -}}
+        <article class="skill-category-card" data-aos="{{ $.Site.Params.animation.options.article.whole }}">
+          <div class="section-heading">
+            <h3>{{ .name }}</h3>
+            <p>{{ .description }}</p>
+          </div>
+          <div class="skill-list">
+            {{- range .items -}}
+              <div class="skill-item">
+                <div class="skill-item__head">
+                  <strong>{{ .name }}</strong>
+                  <span class="skill-level skill-level--{{ .level_key }}">{{ .level }}</span>
+                </div>
+                <div class="skill-progress" aria-label="{{ .name }} {{ .percent }}%">
+                  <span style="width: {{ .percent }}%;"></span>
+                </div>
+              </div>
+            {{- end -}}
+          </div>
+        </article>
+      {{- end -}}
+    </section>
+  </div>
+{{- end -}}

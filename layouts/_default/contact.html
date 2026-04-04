@@ -1,0 +1,31 @@
+{{- define "main" -}}
+  {{- $contact := .Site.Data.contact -}}
+  <div class="career-page">
+    <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
+      <div class="section-heading">
+        <h2>{{ .Title }}</h2>
+        <p>{{ $contact.intro }}</p>
+      </div>
+      <article class="content-panel article-entry">
+        {{ .Content }}
+      </article>
+    </section>
+
+    <section class="contact-grid">
+      {{- range $contact.methods -}}
+        {{- $method := . -}}
+        <article class="info-card" data-aos="{{ $.Site.Params.animation.options.article.whole }}">
+          <span class="info-card__label">{{ .title }}</span>
+          <h3>
+            {{- with .link -}}
+              <a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ $method.value }}</a>
+            {{- else -}}
+              {{ $method.value }}
+            {{- end -}}
+          </h3>
+          <p>{{ .note }}</p>
+        </article>
+      {{- end -}}
+    </section>
+  </div>
+{{- end -}}
