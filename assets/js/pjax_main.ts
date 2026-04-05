@@ -225,12 +225,12 @@ _$$<HTMLAnchorElement>(
 
     window.setTimeout(() => {
       window.location.href = link.href;
-    }, 320);
+    }, 430);
 
     window.setTimeout(() => {
       card.classList.remove("is-card-flipping");
       document.body.classList.remove("is-card-transitioning");
-    }, 700);
+    }, 860);
   });
 });
 
