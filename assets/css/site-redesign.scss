@@ -2810,157 +2810,209 @@ html[data-theme="dark"] .sidebar-top {
 
 @media (min-width: 1200px) {
   #content.sidebar-right {
+    --studio-sidebar-expanded-width: 340px;
+    --studio-sidebar-collapsed-width: 112px;
+    --studio-sidebar-gap: clamp(16px, 1.8vw, 28px);
+    --studio-sidebar-ease: cubic-bezier(0.16, 1, 0.24, 1);
     padding-right: 0;
-  }
-
-  #content.sidebar-right #main {
-    width: calc(100% - 84px);
-    max-width: calc(100% - 84px);
-    margin: 0 76px 0 16px;
-    transition:
-      margin-right 920ms cubic-bezier(0.16, 1, 0.24, 1),
-      max-width 920ms cubic-bezier(0.16, 1, 0.24, 1),
-      width 920ms cubic-bezier(0.16, 1, 0.24, 1),
-      transform 560ms cubic-bezier(0.16, 1, 0.24, 1);
-  }
-
-  #content.sidebar-right #sidebar {
-    position: fixed;
-    top: 20px;
-    right: 0;
-    width: 286px !important;
-    min-width: 286px !important;
-    margin: 0 !important;
-    height: calc(100vh - 40px);
-    z-index: 96;
-    overflow: visible;
-    transform: translate3d(calc(100% - 64px), 0, 0);
-    transition:
-      transform 920ms cubic-bezier(0.16, 1, 0.24, 1),
-      filter 560ms cubic-bezier(0.16, 1, 0.24, 1),
-      opacity 560ms cubic-bezier(0.16, 1, 0.24, 1);
-    will-change: transform;
-    filter: saturate(0.96);
-    opacity: 0.998;
-  }
-
-  #content.sidebar-right #sidebar::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 16px;
-    height: 208px;
-    transform: translateY(-50%);
-    border-radius: 999px 0 0 999px;
-    background:
-      linear-gradient(180deg, rgba(250, 251, 253, 1), rgba(228, 235, 243, 0.84) 42%, rgba(199, 208, 220, 0.34) 100%);
-    box-shadow:
-      0 0 0 1px rgba(199, 206, 216, 0.42),
-      0 12px 26px rgba(165, 174, 186, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.86);
-    opacity: 1;
-    pointer-events: none;
-  }
-
-  #content.sidebar-right #sidebar::after {
-    content: "";
-    position: absolute;
-    inset: -16% 34% -16% -34%;
-    background:
-      linear-gradient(102deg, transparent 30%, rgba(255, 255, 255, 0.9) 43%, rgba(214, 222, 232, 0.6) 49%, rgba(255, 255, 255, 0.18) 56%, transparent 70%),
-      linear-gradient(180deg, transparent 0%, rgba(172, 181, 193, 0.06) 100%);
-    opacity: 0;
-    transform: translate3d(-116%, 0, 0) skewX(-12deg);
-    mix-blend-mode: screen;
-    pointer-events: none;
-  }
-
-  #content.sidebar-right #sidebar .sidebar-wrapper-container {
-    position: relative;
-    width: 286px;
-    max-height: calc(100vh - 40px);
-    padding-left: 18px;
-  }
-
-  #content.sidebar-right #sidebar .sidebar-wrap {
-    background: transparent;
-    border: 0;
-    box-shadow: none;
-    backdrop-filter: none;
-    justify-content: flex-start;
-    align-items: stretch;
-    padding: 0;
-    overflow: visible;
-  }
-
-  #content.sidebar-right #sidebar .sidebar-wrap::before,
-  #content.sidebar-right #sidebar .sidebar-wrap::after {
-    display: none;
-  }
-
-  #content.sidebar-right #sidebar .sidebar-author,
-  #content.sidebar-right #sidebar .sidebar-state,
-  #content.sidebar-right #sidebar .sidebar-social,
-  #content.sidebar-right #sidebar .sidebar-btn-wrapper,
-  #content.sidebar-right #sidebar .sidebar-widget {
-    display: none !important;
-  }
-
-  #content.sidebar-right #sidebar .sidebar-menu {
-    width: 100%;
-    margin: 0;
     display: grid;
-    gap: 0.72rem;
-    justify-items: end;
-  }
+    grid-template-columns: minmax(0, 1fr) var(--studio-sidebar-collapsed-width);
+    grid-template-areas: "main sidebar";
+    align-items: start;
+    gap: var(--studio-sidebar-gap);
+    transition:
+      grid-template-columns 920ms var(--studio-sidebar-ease),
+      gap 920ms var(--studio-sidebar-ease);
 
-  #content.sidebar-right #sidebar .sidebar-menu-link-wrap {
-    width: 100%;
-    max-width: 222px;
-    margin: 0 0 0 auto;
-  }
+    #main {
+      grid-area: main;
+      width: auto;
+      max-width: none;
+      min-width: 0;
+      margin: 0;
+      transition:
+        transform 920ms var(--studio-sidebar-ease),
+        filter 920ms var(--studio-sidebar-ease),
+        opacity 560ms var(--studio-sidebar-ease);
+      transform-origin: top right;
+    }
 
-  #content.sidebar-right #sidebar .sidebar-menu-link,
-  #content.sidebar-right #sidebar .sidebar-menu-icon {
-    color: rgba(28, 31, 36, 0.96) !important;
-    opacity: 1 !important;
-    filter: none !important;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: geometricPrecision;
-  }
+    #sidebar {
+      grid-area: sidebar;
+      position: sticky;
+      top: 20px;
+      width: var(--studio-sidebar-collapsed-width) !important;
+      min-width: 0 !important;
+      max-width: var(--studio-sidebar-collapsed-width);
+      height: auto;
+      max-height: calc(100vh - 40px);
+      margin: 0 !important;
+      overflow-x: hidden;
+      overflow-y: auto;
+      z-index: 96;
+      justify-self: end;
+      align-self: start;
+      border-radius: 32px;
+      scrollbar-width: thin;
+      transition:
+        width 920ms var(--studio-sidebar-ease),
+        max-width 920ms var(--studio-sidebar-ease),
+        filter 560ms var(--studio-sidebar-ease),
+        opacity 560ms var(--studio-sidebar-ease);
+      will-change: width, max-width;
+      filter: saturate(0.98);
+      opacity: 0.998;
+      background: transparent;
+      box-sizing: border-box;
 
-  #content.sidebar-right #sidebar:hover,
-  #content.sidebar-right #sidebar:focus-within {
-    transform: translate3d(0, 0, 0);
-    filter: saturate(1);
-    opacity: 1;
-  }
+      &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 12px;
+        width: 12px;
+        height: 196px;
+        transform: translateY(-50%);
+        border-radius: 999px;
+        background:
+          linear-gradient(180deg, rgba(252, 253, 255, 0.98), rgba(234, 240, 247, 0.9) 42%, rgba(207, 216, 228, 0.46) 100%);
+        box-shadow:
+          0 0 0 1px rgba(201, 209, 221, 0.42),
+          0 0 24px rgba(214, 223, 235, 0.56),
+          0 14px 32px rgba(162, 171, 183, 0.18),
+          inset 0 1px 0 rgba(255, 255, 255, 0.9),
+          inset 0 -12px 20px rgba(176, 186, 199, 0.18);
+        opacity: 0.92;
+        pointer-events: none;
+        transition:
+          opacity 420ms var(--studio-sidebar-ease),
+          transform 420ms var(--studio-sidebar-ease);
+      }
 
-  #content.sidebar-right #sidebar:hover + #main,
-  #content.sidebar-right #sidebar:focus-within + #main {
-    width: calc(100% - 322px);
-    max-width: calc(100% - 322px);
-    margin-right: 314px;
-  }
+      &::after {
+        content: "";
+        position: absolute;
+        inset: -10% 18% -12% -18%;
+        background:
+          linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.88) 42%, rgba(214, 222, 232, 0.62) 48%, rgba(255, 255, 255, 0.16) 56%, transparent 70%),
+          linear-gradient(180deg, transparent 0%, rgba(172, 181, 193, 0.08) 100%);
+        opacity: 0;
+        transform: translate3d(-116%, 0, 0) skewX(-12deg);
+        mix-blend-mode: screen;
+        pointer-events: none;
+      }
 
-  #content.sidebar-right #sidebar:hover::after,
-  #content.sidebar-right #sidebar:focus-within::after {
-    animation: studio-sidebar-drawer-sheen 1240ms cubic-bezier(0.16, 1, 0.24, 1) 1 forwards;
+      > * {
+        width: var(--studio-sidebar-expanded-width);
+        max-width: var(--studio-sidebar-expanded-width);
+        margin-left: auto;
+        transform: translate3d(
+          calc(var(--studio-sidebar-collapsed-width) - var(--studio-sidebar-expanded-width)),
+          0,
+          0
+        );
+        transform-origin: right top;
+        transition:
+          transform 920ms var(--studio-sidebar-ease),
+          opacity 560ms var(--studio-sidebar-ease),
+          filter 560ms var(--studio-sidebar-ease);
+        will-change: transform;
+        opacity: 0.97;
+        filter: saturate(0.94);
+      }
+
+      > * + * {
+        margin-top: 14px;
+      }
+
+      .sidebar-wrapper-container,
+      .sidebar-widget {
+        width: 100%;
+        max-width: none;
+      }
+
+      .sidebar-wrapper-container {
+        padding: 0;
+      }
+
+      .sidebar-wrapper-container.sticky {
+        position: static;
+        top: auto;
+        max-height: none;
+      }
+
+      .sidebar-wrap {
+        justify-content: flex-start;
+        align-items: stretch;
+        overflow: hidden;
+      }
+
+      .sidebar-widget {
+        display: grid;
+        gap: 16px;
+        padding-bottom: 16px;
+      }
+
+      .sidebar-widget .widget-wrap {
+        margin-top: 0;
+      }
+
+      .sidebar-menu {
+        width: 100%;
+      }
+
+      .sidebar-menu-link-wrap {
+        width: Min(100%, 220px);
+      }
+    }
+
+    &.sidebar-is-expanded,
+    &:has(#sidebar:hover),
+    &:has(#sidebar:focus-within) {
+      grid-template-columns: minmax(0, 1fr) var(--studio-sidebar-expanded-width);
+
+      #main {
+        transform: scale(0.992);
+        filter: saturate(0.98);
+      }
+
+      #sidebar {
+        width: var(--studio-sidebar-expanded-width) !important;
+        max-width: var(--studio-sidebar-expanded-width);
+        filter: saturate(1);
+        opacity: 1;
+
+        &::before {
+          opacity: 0.38;
+          transform: translateY(-50%) scaleY(0.92);
+        }
+
+        &::after {
+          animation: studio-sidebar-drawer-sheen 1240ms cubic-bezier(0.16, 1, 0.24, 1) 1 forwards;
+        }
+
+        > * {
+          transform: translate3d(0, 0, 0);
+          opacity: 1;
+          filter: none;
+        }
+      }
+    }
   }
 
   html[data-theme="dark"] #content.sidebar-right #sidebar::before {
     background:
-      linear-gradient(180deg, rgba(148, 158, 170, 0.54), rgba(108, 118, 130, 0.34) 42%, rgba(64, 71, 80, 0.18) 100%);
+      linear-gradient(180deg, rgba(152, 162, 174, 0.62), rgba(110, 120, 132, 0.38) 42%, rgba(64, 71, 80, 0.2) 100%);
     box-shadow:
-      0 0 0 1px rgba(173, 182, 194, 0.16),
+      0 0 0 1px rgba(173, 182, 194, 0.18),
+      0 0 24px rgba(199, 210, 224, 0.18),
       0 10px 24px rgba(0, 0, 0, 0.28),
-      inset 0 1px 0 rgba(255, 255, 255, 0.14);
+      inset 0 1px 0 rgba(255, 255, 255, 0.16);
   }
 
   html[data-theme="dark"] #content.sidebar-right #sidebar::after {
     background:
-      linear-gradient(102deg, transparent 30%, rgba(255, 255, 255, 0.28) 43%, rgba(196, 206, 220, 0.2) 49%, rgba(255, 255, 255, 0.08) 56%, transparent 70%),
+      linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.3) 42%, rgba(196, 206, 220, 0.22) 48%, rgba(255, 255, 255, 0.08) 56%, transparent 70%),
       linear-gradient(180deg, transparent 0%, rgba(172, 181, 193, 0.04) 100%);
   }
 

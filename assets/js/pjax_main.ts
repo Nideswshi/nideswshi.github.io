@@ -153,6 +153,83 @@ _$$(".sidebar-common-btn").forEach((element) => {
   });
 });
 
+var __sidebarDrawerResizeHandler;
+
+const initSidebarDrawer = () => {
+  if (__sidebarDrawerResizeHandler) {
+    window.off("resize", __sidebarDrawerResizeHandler);
+  }
+
+  const content = _$("#content.sidebar-right") as HTMLElement | null;
+  const sidebar = content?.querySelector<HTMLElement>("#sidebar");
+
+  if (!content || !sidebar) {
+    return;
+  }
+
+  let collapseTimer = 0;
+
+  const clearCollapseTimer = () => {
+    if (!collapseTimer) return;
+    window.clearTimeout(collapseTimer);
+    collapseTimer = 0;
+  };
+
+  const expandDrawer = () => {
+    if (window.matchMedia("(max-width: 1199px)").matches) {
+      content.classList.remove("sidebar-is-expanded");
+      return;
+    }
+    clearCollapseTimer();
+    content.classList.add("sidebar-is-expanded");
+  };
+
+  const collapseDrawer = () => {
+    clearCollapseTimer();
+    collapseTimer = window.setTimeout(() => {
+      if (
+        sidebar.matches(":hover") ||
+        sidebar.contains(document.activeElement)
+      ) {
+        return;
+      }
+      content.classList.remove("sidebar-is-expanded");
+    }, 90);
+  };
+
+  sidebar.off("pointerenter").on("pointerenter", () => {
+    expandDrawer();
+  });
+
+  sidebar.off("pointerleave").on("pointerleave", (event: PointerEvent) => {
+    const nextTarget = event.relatedTarget as Node | null;
+    if (nextTarget && sidebar.contains(nextTarget)) return;
+    collapseDrawer();
+  });
+
+  sidebar.off("focusin").on("focusin", () => {
+    expandDrawer();
+  });
+
+  sidebar.off("focusout").on("focusout", (event: FocusEvent) => {
+    const nextTarget = event.relatedTarget as Node | null;
+    if (nextTarget && sidebar.contains(nextTarget)) return;
+    collapseDrawer();
+  });
+
+  __sidebarDrawerResizeHandler = () => {
+    if (window.matchMedia("(max-width: 1199px)").matches) {
+      clearCollapseTimer();
+      content.classList.remove("sidebar-is-expanded");
+    }
+  };
+
+  window.on("resize", __sidebarDrawerResizeHandler);
+  __sidebarDrawerResizeHandler();
+};
+
+initSidebarDrawer();
+
 const motionCardSelector = [
   ".project-card",
   ".note-card",
