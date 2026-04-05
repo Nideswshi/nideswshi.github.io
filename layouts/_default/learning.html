@@ -1,7 +1,8 @@
 {{- define "main" -}}
   {{- $journey := hugo.Data.journey.items -}}
+  {{- $journeyLinks := slice ("portfolio/personal-tech-portfolio/" | relLangURL) ("portfolio/hugo-deployment-workflow/" | relLangURL) ("skills/" | relLangURL) ("contact/" | relLangURL) -}}
   {{- $lang := .Site.Language.Lang -}}
-  <div class="career-page">
+  <div class="career-page career-page--learning">
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="section-heading">
         <div>
@@ -16,14 +17,18 @@
     </section>
 
     <section class="timeline">
-      {{- range $journey -}}
+      {{- range $index, $item := $journey -}}
+        {{- $journeyLink := "learning/" | relLangURL -}}
+        {{- if lt $index (len $journeyLinks) -}}
+          {{- $journeyLink = index $journeyLinks $index -}}
+        {{- end -}}
         <article class="timeline-item" data-aos="{{ $.Site.Params.animation.options.archive.section }}">
           <div class="timeline-item__date">{{ .date }}</div>
-          <div class="timeline-item__content">
-            <span class="section-kicker">{{ partial "helpers/lang-data.html" (dict "value" .stage "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</span>
-            <h3>{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</h3>
-            <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</p>
-            {{- with .tags -}}
+          <div class="timeline-item__content" data-card-url="{{ $journeyLink }}">
+            <span class="section-kicker">{{ partial "helpers/lang-data.html" (dict "value" $item.stage "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</span>
+            <h3>{{ partial "helpers/lang-data.html" (dict "value" $item.title "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</h3>
+            <p>{{ partial "helpers/lang-data.html" (dict "value" $item.description "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</p>
+            {{- with $item.tags -}}
               {{- $tags := partial "helpers/lang-data.html" (dict "value" . "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}
               <div class="tag-list">
                 {{- range $tags -}}

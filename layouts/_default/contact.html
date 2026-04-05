@@ -1,7 +1,7 @@
 {{- define "main" -}}
   {{- $contact := hugo.Data.contact -}}
   {{- $lang := .Site.Language.Lang -}}
-  <div class="career-page">
+  <div class="career-page career-page--contact">
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="section-heading">
         <div>
@@ -18,7 +18,7 @@
     <section class="contact-grid">
       {{- range $contact.methods -}}
         {{- $method := . -}}
-        <article class="info-card" data-aos="{{ $.Site.Params.animation.options.article.whole }}">
+        <article class="info-card" data-aos="{{ $.Site.Params.animation.options.article.whole }}"{{ with .link }} data-card-url="{{ . }}" data-card-target="_blank"{{ end }}>
           <span class="info-card__label">{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</span>
           <h3>
             {{- with .link -}}
@@ -30,7 +30,7 @@
           <p>{{ partial "helpers/lang-data.html" (dict "value" .note "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</p>
         </article>
       {{- end -}}
-      <article class="info-card contact-note" data-aos="{{ .Site.Params.animation.options.article.whole }}">
+      <article class="info-card contact-note" data-card-url="{{ "portfolio/" | relLangURL }}" data-aos="{{ .Site.Params.animation.options.article.whole }}">
         <span class="info-card__label">{{ i18n "availability" }}</span>
         <h3>{{ i18n "availability_title" }}</h3>
         <p>{{ i18n "availability_desc" }}</p>

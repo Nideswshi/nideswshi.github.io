@@ -16,6 +16,7 @@
   {{- $journeyPreview := first 3 hugo.Data.journey.items -}}
   {{- $homeStats := first 3 $profile.stats -}}
   {{- $homeStrengths := first 3 $profile.strengths -}}
+  {{- $homeStatLinks := slice ("portfolio/" | relLangURL) ("archives/" | relLangURL) ("contact/" | relLangURL) -}}
   {{- $lang := .Site.Language.Lang -}}
   {{- $summary := partial "helpers/lang-data.html" (dict "value" $profile.summary "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}
   {{- $focus := partial "helpers/lang-data.html" (dict "value" $profile.focus "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}
@@ -170,14 +171,14 @@
     </section>
 
     <section class="home-insight-grid" data-aos="{{ .Site.Params.animation.options.home.widget }}">
-      {{- range $homeStats -}}
-        <article class="info-card home-insight-card">
-          <span class="info-card__label">{{ partial "helpers/lang-data.html" (dict "value" .value "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</span>
-          <h3>{{ partial "helpers/lang-data.html" (dict "value" .label "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</h3>
+      {{- range $index, $stat := $homeStats -}}
+        <article class="info-card home-insight-card" data-card-url="{{ index $homeStatLinks $index }}">
+          <span class="info-card__label">{{ partial "helpers/lang-data.html" (dict "value" $stat.value "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</span>
+          <h3>{{ partial "helpers/lang-data.html" (dict "value" $stat.label "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</h3>
         </article>
       {{- end -}}
       {{- range $homeStrengths -}}
-        <article class="info-card home-insight-card">
+        <article class="info-card home-insight-card" data-card-url="{{ "skills/" | relLangURL }}">
           <span class="info-card__label">{{ i18n "strengths_kicker" }}</span>
           <h3>{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</h3>
           <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</p>

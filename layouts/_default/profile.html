@@ -15,6 +15,7 @@
     {{- $featuredProjects = first 1 ($portfolioPages.ByDate.Reverse) -}}
   {{- end -}}
   {{- $latestNotes := first 1 ((where .Site.RegularPages "Section" "post").ByDate.Reverse) -}}
+  {{- $quickFactLinks := slice ("portfolio/" | relLangURL) ("archives/" | relLangURL) ("contact/" | relLangURL) -}}
   <div class="career-page career-page--about about-apple">
     <section class="resume-hero resume-hero--about page-landing-hero page-landing-hero--about" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="resume-hero__copy">
@@ -38,11 +39,11 @@
             <img src="{{ $avatar | relURL }}" alt="{{ $profile.name }}" />
           </div>
           <div class="about-stage-card__facts detail-facts">
-            <div class="info-card">
+            <div class="info-card" data-card-url="{{ "contact/" | relLangURL }}">
               <span class="info-card__label">{{ i18n "status" }}</span>
               <strong>{{ $status }}</strong>
             </div>
-            <div class="info-card">
+            <div class="info-card" data-card-url="{{ "contact/" | relLangURL }}">
               <span class="info-card__label">{{ i18n "location" }}</span>
               <strong>{{ $location }}</strong>
             </div>
@@ -92,7 +93,7 @@
       </div>
       <div class="resume-grid">
         {{- range $profile.strengths -}}
-          <article class="info-card about-strength-card">
+          <article class="info-card about-strength-card" data-card-url="{{ "skills/" | relLangURL }}">
             <h4>{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</h4>
             <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</p>
           </article>
@@ -138,10 +139,10 @@
         </div>
       </div>
       <div class="resume-grid">
-        {{- range $profile.stats -}}
-          <article class="info-card">
-            <span class="info-card__label">{{ partial "helpers/lang-data.html" (dict "value" .label "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</span>
-            <h4>{{ partial "helpers/lang-data.html" (dict "value" .value "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</h4>
+        {{- range $index, $stat := $profile.stats -}}
+          <article class="info-card" data-card-url="{{ index $quickFactLinks $index }}">
+            <span class="info-card__label">{{ partial "helpers/lang-data.html" (dict "value" $stat.label "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</span>
+            <h4>{{ partial "helpers/lang-data.html" (dict "value" $stat.value "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</h4>
           </article>
         {{- end -}}
       </div>

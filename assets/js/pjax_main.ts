@@ -246,15 +246,117 @@ const motionCardSelector = [
   ".home-spec-card",
 ].join(", ");
 
-const navigableCardSelector = [
-  ".project-card[data-card-url]",
-  ".note-card[data-card-url]",
-  ".apple-showcase[data-card-url]",
-  ".apple-tile[data-card-url]",
-  ".apple-project-tile[data-card-url]",
-  ".about-proof-card[data-card-url]",
-  ".archive-feature[data-card-url]",
+const cardNavigationCandidateSelector = [
+  ".project-card",
+  ".note-card",
+  ".apple-showcase",
+  ".apple-tile",
+  ".apple-project-tile",
+  ".about-proof-card",
+  ".archive-feature",
+  ".info-card",
+  ".skill-category-card",
+  ".timeline-item__content",
+  ".home-spec-card",
 ].join(", ");
+
+type CardNavigation = {
+  url: string;
+  target: "_self" | "_blank";
+  useTransition: boolean;
+};
+
+const preferredCardNavigationSelectors = [
+  ".project-card__readmore[href]",
+  ".section-link[href]",
+  ".apple-card-action[href]",
+  ".apple-link[href]",
+  ".career-button[href]",
+  ".home-hero-button[href]",
+  ".note-card__title a[href]",
+  ".project-card__title a[href]",
+  "h2 a[href]",
+  "h3 a[href]",
+  "h4 a[href]",
+];
+
+const isNavigableCardHref = (href?: string | null) => {
+  if (!href) return false;
+  const value = href.trim();
+  return (
+    value.length > 0 &&
+    !value.startsWith("#") &&
+    !value.toLowerCase().startsWith("javascript:")
+  );
+};
+
+const normalizeCardNavigation = (
+  href?: string | null,
+  target?: string | null,
+): CardNavigation | null => {
+  if (!isNavigableCardHref(href)) {
+    return null;
+  }
+
+  try {
+    const resolved = new URL(href, window.location.href);
+    const isSpecialProtocol =
+      resolved.protocol === "mailto:" || resolved.protocol === "tel:";
+    const isSameOrigin = resolved.origin === window.location.origin;
+    const normalizedTarget =
+      target === "_blank" || isSpecialProtocol ? "_blank" : "_self";
+
+    return {
+      url: resolved.toString(),
+      target: normalizedTarget,
+      useTransition:
+        normalizedTarget === "_self" && isSameOrigin && !isSpecialProtocol,
+    };
+  } catch {
+    return null;
+  }
+};
+
+const getPreferredCardLink = (card: HTMLElement) => {
+  for (const selector of preferredCardNavigationSelectors) {
+    const link = card.querySelector<HTMLAnchorElement>(selector);
+    if (link && isNavigableCardHref(link.getAttribute("href"))) {
+      return link;
+    }
+  }
+
+  return Array.from(card.querySelectorAll<HTMLAnchorElement>("a[href]")).find(
+    (link) => isNavigableCardHref(link.getAttribute("href")),
+  );
+};
+
+const resolveCardNavigation = (card: HTMLElement): CardNavigation | null => {
+  const explicitNavigation = normalizeCardNavigation(
+    card.dataset.cardUrl,
+    card.dataset.cardTarget,
+  );
+  if (explicitNavigation) {
+    return explicitNavigation;
+  }
+
+  const link = getPreferredCardLink(card);
+  if (!link) {
+    return null;
+  }
+
+  return normalizeCardNavigation(link.getAttribute("href"), link.target);
+};
+
+const ensureCardNavigationIndicator = (card: HTMLElement) => {
+  let indicator = card.querySelector<HTMLElement>(".card-nav-indicator");
+  if (!indicator) {
+    indicator = document.createElement("span");
+    indicator.className = "card-nav-indicator";
+    indicator.setAttribute("aria-hidden", "true");
+    card.appendChild(indicator);
+  }
+  return indicator;
+};
 
 const cardTimers = new WeakMap<
   HTMLElement,
@@ -470,43 +572,6 @@ motionCards.forEach((card) => {
 
 document.body.classList.add("motion-enhanced");
 
-motionCards
-  .filter((card) => !card.matches(navigableCardSelector))
-  .forEach((card) => {
-    let pointerStartX = 0;
-    let pointerStartY = 0;
-
-    card.off("dblclick").on("dblclick", (event: MouseEvent) => {
-      event.preventDefault();
-      toggleCardFavorite(card);
-    });
-
-    card.off("pointerdown").on("pointerdown", (event: PointerEvent) => {
-      pointerStartX = event.clientX;
-      pointerStartY = event.clientY;
-      clearCardTimeout(card, "hold");
-      ensureCardTimers(card).hold = window.setTimeout(() => {
-        showCardEasterEgg(card);
-      }, 1000);
-    });
-
-    card.off("pointermove").on("pointermove", (event: PointerEvent) => {
-      if (
-        Math.abs(event.clientX - pointerStartX) > 12 ||
-        Math.abs(event.clientY - pointerStartY) > 12
-      ) {
-        clearCardTimeout(card, "hold");
-      }
-    });
-
-    card.off("pointerup").on("pointerup", () => {
-      clearCardTimeout(card, "hold");
-    });
-    card.off("pointerleave").on("pointerleave", () => {
-      clearCardTimeout(card, "hold");
-    });
-  });
-
 if (prefersReducedMotion) {
   motionCards.forEach((card) => card.classList.add("is-card-visible"));
 } else if ("IntersectionObserver" in window) {
@@ -570,13 +635,88 @@ window.on("scroll", __cardParallaxScrollHandler);
 window.on("resize", __cardParallaxResizeHandler);
 requestCardParallax();
 
-_$$<HTMLElement>(navigableCardSelector).forEach((card) => {
-  const url = card.dataset.cardUrl;
+const navigationCards = motionCards.filter((card) => {
+  if (!card.matches(cardNavigationCandidateSelector)) {
+    return false;
+  }
+
+  const navigation = resolveCardNavigation(card);
+  if (!navigation) {
+    return false;
+  }
+
+  card.classList.add("is-card-navigable");
+  card.dataset.cardResolvedUrl = navigation.url;
+  card.dataset.cardTarget = navigation.target;
+  card.dataset.cardUseTransition = navigation.useTransition ? "true" : "false";
+  ensureCardNavigationIndicator(card);
+  return true;
+});
+
+const nonNavigableMotionCards = motionCards.filter(
+  (card) => !navigationCards.includes(card),
+);
+
+nonNavigableMotionCards.forEach((card) => {
+  let pointerStartX = 0;
+  let pointerStartY = 0;
+
+  card.off("dblclick").on("dblclick", (event: MouseEvent) => {
+    event.preventDefault();
+    toggleCardFavorite(card);
+  });
+
+  card.off("pointerdown").on("pointerdown", (event: PointerEvent) => {
+    pointerStartX = event.clientX;
+    pointerStartY = event.clientY;
+    clearCardTimeout(card, "hold");
+    ensureCardTimers(card).hold = window.setTimeout(() => {
+      showCardEasterEgg(card);
+    }, 1000);
+  });
+
+  card.off("pointermove").on("pointermove", (event: PointerEvent) => {
+    if (
+      Math.abs(event.clientX - pointerStartX) > 12 ||
+      Math.abs(event.clientY - pointerStartY) > 12
+    ) {
+      clearCardTimeout(card, "hold");
+    }
+  });
+
+  card.off("pointerup").on("pointerup", () => {
+    clearCardTimeout(card, "hold");
+  });
+  card.off("pointerleave").on("pointerleave", () => {
+    clearCardTimeout(card, "hold");
+  });
+});
+
+navigationCards.forEach((card) => {
+  const url = card.dataset.cardResolvedUrl;
+  const targetMode = (card.dataset.cardTarget || "_self") as
+    | "_self"
+    | "_blank";
+  const useTransition = card.dataset.cardUseTransition === "true";
+
   if (!url) return;
 
-  card.style.cursor = "pointer";
   card.setAttribute("tabindex", "0");
   card.setAttribute("role", "link");
+
+  const openCardNavigation = (openInNewTab = false) => {
+    if (openInNewTab || targetMode === "_blank") {
+      window.open(url, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    if (useTransition) {
+      scheduleCardOpen(card, url);
+      return;
+    }
+
+    window.location.href = url;
+  };
 
   card.off("click").on("click", (event: MouseEvent) => {
     if (card.dataset.longPressTriggered === "true") {
@@ -594,19 +734,17 @@ _$$<HTMLElement>(navigableCardSelector).forEach((card) => {
       return;
     }
 
-    if (event.metaKey || event.ctrlKey) {
-      window.open(url, "_blank", "noopener,noreferrer");
-      return;
-    }
-
     event.preventDefault();
-    scheduleCardOpen(card, url);
+    openCardNavigation(event.metaKey || event.ctrlKey);
   });
 
   card.off("keydown").on("keydown", (event: KeyboardEvent) => {
-    if ((event.key === "Enter" || event.key === " ") && !card.classList.contains("is-card-transitioning")) {
+    if (
+      (event.key === "Enter" || event.key === " ") &&
+      !card.classList.contains("is-card-transitioning")
+    ) {
       event.preventDefault();
-      scheduleCardOpen(card, url, 620);
+      openCardNavigation();
     }
   });
 

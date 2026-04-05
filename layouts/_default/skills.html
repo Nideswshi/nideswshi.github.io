@@ -1,7 +1,7 @@
 {{- define "main" -}}
   {{- $skills := hugo.Data.skills -}}
   {{- $lang := .Site.Language.Lang -}}
-  <div class="career-page">
+  <div class="career-page career-page--skills">
     <section class="career-section" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="section-heading">
         <div>
@@ -17,7 +17,7 @@
 
     <section class="skill-category-grid">
       {{- range $skills.categories -}}
-        <article class="skill-category-card" data-aos="{{ $.Site.Params.animation.options.article.whole }}">
+        <article class="skill-category-card" data-card-url="{{ "portfolio/" | relLangURL }}" data-aos="{{ $.Site.Params.animation.options.article.whole }}">
           <div class="section-heading">
             <div>
               {{- $categoryName := partial "helpers/lang-data.html" (dict "value" .name "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}

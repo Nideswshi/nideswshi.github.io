@@ -1338,6 +1338,74 @@ html[data-theme="dark"] .career-page--contact .contact-note {
     backdrop-filter 420ms var(--card-transition-ease);
 }
 
+.is-card-navigable {
+  cursor: pointer;
+}
+
+.card-nav-indicator {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 4;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  pointer-events: none;
+  opacity: 0;
+  color: rgba(25, 28, 34, 0.88);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(239, 244, 249, 0.88));
+  box-shadow:
+    0 14px 32px rgba(148, 160, 178, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(18px) saturate(1.08);
+  transform: translate3d(0, 10px, 0) scale(0.88);
+  transition:
+    opacity 260ms var(--card-transition-ease),
+    transform 360ms var(--card-transition-ease),
+    background-color 260ms var(--card-transition-ease),
+    box-shadow 360ms var(--card-transition-ease);
+}
+
+.card-nav-indicator::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  transform: translate(-58%, -50%) rotate(45deg);
+  transition: transform 320ms var(--card-transition-ease);
+}
+
+.is-card-navigable:hover .card-nav-indicator,
+.is-card-navigable:focus-visible .card-nav-indicator,
+.is-card-navigable:focus-within .card-nav-indicator {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.is-card-navigable:hover .card-nav-indicator::before,
+.is-card-navigable:focus-visible .card-nav-indicator::before,
+.is-card-navigable:focus-within .card-nav-indicator::before {
+  transform: translate(-44%, -50%) rotate(45deg);
+}
+
+.is-card-navigable.is-favorited .card-nav-indicator {
+  opacity: 0;
+}
+
+html[data-theme="dark"] .card-nav-indicator {
+  color: rgba(245, 245, 247, 0.92);
+  background:
+    linear-gradient(180deg, rgba(28, 30, 35, 0.92), rgba(16, 18, 22, 0.9));
+  box-shadow:
+    0 18px 38px rgba(0, 0, 0, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
 body.motion-enhanced .project-card,
 body.motion-enhanced .note-card,
 body.motion-enhanced .apple-showcase,
