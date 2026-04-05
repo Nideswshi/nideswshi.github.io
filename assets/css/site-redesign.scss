@@ -2673,23 +2673,25 @@ html[data-theme="dark"] .career-page--portfolio-detail .content-panel {
 
 .sidebar-menu-link-wrap.link-active {
   background:
-    linear-gradient(180deg, rgba(118, 126, 138, 0.98), rgba(92, 100, 111, 0.96) 52%, rgba(77, 84, 94, 0.96)) !important;
-  border-color: rgba(102, 110, 122, 0.52) !important;
+    linear-gradient(180deg, rgba(128, 136, 148, 0.98), rgba(98, 106, 118, 0.97) 46%, rgba(78, 85, 95, 0.98) 100%) !important;
+  border-color: rgba(106, 114, 126, 0.46) !important;
   box-shadow:
-    0 16px 32px rgba(37, 44, 56, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.28),
-    inset 0 -12px 20px rgba(20, 24, 31, 0.12);
+    0 18px 34px rgba(37, 44, 56, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    inset 0 -14px 22px rgba(18, 22, 28, 0.14),
+    inset 12px 0 18px rgba(255, 255, 255, 0.04),
+    inset -12px 0 20px rgba(11, 14, 18, 0.08);
   opacity: 1 !important;
 }
 
 .sidebar-menu-link-wrap.link-active::before {
-  border-color: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.16);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04) 34%, transparent 100%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05) 34%, transparent 100%);
 }
 
 .sidebar-menu-link-wrap.link-active::after {
-  opacity: 0.2;
+  opacity: 0.26;
 }
 
 .sidebar-menu-link-wrap.link-active .sidebar-menu-link,
@@ -2774,18 +2776,20 @@ html[data-theme="dark"] .sidebar-menu-link-wrap:hover {
 
 html[data-theme="dark"] .sidebar-menu-link-wrap.link-active {
   background:
-    linear-gradient(180deg, rgba(112, 120, 131, 0.96), rgba(84, 92, 102, 0.92) 54%, rgba(62, 68, 77, 0.94)) !important;
-  border-color: rgba(189, 194, 204, 0.18) !important;
+    linear-gradient(180deg, rgba(122, 130, 142, 0.96), rgba(88, 96, 106, 0.94) 50%, rgba(58, 64, 73, 0.96) 100%) !important;
+  border-color: rgba(189, 194, 204, 0.16) !important;
   box-shadow:
-    0 16px 34px rgba(0, 0, 0, 0.22),
+    0 16px 34px rgba(0, 0, 0, 0.24),
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    inset 0 -12px 20px rgba(0, 0, 0, 0.18);
+    inset 0 -14px 22px rgba(0, 0, 0, 0.22),
+    inset 12px 0 18px rgba(255, 255, 255, 0.03),
+    inset -12px 0 20px rgba(0, 0, 0, 0.12);
 }
 
 html[data-theme="dark"] .sidebar-menu-link-wrap.link-active::before {
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.1);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02) 34%, transparent 100%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02) 34%, transparent 100%);
 }
 
 html[data-theme="dark"] .sidebar-menu-link-wrap.link-active .sidebar-menu-link,
@@ -2801,6 +2805,110 @@ html[data-theme="dark"] .sidebar-top {
     0 12px 26px rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
     inset 0 -10px 18px rgba(0, 0, 0, 0.14);
+}
+
+
+@media (min-width: 1200px) {
+  #content.sidebar-right {
+    padding-right: 0;
+  }
+
+  #content.sidebar-right #main {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 18px 0 16px;
+  }
+
+  #content.sidebar-right #sidebar {
+    position: fixed;
+    top: 20px;
+    right: 0;
+    width: 0 !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    height: calc(100vh - 40px);
+    z-index: 96;
+    overflow: visible;
+  }
+
+  #content.sidebar-right #sidebar .sidebar-wrapper-container {
+    position: relative;
+    width: 324px;
+    max-height: calc(100vh - 40px);
+    padding-left: 10px;
+    transform: translate3d(calc(100% - 84px), 0, 0);
+    transition:
+      transform 720ms cubic-bezier(0.12, 0.88, 0.24, 1),
+      filter 420ms cubic-bezier(0.12, 0.88, 0.24, 1),
+      opacity 420ms cubic-bezier(0.12, 0.88, 0.24, 1);
+    will-change: transform;
+    filter: saturate(0.96);
+    opacity: 0.98;
+  }
+
+  #content.sidebar-right #sidebar .sidebar-wrapper-container::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 10px;
+    height: 176px;
+    transform: translateY(-50%);
+    border-radius: 999px 0 0 999px;
+    background:
+      linear-gradient(180deg, rgba(246, 248, 251, 0.94), rgba(220, 227, 236, 0.7) 46%, rgba(201, 209, 220, 0.3) 100%);
+    box-shadow:
+      0 0 0 1px rgba(198, 205, 214, 0.34),
+      0 10px 24px rgba(165, 174, 186, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.76);
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  #content.sidebar-right #sidebar .sidebar-wrapper-container::after {
+    content: "";
+    position: absolute;
+    inset: -16% 36% -16% -36%;
+    background:
+      linear-gradient(102deg, transparent 30%, rgba(255, 255, 255, 0.84) 43%, rgba(214, 222, 232, 0.54) 49%, rgba(255, 255, 255, 0.16) 56%, transparent 70%),
+      linear-gradient(180deg, transparent 0%, rgba(172, 181, 193, 0.06) 100%);
+    opacity: 0;
+    transform: translate3d(-116%, 0, 0) skewX(-12deg);
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+
+  #content.sidebar-right #sidebar:hover .sidebar-wrapper-container,
+  #content.sidebar-right #sidebar:focus-within .sidebar-wrapper-container {
+    transform: translate3d(0, 0, 0);
+    filter: saturate(1);
+    opacity: 1;
+  }
+
+  #content.sidebar-right #sidebar:hover .sidebar-wrapper-container::after,
+  #content.sidebar-right #sidebar:focus-within .sidebar-wrapper-container::after {
+    animation: studio-sidebar-drawer-sheen 1100ms cubic-bezier(0.12, 0.88, 0.24, 1) 1 forwards;
+  }
+
+  #content.sidebar-right #sidebar:hover .sidebar-wrapper-container::before,
+  #content.sidebar-right #sidebar:focus-within .sidebar-wrapper-container::before {
+    opacity: 1;
+  }
+
+  html[data-theme="dark"] #content.sidebar-right #sidebar .sidebar-wrapper-container::before {
+    background:
+      linear-gradient(180deg, rgba(138, 147, 159, 0.46), rgba(105, 114, 126, 0.28) 46%, rgba(64, 71, 80, 0.16) 100%);
+    box-shadow:
+      0 0 0 1px rgba(173, 182, 194, 0.12),
+      0 10px 24px rgba(0, 0, 0, 0.26),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  html[data-theme="dark"] #content.sidebar-right #sidebar .sidebar-wrapper-container::after {
+    background:
+      linear-gradient(102deg, transparent 30%, rgba(255, 255, 255, 0.24) 43%, rgba(196, 206, 220, 0.18) 49%, rgba(255, 255, 255, 0.08) 56%, transparent 70%),
+      linear-gradient(180deg, transparent 0%, rgba(172, 181, 193, 0.04) 100%);
+  }
 }
 
 #header.header--home {
@@ -3181,6 +3289,27 @@ html[data-theme='dark'] .project-card__readmore:hover::after {
   100% {
     opacity: 0;
     transform: translate3d(122%, 0, 0) skewX(-12deg) scale(1.012);
+  }
+}
+
+
+@keyframes studio-sidebar-drawer-sheen {
+  0% {
+    opacity: 0;
+    transform: translate3d(-116%, 0, 0) skewX(-12deg) scale(1.01);
+  }
+
+  14% {
+    opacity: 0.86;
+  }
+
+  42% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(122%, 0, 0) skewX(-12deg) scale(1.01);
   }
 }
 
