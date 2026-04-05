@@ -169,8 +169,13 @@ _$$(
       'a[href]:not([target="_blank"])',
     );
 
-    card.classList.add("is-card-transitioning");
-    document.body.classList.add("is-card-transitioning");
+    card.classList.add("is-card-pressing");
+
+    window.setTimeout(() => {
+      card.classList.remove("is-card-pressing");
+      card.classList.add("is-card-transitioning");
+      document.body.classList.add("is-card-transitioning");
+    }, 90);
 
     window.setTimeout(() => {
       if (primaryLink) {
@@ -178,9 +183,10 @@ _$$(
         return;
       }
       window.location.href = url;
-    }, 220);
+    }, 240);
 
     window.setTimeout(() => {
+      card.classList.remove("is-card-pressing");
       card.classList.remove("is-card-transitioning");
       document.body.classList.remove("is-card-transitioning");
     }, 900);
@@ -192,48 +198,6 @@ _$$(
       event.preventDefault();
       navigate(event);
     }
-  });
-});
-
-_$$<HTMLElement>(
-  [
-    ".project-card",
-    ".note-card",
-    ".apple-showcase",
-    ".apple-tile",
-    ".apple-project-tile",
-    ".about-proof-card",
-    ".archive-feature",
-    ".resume-hero",
-    ".project-detail__hero--apple",
-    ".home-spec-card",
-    ".home-hero-button",
-    ".home-stage-link",
-    ".career-button",
-    ".apple-link",
-    ".about-link-item",
-    ".project-card__links a",
-    ".section-link",
-    ".project-card__readmore",
-  ].join(", "),
-).forEach((element) => {
-  const setPointerPosition = (event: MouseEvent) => {
-    const rect = element.getBoundingClientRect();
-    element.style.setProperty("--pointer-x", `${event.clientX - rect.left}px`);
-    element.style.setProperty("--pointer-y", `${event.clientY - rect.top}px`);
-  };
-
-  element.off("mouseenter").on("mouseenter", (event: Event) => {
-    element.classList.add("is-pointer-inside");
-    setPointerPosition(event as MouseEvent);
-  });
-
-  element.off("mousemove").on("mousemove", (event: Event) => {
-    setPointerPosition(event as MouseEvent);
-  });
-
-  element.off("mouseleave").on("mouseleave", () => {
-    element.classList.remove("is-pointer-inside");
   });
 });
 
