@@ -137,7 +137,7 @@ _$$(".sidebar-common-btn").forEach((element) => {
 });
 
 _$$(
-  ".project-card[data-card-url], .note-card[data-card-url], .apple-project-tile[data-card-url], .about-proof-card[data-card-url]",
+  ".project-card[data-card-url], .note-card[data-card-url], .apple-project-tile[data-card-url], .about-proof-card[data-card-url], .archive-feature[data-card-url]",
 ).forEach((element) => {
   const card = element as HTMLElement;
   const url = card.dataset.cardUrl;
@@ -212,6 +212,9 @@ _$$<HTMLElement>(
     ".archive-feature",
     ".resume-hero",
     ".project-detail__hero--apple",
+    ".info-card",
+    ".skill-category-card",
+    ".timeline-item__content",
     ".home-spec-card",
     ".home-hero-button",
     ".career-button",
@@ -238,6 +241,9 @@ _$$<HTMLElement>(
     element.style.removeProperty("--tilt-rotate-y");
     element.style.removeProperty("--tilt-translate-x");
     element.style.removeProperty("--tilt-translate-y");
+    element.style.removeProperty("--pointer-x");
+    element.style.removeProperty("--pointer-y");
+    element.classList.remove("is-pointer-down");
   };
 
   element.off("mousemove").on("mousemove", (event: Event) => {
@@ -252,8 +258,16 @@ _$$<HTMLElement>(
     element.style.setProperty("--tilt-rotate-y", `${(percentX * maxRotate).toFixed(2)}deg`);
     element.style.setProperty("--tilt-translate-x", `${(percentX * maxTranslate).toFixed(2)}px`);
     element.style.setProperty("--tilt-translate-y", `${(percentY * maxTranslate).toFixed(2)}px`);
+    element.style.setProperty("--pointer-x", `${(((mouseEvent.clientX - rect.left) / (rect.width || 1)) * 100).toFixed(2)}%`);
+    element.style.setProperty("--pointer-y", `${(((mouseEvent.clientY - rect.top) / (rect.height || 1)) * 100).toFixed(2)}%`);
   });
 
+  element.off("mousedown").on("mousedown", () => {
+    element.classList.add("is-pointer-down");
+  });
+  element.off("mouseup").on("mouseup", () => {
+    element.classList.remove("is-pointer-down");
+  });
   element.off("mouseleave").on("mouseleave", resetTransform);
   element.off("blur").on("blur", resetTransform);
 });

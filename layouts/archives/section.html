@@ -11,7 +11,7 @@
   {{- end -}}
   {{- $pages := $paginator.Pages.ByDate.Reverse -}}
   {{- $featured := first 1 $pages -}}
-  <div class="career-page archive-shell" data-aos="{{ .Site.Params.animation.options.archive.whole }}">
+  <div class="career-page career-page--archives archive-shell" data-aos="{{ .Site.Params.animation.options.archive.whole }}">
     <section class="career-section archive-hero">
       <div class="section-heading">
         <div>
@@ -31,7 +31,7 @@
 
     {{- range first 1 $featured -}}
       {{- $cover := .Params.cover | default .Params.banner | default $.Site.Params.banner -}}
-      <section class="archive-feature" data-aos="{{ $.Site.Params.animation.options.archive.section }}">
+      <section class="archive-feature" data-card-url="{{ .RelPermalink }}" data-aos="{{ $.Site.Params.animation.options.archive.section }}">
         <div class="archive-feature__copy">
           <span class="section-kicker">{{ i18n "article_latest_label" }}</span>
           <h3>{{ .Title }}</h3>
