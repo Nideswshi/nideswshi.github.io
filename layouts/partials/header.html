@@ -227,33 +227,6 @@
             </div>
           </div>
 
-          <div class="home-product-hero__stage" data-aos="{{ .Site.Params.animation.options.header.subTitle }}">
-            <article class="home-stage-panel">
-              <div class="home-stage-panel__copy">
-                <span class="home-stage-panel__eyebrow">{{ i18n "home_stage_label" }}</span>
-                <h3>{{ i18n "home_stage_title" }}</h3>
-                <p>{{ i18n "home_stage_desc" }}</p>
-              </div>
-
-              <div class="home-stage-panel__visual">
-                <div class="home-stage-panel__portrait">
-                  <img src="{{ $avatar | relURL }}" alt="{{ .Site.Title }}">
-                </div>
-              </div>
-
-              <div class="home-stage-panel__dock">
-                <a class="home-stage-link" href="{{ "portfolio/" | relLangURL }}">{{ i18n "portfolio" }}</a>
-                <a class="home-stage-link" href="{{ "archives/" | relLangURL }}">{{ i18n "blog" }}</a>
-                <a class="home-stage-link" href="{{ "about/" | relLangURL }}">{{ i18n "about" }}</a>
-              </div>
-
-              <div class="home-stage-panel__tags">
-                {{- range first 4 $homeFocus -}}
-                  <span>{{ . }}</span>
-                {{- end -}}
-              </div>
-            </article>
-          </div>
         </div>
       {{- else -}}
         {{- $title := "" -}}

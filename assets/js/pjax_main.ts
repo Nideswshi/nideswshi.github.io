@@ -201,6 +201,63 @@ _$$(
   });
 });
 
+_$$<HTMLElement>(
+  [
+    ".project-card",
+    ".note-card",
+    ".apple-showcase",
+    ".apple-tile",
+    ".apple-project-tile",
+    ".about-proof-card",
+    ".archive-feature",
+    ".resume-hero",
+    ".project-detail__hero--apple",
+    ".home-spec-card",
+    ".home-hero-button",
+    ".career-button",
+    ".apple-link",
+    ".about-link-item",
+    ".project-card__links a",
+    ".section-link",
+    ".project-card__readmore",
+  ].join(", "),
+).forEach((element) => {
+  const maxRotate = element.matches(
+    ".home-hero-button, .career-button, .apple-link, .project-card__links a, .section-link, .project-card__readmore",
+  )
+    ? 4
+    : 7;
+  const maxTranslate = element.matches(
+    ".home-hero-button, .career-button, .apple-link, .project-card__links a, .section-link, .project-card__readmore",
+  )
+    ? 4
+    : 10;
+
+  const resetTransform = () => {
+    element.style.removeProperty("--tilt-rotate-x");
+    element.style.removeProperty("--tilt-rotate-y");
+    element.style.removeProperty("--tilt-translate-x");
+    element.style.removeProperty("--tilt-translate-y");
+  };
+
+  element.off("mousemove").on("mousemove", (event: Event) => {
+    const mouseEvent = event as MouseEvent;
+    const rect = element.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const percentX = (mouseEvent.clientX - centerX) / (rect.width / 2 || 1);
+    const percentY = (mouseEvent.clientY - centerY) / (rect.height / 2 || 1);
+
+    element.style.setProperty("--tilt-rotate-x", `${(-percentY * maxRotate).toFixed(2)}deg`);
+    element.style.setProperty("--tilt-rotate-y", `${(percentX * maxRotate).toFixed(2)}deg`);
+    element.style.setProperty("--tilt-translate-x", `${(percentX * maxTranslate).toFixed(2)}px`);
+    element.style.setProperty("--tilt-translate-y", `${(percentY * maxTranslate).toFixed(2)}px`);
+  });
+
+  element.off("mouseleave").on("mouseleave", resetTransform);
+  element.off("blur").on("blur", resetTransform);
+});
+
 (() => {
   const rootRealPath = getRealPath(window.location.pathname);
   _$$(".sidebar-menu-link-wrap").forEach((link) => {
