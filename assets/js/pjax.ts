@@ -193,6 +193,7 @@ window.addEventListener("pjax:success", () => {
 window.addEventListener("pjax:complete", () => {
   document.body.classList.remove("is-pjax-loading");
   document.body.classList.add("is-pjax-ready");
+  document.body.classList.remove("is-card-transitioning");
   window.setTimeout(() => {
     document.body.classList.remove("is-pjax-ready");
   }, 480);
@@ -226,6 +227,7 @@ window.addEventListener("pjax:send", () => {
 });
 window.addEventListener("pjax:success", () => {
   document.body.classList.remove("is-pjax-loading");
+  document.body.classList.remove("is-card-transitioning");
 });
 if (window.startLoading) window.addEventListener("pjax:send", startLoading!);
 if (window.endLoading) window.addEventListener("pjax:complete", endLoading!);

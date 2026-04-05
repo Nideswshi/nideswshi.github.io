@@ -1,6 +1,7 @@
 {{- $params := .ctx.Site.Params -}}
 {{- $mobile := .mobile -}}
 {{- $showMenu := true -}}
+{{- $description := partial "helpers/lang-data.html" (dict "value" $params.description "lang" .ctx.Site.Language.Lang) | transform.Unmarshal (dict "format" "json") -}}
 {{- /* Backward compatibility */ -}}
 {{- if and (reflect.IsMap $params.sidebar) (isset $params.sidebar "menu") -}}
   {{- $showMenu = $params.sidebar.menu -}}
@@ -13,7 +14,7 @@
     class="lazyload"
   />
   <div class="sidebar-author-name">{{ $params.author }}</div>
-  <div class="sidebar-description">{{ $params.description }}</div>
+  <div class="sidebar-description">{{ $description }}</div>
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
