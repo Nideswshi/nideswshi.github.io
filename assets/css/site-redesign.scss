@@ -1336,13 +1336,13 @@ body.motion-enhanced .info-card,
 body.motion-enhanced .skill-category-card,
 body.motion-enhanced .timeline-item__content,
 body.motion-enhanced .home-spec-card {
-  opacity: 0;
+  opacity: 1;
   transform:
     perspective(1200px)
-    translate3d(var(--tilt-translate-x, 0), calc(var(--tilt-translate-y, 0) + 24px), 0)
+    translate3d(var(--tilt-translate-x, 0), var(--tilt-translate-y, 0), 0)
     rotateX(var(--tilt-rotate-x, 0))
     rotateY(var(--tilt-rotate-y, 0))
-    scale(0.95);
+    scale(1);
 }
 
 body.motion-enhanced .project-card.is-card-visible,
@@ -1372,7 +1372,8 @@ body.motion-enhanced .project-card__readmore.is-card-visible {
     rotateX(var(--tilt-rotate-x, 0))
     rotateY(var(--tilt-rotate-y, 0))
     scale(1);
-  transition-delay: var(--card-enter-delay, 0s);
+  animation: studio-fade-up 720ms var(--card-transition-ease) both;
+  animation-delay: var(--card-enter-delay, 0s);
 }
 
 body.is-detail-landing .project-detail__hero--apple {

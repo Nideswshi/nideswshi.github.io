@@ -624,13 +624,13 @@ _$$<HTMLElement>(
   const maxRotate = element.matches(
     ".home-hero-button, .career-button, .apple-link, .project-card__links a, .section-link, .project-card__readmore",
   )
-    ? 6
-    : 10;
+    ? 8
+    : 14;
   const maxTranslate = element.matches(
     ".home-hero-button, .career-button, .apple-link, .project-card__links a, .section-link, .project-card__readmore",
   )
-    ? 7
-    : 14;
+    ? 10
+    : 20;
 
   const resetTransform = () => {
     element.style.removeProperty("--tilt-rotate-x");
@@ -642,8 +642,8 @@ _$$<HTMLElement>(
     element.classList.remove("is-pointer-down");
   };
 
-  element.off("mousemove").on("mousemove", (event: Event) => {
-    const mouseEvent = event as MouseEvent;
+  element.off("pointermove").on("pointermove", (event: Event) => {
+    const mouseEvent = event as PointerEvent;
     const rect = element.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
