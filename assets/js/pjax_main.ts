@@ -201,6 +201,39 @@ _$$(
   });
 });
 
+_$$<HTMLAnchorElement>(
+  [
+    ".project-card__readmore",
+    ".section-link",
+    ".project-card__links a",
+    ".archive-feature .career-button",
+  ].join(", "),
+).forEach((link) => {
+  link.off("click").on("click", (event: MouseEvent) => {
+    const href = link.getAttribute("href");
+    if (!href || href.startsWith("#") || link.target === "_blank") return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+    const card = link.closest<HTMLElement>(
+      ".project-card, .note-card, .apple-project-tile, .about-proof-card, .archive-feature",
+    );
+    if (!card || card.classList.contains("is-card-flipping")) return;
+
+    event.preventDefault();
+    card.classList.add("is-card-flipping");
+    document.body.classList.add("is-card-transitioning");
+
+    window.setTimeout(() => {
+      window.location.href = link.href;
+    }, 320);
+
+    window.setTimeout(() => {
+      card.classList.remove("is-card-flipping");
+      document.body.classList.remove("is-card-transitioning");
+    }, 700);
+  });
+});
+
 _$$<HTMLElement>(
   [
     ".project-card",
