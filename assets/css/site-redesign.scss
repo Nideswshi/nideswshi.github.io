@@ -2119,7 +2119,7 @@ body.is-detail-landing .project-detail__story {
   isolation: isolate;
   grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
   align-items: center;
-  min-height: min(72vh, 780px);
+  min-height: clamp(620px, 72vh, 780px);
   padding: clamp(1.6rem, 2.4vw, 2.2rem);
   border-radius: 32px;
   overflow: hidden;
