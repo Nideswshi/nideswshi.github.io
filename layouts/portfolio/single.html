@@ -1,13 +1,13 @@
 {{- define "main" -}}
   {{- $ctx := . -}}
   {{- $cover := .Params.banner | default .Params.cover | default .Site.Params.banner -}}
-  <article class="career-page project-detail project-detail--apple">
+  <article class="career-page career-page--portfolio-detail project-detail project-detail--apple">
     <section class="project-detail__hero project-detail__hero--apple" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="project-detail__intro">
-        <span class="section-kicker">{{ .Params.period | default (.Date.Format .Site.Params.dateFormat) }}</span>
+        <span class="section-kicker project-detail__kicker">{{ .Params.period | default (.Date.Format .Site.Params.dateFormat) }}</span>
         <h2>{{ .Title }}</h2>
         <p class="career-lead">{{ .Params.description }}</p>
-        <div class="detail-meta">
+        <div class="detail-meta project-detail__meta">
           {{- with .Params.role -}}
             <span>{{ . }}</span>
           {{- end -}}
@@ -17,7 +17,7 @@
           {{- end -}}
         </div>
         {{- with .Params.tech_stack -}}
-          <div class="tag-list">
+          <div class="tag-list project-detail__tags">
             {{- range . -}}
               <span class="tag">{{ . }}</span>
             {{- end -}}

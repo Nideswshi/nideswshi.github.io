@@ -10,6 +10,23 @@ var getRealPath = (pathname = window.location.pathname, desc = false) => {
   }
 };
 
+const CARD_LANDING_STORAGE_KEY = "apple-card-landing";
+
+try {
+  const landingRaw = window.sessionStorage.getItem(CARD_LANDING_STORAGE_KEY);
+  if (landingRaw) {
+    const landing = JSON.parse(landingRaw) as { pathname?: string; time?: number };
+    const isFresh = landing.time && Date.now() - landing.time < 5000;
+    if (landing.pathname === window.location.pathname && isFresh) {
+      document.body.classList.add("is-detail-landing");
+      window.setTimeout(() => {
+        document.body.classList.remove("is-detail-landing");
+      }, 1800);
+    }
+    window.sessionStorage.removeItem(CARD_LANDING_STORAGE_KEY);
+  }
+} catch {}
+
 var scrollIntoViewAndWait = (element: HTMLElement) => {
   return new Promise<void>((resolve) => {
     if ("onscrollend" in window) {
@@ -241,6 +258,8 @@ const clearCardOpenState = (card: HTMLElement, clone?: HTMLElement | null) => {
   card.classList.remove("is-source-opening");
   card.classList.remove("is-card-opening");
   card.classList.remove("is-card-transitioning");
+  card.classList.remove("is-card-flipping");
+  card.classList.remove("is-card-pressing");
   document.body.classList.remove("is-card-opening");
   document.body.classList.remove("is-card-transitioning");
   clone?.remove();
@@ -265,6 +284,14 @@ const playCardOpenTransition = (card: HTMLElement, url: string) => {
   const targetTop = (window.innerHeight - targetHeight) / 2;
 
   clone.classList.add("card-transition-clone");
+  clone.classList.remove(
+    "is-card-flipping",
+    "is-card-pressing",
+    "is-card-transitioning",
+    "is-source-opening",
+    "is-favorited",
+    "is-easter-visible",
+  );
   clone.style.top = `${rect.top}px`;
   clone.style.left = `${rect.left}px`;
   clone.style.width = `${rect.width}px`;
@@ -286,6 +313,17 @@ const playCardOpenTransition = (card: HTMLElement, url: string) => {
     clone.style.borderRadius = "28px";
   });
 
+  try {
+    const targetUrl = new URL(url, window.location.origin);
+    window.sessionStorage.setItem(
+      CARD_LANDING_STORAGE_KEY,
+      JSON.stringify({
+        pathname: targetUrl.pathname,
+        time: Date.now(),
+      }),
+    );
+  } catch {}
+
   ensureCardTimers(card).navigate = window.setTimeout(() => {
     window.location.href = url;
   }, 520);
@@ -295,11 +333,32 @@ const playCardOpenTransition = (card: HTMLElement, url: string) => {
   }, 1200);
 };
 
-const scheduleCardOpen = (card: HTMLElement, url: string, delay = 240) => {
+const scheduleCardOpen = (card: HTMLElement, url: string, delay = 280) => {
+  if (
+    card.classList.contains("is-card-transitioning") ||
+    document.body.classList.contains("is-card-opening")
+  ) {
+    return;
+  }
+
   clearCardTimeout(card, "navigate");
+  clearCardTimeout(card, "cleanup");
+  card.classList.remove("is-card-flipping");
+  card.classList.add("is-card-pressing");
+  window.requestAnimationFrame(() => {
+    card.classList.add("is-card-flipping");
+  });
+
   ensureCardTimers(card).navigate = window.setTimeout(() => {
     playCardOpenTransition(card, url);
   }, delay);
+
+  ensureCardTimers(card).cleanup = window.setTimeout(() => {
+    if (!card.classList.contains("is-source-opening")) {
+      card.classList.remove("is-card-flipping");
+      card.classList.remove("is-card-pressing");
+    }
+  }, Math.max(delay + 120, 760));
 };
 
 const motionCards = _$$<HTMLElement>(motionCardSelector);
@@ -307,6 +366,32 @@ const motionCards = _$$<HTMLElement>(motionCardSelector);
 motionCards.forEach((card, index) => {
   card.style.setProperty("--card-enter-delay", `${Math.min((index % 8) * 0.1, 0.7)}s`);
 });
+
+const revealCardIfInView = (card: HTMLElement) => {
+  const rect = card.getBoundingClientRect();
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+  const isInInitialViewport =
+    rect.top <= viewportHeight * 0.94 && rect.bottom >= -viewportHeight * 0.08;
+
+  if (isInInitialViewport) {
+    card.classList.add("is-card-visible");
+    return true;
+  }
+
+  return false;
+};
+
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+motionCards.forEach((card) => {
+  if (prefersReducedMotion) {
+    card.classList.add("is-card-visible");
+  } else {
+    revealCardIfInView(card);
+  }
+});
+
+document.body.classList.add("motion-enhanced");
 
 motionCards
   .filter((card) => !card.matches(navigableCardSelector))
@@ -345,7 +430,9 @@ motionCards
     });
   });
 
-if ("IntersectionObserver" in window) {
+if (prefersReducedMotion) {
+  motionCards.forEach((card) => card.classList.add("is-card-visible"));
+} else if ("IntersectionObserver" in window) {
   const revealObserver = new IntersectionObserver(
     (entries, observer) => {
       entries.forEach((entry) => {
@@ -361,7 +448,11 @@ if ("IntersectionObserver" in window) {
     },
   );
 
-  motionCards.forEach((card) => revealObserver.observe(card));
+  motionCards.forEach((card) => {
+    if (!card.classList.contains("is-card-visible")) {
+      revealObserver.observe(card);
+    }
+  });
 } else {
   motionCards.forEach((card) => card.classList.add("is-card-visible"));
 }

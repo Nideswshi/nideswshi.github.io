@@ -7,8 +7,8 @@
   --studio-text: #1d1d1f;
   --studio-text-soft: #424245;
   --studio-muted: #6e6e73;
-  --studio-border: rgba(29, 29, 31, 0.14);
-  --studio-border-strong: rgba(29, 29, 31, 0.22);
+  --studio-border: rgba(29, 29, 31, 0.18);
+  --studio-border-strong: rgba(29, 29, 31, 0.28);
   --studio-accent: #5f6f87;
   --studio-accent-strong: #46566f;
   --studio-accent-soft: rgba(95, 111, 135, 0.08);
@@ -44,8 +44,8 @@ html[data-theme="dark"] {
   --studio-text: #f5f5f7;
   --studio-text-soft: #d2d2d7;
   --studio-muted: #a1a1a6;
-  --studio-border: rgba(245, 245, 247, 0.14);
-  --studio-border-strong: rgba(245, 245, 247, 0.22);
+  --studio-border: rgba(245, 245, 247, 0.18);
+  --studio-border-strong: rgba(245, 245, 247, 0.28);
   --studio-accent: #b8c0cc;
   --studio-accent-strong: #d7dbe1;
   --studio-accent-soft: rgba(184, 192, 204, 0.08);
@@ -1307,19 +1307,19 @@ html[data-theme="dark"] .career-page--contact .contact-note {
     filter 560ms var(--card-transition-ease);
 }
 
-.project-card,
-.note-card,
-.apple-showcase,
-.apple-tile,
-.apple-project-tile,
-.about-proof-card,
-.archive-feature,
-.resume-hero,
-.project-detail__hero--apple,
-.info-card,
-.skill-category-card,
-.timeline-item__content,
-.home-spec-card {
+body.motion-enhanced .project-card,
+body.motion-enhanced .note-card,
+body.motion-enhanced .apple-showcase,
+body.motion-enhanced .apple-tile,
+body.motion-enhanced .apple-project-tile,
+body.motion-enhanced .about-proof-card,
+body.motion-enhanced .archive-feature,
+body.motion-enhanced .resume-hero,
+body.motion-enhanced .project-detail__hero--apple,
+body.motion-enhanced .info-card,
+body.motion-enhanced .skill-category-card,
+body.motion-enhanced .timeline-item__content,
+body.motion-enhanced .home-spec-card {
   opacity: 0;
   transform:
     perspective(1200px)
@@ -1329,26 +1329,26 @@ html[data-theme="dark"] .career-page--contact .contact-note {
     scale(0.95);
 }
 
-.project-card.is-card-visible,
-.note-card.is-card-visible,
-.apple-showcase.is-card-visible,
-.apple-tile.is-card-visible,
-.apple-project-tile.is-card-visible,
-.about-proof-card.is-card-visible,
-.archive-feature.is-card-visible,
-.resume-hero.is-card-visible,
-.project-detail__hero--apple.is-card-visible,
-.info-card.is-card-visible,
-.skill-category-card.is-card-visible,
-.timeline-item__content.is-card-visible,
-.home-spec-card.is-card-visible,
-.about-link-item.is-card-visible,
-.home-hero-button.is-card-visible,
-.career-button.is-card-visible,
-.apple-link.is-card-visible,
-.project-card__links a.is-card-visible,
-.section-link.is-card-visible,
-.project-card__readmore.is-card-visible {
+body.motion-enhanced .project-card.is-card-visible,
+body.motion-enhanced .note-card.is-card-visible,
+body.motion-enhanced .apple-showcase.is-card-visible,
+body.motion-enhanced .apple-tile.is-card-visible,
+body.motion-enhanced .apple-project-tile.is-card-visible,
+body.motion-enhanced .about-proof-card.is-card-visible,
+body.motion-enhanced .archive-feature.is-card-visible,
+body.motion-enhanced .resume-hero.is-card-visible,
+body.motion-enhanced .project-detail__hero--apple.is-card-visible,
+body.motion-enhanced .info-card.is-card-visible,
+body.motion-enhanced .skill-category-card.is-card-visible,
+body.motion-enhanced .timeline-item__content.is-card-visible,
+body.motion-enhanced .home-spec-card.is-card-visible,
+body.motion-enhanced .about-link-item.is-card-visible,
+body.motion-enhanced .home-hero-button.is-card-visible,
+body.motion-enhanced .career-button.is-card-visible,
+body.motion-enhanced .apple-link.is-card-visible,
+body.motion-enhanced .project-card__links a.is-card-visible,
+body.motion-enhanced .section-link.is-card-visible,
+body.motion-enhanced .project-card__readmore.is-card-visible {
   opacity: 1;
   transform:
     perspective(1200px)
@@ -1357,6 +1357,134 @@ html[data-theme="dark"] .career-page--contact .contact-note {
     rotateY(var(--tilt-rotate-y, 0))
     scale(1);
   transition-delay: var(--card-enter-delay, 0s);
+}
+
+body.is-detail-landing .project-detail__hero--apple {
+  animation: studio-detail-hero-in 960ms var(--card-transition-ease) both;
+}
+
+body.is-detail-landing .project-detail__hero--apple::before {
+  animation: studio-detail-ambient-in 1200ms var(--card-transition-ease) both;
+}
+
+body.is-detail-landing .project-detail__intro > * {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  animation: studio-detail-copy-in 720ms var(--card-transition-ease) both;
+}
+
+body.is-detail-landing .project-detail__intro > :nth-child(1) { animation-delay: 0.08s; }
+body.is-detail-landing .project-detail__intro > :nth-child(2) { animation-delay: 0.14s; }
+body.is-detail-landing .project-detail__intro > :nth-child(3) { animation-delay: 0.2s; }
+body.is-detail-landing .project-detail__intro > :nth-child(4) { animation-delay: 0.26s; }
+body.is-detail-landing .project-detail__intro > :nth-child(5) { animation-delay: 0.32s; }
+body.is-detail-landing .project-detail__intro > :nth-child(6) { animation-delay: 0.38s; }
+
+body.is-detail-landing .project-detail__cover {
+  opacity: 0;
+  transform:
+    perspective(1400px)
+    translate3d(26px, 18px, 0)
+    rotateY(-12deg)
+    scale(0.96);
+  animation: studio-detail-cover-in 980ms var(--card-transition-ease) 0.14s both;
+}
+
+body.is-detail-landing .project-detail__cover img {
+  transform: translateY(0) scale(1.08);
+  animation: studio-detail-image-settle 1300ms var(--card-transition-ease) 0.2s both;
+}
+
+body.is-detail-landing .project-detail__summary-grid > * {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0) scale(0.98);
+  animation: studio-detail-copy-in 700ms var(--card-transition-ease) both;
+}
+
+body.is-detail-landing .project-detail__summary-grid > :nth-child(1) { animation-delay: 0.34s; }
+body.is-detail-landing .project-detail__summary-grid > :nth-child(2) { animation-delay: 0.42s; }
+body.is-detail-landing .project-detail__summary-grid > :nth-child(3) { animation-delay: 0.5s; }
+
+body.is-detail-landing .project-detail__story {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  animation: studio-detail-copy-in 760ms var(--card-transition-ease) 0.56s both;
+}
+
+@keyframes studio-detail-hero-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0) scale(0.97);
+    filter: blur(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes studio-detail-ambient-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.08);
+    filter: blur(18px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes studio-detail-cover-in {
+  0% {
+    opacity: 0;
+    transform:
+      perspective(1400px)
+      translate3d(26px, 18px, 0)
+      rotateY(-12deg)
+      scale(0.96);
+    filter: blur(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform:
+      perspective(1400px)
+      translate3d(0, 0, 0)
+      rotateY(0deg)
+      scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes studio-detail-image-settle {
+  0% {
+    transform: translateY(14px) scale(1.08);
+    filter: saturate(0.88) blur(6px);
+  }
+
+  100% {
+    transform: translateY(0) scale(1.01);
+    filter: saturate(1) blur(0);
+  }
+}
+
+@keyframes studio-detail-copy-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    filter: blur(8px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
 }
 
 .project-card::before,
@@ -1987,8 +2115,53 @@ html[data-theme="dark"] .career-page--contact .contact-note {
 }
 
 .project-detail__hero--apple {
+  position: relative;
+  isolation: isolate;
   grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
   align-items: center;
+  min-height: min(72vh, 780px);
+  padding: clamp(1.6rem, 2.4vw, 2.2rem);
+  border-radius: 32px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 76% 18%, rgba(255, 255, 255, 0.46), transparent 22%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(238, 242, 246, 0.92));
+  box-shadow:
+    var(--card-shadow-normal),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.project-detail__hero--apple::before,
+.project-detail__hero--apple::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.project-detail__hero--apple::before {
+  z-index: 0;
+  background:
+    radial-gradient(circle at 82% 24%, rgba(255, 255, 255, 0.62), transparent 18%),
+    radial-gradient(circle at 18% 72%, rgba(169, 179, 192, 0.18), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0));
+  opacity: 0.95;
+}
+
+.project-detail__hero--apple::after {
+  z-index: 0;
+  inset: 1px;
+  border-radius: inherit;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(122, 136, 158, 0.05) 0,
+      rgba(122, 136, 158, 0.05) 1px,
+      transparent 1px,
+      transparent 168px
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0));
+  opacity: 0.82;
 }
 
 .project-detail__summary-grid {
@@ -1996,11 +2169,118 @@ html[data-theme="dark"] .career-page--contact .contact-note {
 }
 
 .project-detail__stat-card {
-  min-height: 160px;
+  min-height: 168px;
 }
 
 .project-detail__story {
-  padding-top: clamp(1.4rem, 2.4vw, 1.9rem);
+  padding-top: clamp(1.1rem, 2vw, 1.5rem);
+}
+
+.project-detail__cover {
+  position: relative;
+  min-height: 460px;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow:
+    0 32px 80px rgba(15, 23, 42, 0.14),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+}
+
+.project-detail__cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 22%, transparent 72%, rgba(17, 17, 19, 0.12)),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.12), transparent 26%);
+}
+
+.project-detail__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-detail__intro {
+  display: grid;
+  gap: 0.95rem;
+  position: relative;
+  z-index: 1;
+  align-content: center;
+  padding: clamp(0.2rem, 0.8vw, 0.5rem) 0;
+}
+
+.project-detail__intro h2 {
+  margin: 0;
+  font-size: clamp(2.4rem, 5vw, 5.4rem);
+  line-height: 0.94;
+  letter-spacing: -0.06em;
+}
+
+.project-detail__kicker {
+  margin-bottom: 0.2rem;
+}
+
+.project-detail__meta {
+  gap: 0.72rem 1rem;
+}
+
+.project-detail__tags,
+.project-detail__actions {
+  margin-top: 0.15rem;
+}
+
+.project-detail__summary-grid .info-card,
+.project-detail__story,
+.career-page--portfolio-detail .content-panel {
+  border-color: var(--studio-border-strong);
+  box-shadow:
+    0 18px 46px rgba(15, 23, 42, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.48);
+}
+
+html[data-theme="dark"] .project-detail__hero--apple {
+  background:
+    radial-gradient(circle at 76% 18%, rgba(255, 255, 255, 0.06), transparent 22%),
+    linear-gradient(180deg, rgba(18, 19, 22, 0.94), rgba(8, 9, 11, 0.98));
+  box-shadow:
+    var(--card-shadow-elevated),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme="dark"] .project-detail__hero--apple::before {
+  background:
+    radial-gradient(circle at 82% 24%, rgba(255, 255, 255, 0.1), transparent 18%),
+    radial-gradient(circle at 18% 72%, rgba(171, 180, 192, 0.1), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+}
+
+html[data-theme="dark"] .project-detail__hero--apple::after {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(240, 243, 247, 0.04) 0,
+      rgba(240, 243, 247, 0.04) 1px,
+      transparent 1px,
+      transparent 168px
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
+}
+
+html[data-theme="dark"] .project-detail__cover {
+  box-shadow:
+    0 38px 94px rgba(0, 0, 0, 0.34),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="dark"] .project-detail__summary-grid .info-card,
+html[data-theme="dark"] .project-detail__story,
+html[data-theme="dark"] .career-page--portfolio-detail .content-panel {
+  border-color: rgba(245, 245, 247, 0.18);
+  box-shadow:
+    0 22px 58px rgba(0, 0, 0, 0.22),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
 .project-detail__actions {
@@ -3075,7 +3355,7 @@ html[data-theme="dark"] .home-stage-panel__tags span {
   width: Min(1480px, calc(100% - 24px));
   margin: 0 auto 4.5rem;
   display: grid;
-  gap: 1.5rem;
+  gap: 1.2rem;
 }
 
 .apple-showcase,
@@ -3093,7 +3373,7 @@ html[data-theme="dark"] .home-stage-panel__tags span {
 .apple-showcase {
   display: grid;
   grid-template-columns: minmax(0, 0.96fr) minmax(480px, 1.04fr);
-  min-height: 820px;
+  min-height: 720px;
   background:
     radial-gradient(circle at top center, rgba(255, 255, 255, 0.72), transparent 28%),
     linear-gradient(180deg, #ffffff 0%, #eef2f6 100%);
@@ -3275,7 +3555,7 @@ html[data-theme="dark"] .card-easter-egg {
   flex-direction: column;
   justify-content: space-between;
   gap: 1.2rem;
-  min-height: 540px;
+  min-height: 480px;
   background: linear-gradient(180deg, #ffffff 0%, #f6f7f9 100%);
   color: #1d1d1f;
 }
@@ -3362,18 +3642,18 @@ html[data-theme="dark"] .card-easter-egg {
 @media (hover: hover) and (pointer: fine) {
   .apple-card-detail--bottom,
   .project-card .tag-list {
-    opacity: 0;
-    transform: translateY(12px);
-    filter: blur(3px);
+    opacity: 0.78;
+    transform: translateY(8px);
+    filter: blur(1px);
   }
 
   .apple-card-detail--side,
   .project-card__highlights,
   .note-card__meta,
   .archive-feature .detail-meta {
-    opacity: 0.16;
-    transform: translateX(18px);
-    filter: blur(2px);
+    opacity: 0.68;
+    transform: translateX(10px);
+    filter: blur(1px);
   }
 
   .apple-card-detail--action,
@@ -3382,9 +3662,9 @@ html[data-theme="dark"] .card-easter-egg {
   .note-card__footer,
   .archive-feature__copy .career-button,
   .about-proof-card .section-link {
-    opacity: 0.12;
-    transform: translateX(-16px) rotate(-3deg);
-    filter: blur(2px);
+    opacity: 0.74;
+    transform: translateX(-8px) rotate(-1deg);
+    filter: blur(1px);
   }
 
   .apple-showcase:hover .apple-card-detail--bottom,
@@ -3482,8 +3762,8 @@ html[data-theme="dark"] .card-easter-egg {
 
 .apple-project-tile {
   display: grid;
-  grid-template-rows: 280px auto;
-  min-height: 560px;
+  grid-template-rows: 240px auto;
+  min-height: 500px;
 }
 
 .apple-project-tile__media {
