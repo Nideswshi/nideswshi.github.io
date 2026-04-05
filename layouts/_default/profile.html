@@ -15,8 +15,8 @@
     {{- $featuredProjects = first 1 ($portfolioPages.ByDate.Reverse) -}}
   {{- end -}}
   {{- $latestNotes := first 1 ((where .Site.RegularPages "Section" "post").ByDate.Reverse) -}}
-  <div class="career-page about-apple">
-    <section class="resume-hero resume-hero--about" data-aos="{{ .Site.Params.animation.options.article.whole }}">
+  <div class="career-page career-page--about about-apple">
+    <section class="resume-hero resume-hero--about page-landing-hero page-landing-hero--about" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       <div class="resume-hero__copy">
         <span class="section-kicker">{{ i18n "about_resume_kicker" }}</span>
         <h2>{{ $profile.name }}</h2>

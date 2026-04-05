@@ -333,7 +333,7 @@ const playCardOpenTransition = (card: HTMLElement, url: string) => {
   }, 1200);
 };
 
-const scheduleCardOpen = (card: HTMLElement, url: string, delay = 280) => {
+const scheduleCardOpen = (card: HTMLElement, url: string, delay = 620) => {
   if (
     card.classList.contains("is-card-transitioning") ||
     document.body.classList.contains("is-card-opening")
@@ -529,7 +529,7 @@ _$$<HTMLElement>(navigableCardSelector).forEach((card) => {
   card.off("keydown").on("keydown", (event: KeyboardEvent) => {
     if ((event.key === "Enter" || event.key === " ") && !card.classList.contains("is-card-transitioning")) {
       event.preventDefault();
-      scheduleCardOpen(card, url, 0);
+      scheduleCardOpen(card, url, 620);
     }
   });
 
@@ -593,7 +593,7 @@ _$$<HTMLAnchorElement>(
     );
     if (!card) return;
     event.preventDefault();
-    scheduleCardOpen(card, link.href, 240);
+    scheduleCardOpen(card, link.href, 620);
   });
 });
 
@@ -624,13 +624,13 @@ _$$<HTMLElement>(
   const maxRotate = element.matches(
     ".home-hero-button, .career-button, .apple-link, .project-card__links a, .section-link, .project-card__readmore",
   )
-    ? 4
-    : 7;
+    ? 6
+    : 10;
   const maxTranslate = element.matches(
     ".home-hero-button, .career-button, .apple-link, .project-card__links a, .section-link, .project-card__readmore",
   )
-    ? 4
-    : 10;
+    ? 7
+    : 14;
 
   const resetTransform = () => {
     element.style.removeProperty("--tilt-rotate-x");

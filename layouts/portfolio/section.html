@@ -10,8 +10,8 @@
   {{- else -}}
     {{- $paginator = .Paginate $pages -}}
   {{- end -}}
-  <div class="career-page">
-    <section class="career-section" data-aos="{{ .Site.Params.animation.options.archive.whole }}">
+  <div class="career-page career-page--portfolio">
+    <section class="career-section page-landing-hero page-landing-hero--portfolio" data-aos="{{ .Site.Params.animation.options.archive.whole }}">
       <div class="section-heading">
         <div>
           <span class="section-kicker">{{ i18n "portfolio_archive_kicker" }}</span>

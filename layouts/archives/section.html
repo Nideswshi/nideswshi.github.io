@@ -12,7 +12,7 @@
   {{- $pages := $paginator.Pages.ByDate.Reverse -}}
   {{- $featured := first 1 $pages -}}
   <div class="career-page career-page--archives archive-shell" data-aos="{{ .Site.Params.animation.options.archive.whole }}">
-    <section class="career-section archive-hero">
+    <section class="career-section archive-hero page-landing-hero page-landing-hero--archives">
       <div class="section-heading">
         <div>
           <span class="section-kicker">{{ i18n "notes_archive_kicker" }}</span>
