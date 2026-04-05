@@ -136,10 +136,273 @@ _$$(".sidebar-common-btn").forEach((element) => {
   });
 });
 
-_$$(
-  ".project-card[data-card-url], .note-card[data-card-url], .apple-project-tile[data-card-url], .about-proof-card[data-card-url], .archive-feature[data-card-url]",
-).forEach((element) => {
-  const card = element as HTMLElement;
+const motionCardSelector = [
+  ".project-card",
+  ".note-card",
+  ".apple-showcase",
+  ".apple-tile",
+  ".apple-project-tile",
+  ".about-proof-card",
+  ".archive-feature",
+  ".resume-hero",
+  ".project-detail__hero--apple",
+  ".info-card",
+  ".skill-category-card",
+  ".timeline-item__content",
+  ".home-spec-card",
+].join(", ");
+
+const navigableCardSelector = [
+  ".project-card[data-card-url]",
+  ".note-card[data-card-url]",
+  ".apple-showcase[data-card-url]",
+  ".apple-tile[data-card-url]",
+  ".apple-project-tile[data-card-url]",
+  ".about-proof-card[data-card-url]",
+  ".archive-feature[data-card-url]",
+].join(", ");
+
+const cardTimers = new WeakMap<
+  HTMLElement,
+  {
+    navigate?: number;
+    cleanup?: number;
+    hold?: number;
+    easter?: number;
+  }
+>();
+
+const ensureCardTimers = (card: HTMLElement) => {
+  const timers = cardTimers.get(card) || {};
+  cardTimers.set(card, timers);
+  return timers;
+};
+
+const clearCardTimeout = (
+  card: HTMLElement,
+  key: "navigate" | "cleanup" | "hold" | "easter",
+) => {
+  const timers = ensureCardTimers(card);
+  const value = timers[key];
+  if (value) {
+    window.clearTimeout(value);
+    delete timers[key];
+  }
+};
+
+const clearAllCardTimeouts = (card: HTMLElement) => {
+  clearCardTimeout(card, "navigate");
+  clearCardTimeout(card, "cleanup");
+  clearCardTimeout(card, "hold");
+  clearCardTimeout(card, "easter");
+};
+
+const getCardLabel = (card: HTMLElement) => {
+  return (
+    card.dataset.cardTitle ||
+    card.querySelector("h1, h2, h3, h4, strong")?.textContent?.trim() ||
+    card.getAttribute("aria-label") ||
+    "this card"
+  );
+};
+
+const ensureFavoriteBadge = (card: HTMLElement) => {
+  let badge = card.querySelector<HTMLElement>(".card-favorite-badge");
+  if (!badge) {
+    badge = document.createElement("div");
+    badge.className = "card-favorite-badge";
+    badge.textContent = "★";
+    card.appendChild(badge);
+  }
+  return badge;
+};
+
+const showCardEasterEgg = (card: HTMLElement) => {
+  let easter = card.querySelector<HTMLElement>(".card-easter-egg");
+  if (!easter) {
+    easter = document.createElement("div");
+    easter.className = "card-easter-egg";
+    card.appendChild(easter);
+  }
+  easter.textContent = `One more thing · ${getCardLabel(card)} is designed to feel lighter, faster, and more deliberate.`;
+  card.classList.add("is-easter-visible");
+  clearCardTimeout(card, "easter");
+  ensureCardTimers(card).easter = window.setTimeout(() => {
+    card.classList.remove("is-easter-visible");
+  }, 2400);
+};
+
+const toggleCardFavorite = (card: HTMLElement) => {
+  ensureFavoriteBadge(card);
+  card.classList.toggle("is-favorited");
+};
+
+const clearCardOpenState = (card: HTMLElement, clone?: HTMLElement | null) => {
+  card.classList.remove("is-source-opening");
+  card.classList.remove("is-card-opening");
+  card.classList.remove("is-card-transitioning");
+  document.body.classList.remove("is-card-opening");
+  document.body.classList.remove("is-card-transitioning");
+  clone?.remove();
+};
+
+const playCardOpenTransition = (card: HTMLElement, url: string) => {
+  if (
+    card.classList.contains("is-card-transitioning") ||
+    document.body.classList.contains("is-card-opening")
+  ) {
+    return;
+  }
+
+  clearAllCardTimeouts(card);
+  const rect = card.getBoundingClientRect();
+  const computed = window.getComputedStyle(card);
+  const clone = card.cloneNode(true) as HTMLElement;
+  const margin = Math.max(18, Math.min(window.innerWidth, window.innerHeight) * 0.04);
+  const targetWidth = Math.min(window.innerWidth - margin * 2, Math.max(rect.width, window.innerWidth * 0.84));
+  const targetHeight = Math.min(window.innerHeight - margin * 2, Math.max(rect.height, window.innerHeight * 0.84));
+  const targetLeft = (window.innerWidth - targetWidth) / 2;
+  const targetTop = (window.innerHeight - targetHeight) / 2;
+
+  clone.classList.add("card-transition-clone");
+  clone.style.top = `${rect.top}px`;
+  clone.style.left = `${rect.left}px`;
+  clone.style.width = `${rect.width}px`;
+  clone.style.height = `${rect.height}px`;
+  clone.style.borderRadius = computed.borderRadius;
+  document.body.appendChild(clone);
+
+  card.classList.add("is-source-opening");
+  card.classList.add("is-card-transitioning");
+
+  window.requestAnimationFrame(() => {
+    document.body.classList.add("is-card-transitioning");
+    document.body.classList.add("is-card-opening");
+    clone.classList.add("is-opening");
+    clone.style.top = `${targetTop}px`;
+    clone.style.left = `${targetLeft}px`;
+    clone.style.width = `${targetWidth}px`;
+    clone.style.height = `${targetHeight}px`;
+    clone.style.borderRadius = "28px";
+  });
+
+  ensureCardTimers(card).navigate = window.setTimeout(() => {
+    window.location.href = url;
+  }, 520);
+
+  ensureCardTimers(card).cleanup = window.setTimeout(() => {
+    clearCardOpenState(card, clone);
+  }, 1200);
+};
+
+const scheduleCardOpen = (card: HTMLElement, url: string, delay = 240) => {
+  clearCardTimeout(card, "navigate");
+  ensureCardTimers(card).navigate = window.setTimeout(() => {
+    playCardOpenTransition(card, url);
+  }, delay);
+};
+
+const motionCards = _$$<HTMLElement>(motionCardSelector);
+
+motionCards.forEach((card, index) => {
+  card.style.setProperty("--card-enter-delay", `${Math.min((index % 8) * 0.1, 0.7)}s`);
+});
+
+motionCards
+  .filter((card) => !card.matches(navigableCardSelector))
+  .forEach((card) => {
+    let pointerStartX = 0;
+    let pointerStartY = 0;
+
+    card.off("dblclick").on("dblclick", (event: MouseEvent) => {
+      event.preventDefault();
+      toggleCardFavorite(card);
+    });
+
+    card.off("pointerdown").on("pointerdown", (event: PointerEvent) => {
+      pointerStartX = event.clientX;
+      pointerStartY = event.clientY;
+      clearCardTimeout(card, "hold");
+      ensureCardTimers(card).hold = window.setTimeout(() => {
+        showCardEasterEgg(card);
+      }, 1000);
+    });
+
+    card.off("pointermove").on("pointermove", (event: PointerEvent) => {
+      if (
+        Math.abs(event.clientX - pointerStartX) > 12 ||
+        Math.abs(event.clientY - pointerStartY) > 12
+      ) {
+        clearCardTimeout(card, "hold");
+      }
+    });
+
+    card.off("pointerup").on("pointerup", () => {
+      clearCardTimeout(card, "hold");
+    });
+    card.off("pointerleave").on("pointerleave", () => {
+      clearCardTimeout(card, "hold");
+    });
+  });
+
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        const target = entry.target as HTMLElement;
+        if (!entry.isIntersecting) return;
+        target.classList.add("is-card-visible");
+        observer.unobserve(target);
+      });
+    },
+    {
+      threshold: 0.14,
+      rootMargin: "0px 0px -8% 0px",
+    },
+  );
+
+  motionCards.forEach((card) => revealObserver.observe(card));
+} else {
+  motionCards.forEach((card) => card.classList.add("is-card-visible"));
+}
+
+let __cardParallaxRaf = 0;
+var __cardParallaxScrollHandler;
+var __cardParallaxResizeHandler;
+
+const updateCardParallax = () => {
+  motionCards.forEach((card) => {
+    const rect = card.getBoundingClientRect();
+    if (rect.bottom < -120 || rect.top > window.innerHeight + 120) {
+      card.style.setProperty("--scroll-media-parallax-y", "0px");
+      return;
+    }
+    const distance = (rect.top + rect.height / 2 - window.innerHeight / 2) / window.innerHeight;
+    const mediaOffset = Math.max(-14, Math.min(14, -distance * 18));
+    card.style.setProperty("--scroll-media-parallax-y", `${mediaOffset.toFixed(2)}px`);
+  });
+  __cardParallaxRaf = 0;
+};
+
+const requestCardParallax = () => {
+  if (__cardParallaxRaf) return;
+  __cardParallaxRaf = window.requestAnimationFrame(updateCardParallax);
+};
+
+if (__cardParallaxScrollHandler) {
+  window.off("scroll", __cardParallaxScrollHandler);
+}
+if (__cardParallaxResizeHandler) {
+  window.off("resize", __cardParallaxResizeHandler);
+}
+
+__cardParallaxScrollHandler = requestCardParallax;
+__cardParallaxResizeHandler = requestCardParallax;
+window.on("scroll", __cardParallaxScrollHandler);
+window.on("resize", __cardParallaxResizeHandler);
+requestCardParallax();
+
+_$$<HTMLElement>(navigableCardSelector).forEach((card) => {
   const url = card.dataset.cardUrl;
   if (!url) return;
 
@@ -147,11 +410,14 @@ _$$(
   card.setAttribute("tabindex", "0");
   card.setAttribute("role", "link");
 
-  const navigate = (event?: Event) => {
-    if (card.classList.contains("is-card-transitioning")) return;
-    const target = event?.target as HTMLElement | null;
-    const mouseEvent = event as MouseEvent | undefined;
+  card.off("click").on("click", (event: MouseEvent) => {
+    if (card.dataset.longPressTriggered === "true") {
+      event.preventDefault();
+      card.dataset.longPressTriggered = "false";
+      return;
+    }
 
+    const target = event.target as HTMLElement | null;
     if (
       target?.closest(
         "a, button, input, textarea, select, summary, .project-card__links, .project-card__footer",
@@ -160,49 +426,66 @@ _$$(
       return;
     }
 
-    if (mouseEvent?.metaKey || mouseEvent?.ctrlKey) {
+    if (event.metaKey || event.ctrlKey) {
       window.open(url, "_blank", "noopener,noreferrer");
       return;
     }
 
-    const primaryLink = card.querySelector<HTMLAnchorElement>(
-      'a[href]:not([target="_blank"])',
-    );
+    event.preventDefault();
+    scheduleCardOpen(card, url);
+  });
 
-    card.classList.add("is-card-pressing");
-
-    window.setTimeout(() => {
-      card.classList.remove("is-card-pressing");
-      card.classList.add("is-card-transitioning");
-      document.body.classList.add("is-card-transitioning");
-    }, 90);
-
-    window.setTimeout(() => {
-      if (primaryLink) {
-        primaryLink.click();
-        return;
-      }
-      window.location.href = url;
-    }, 240);
-
-    window.setTimeout(() => {
-      card.classList.remove("is-card-pressing");
-      card.classList.remove("is-card-transitioning");
-      document.body.classList.remove("is-card-transitioning");
-    }, 900);
-  };
-
-  card.off("click").on("click", navigate);
   card.off("keydown").on("keydown", (event: KeyboardEvent) => {
-    if (event.key === "Enter" || event.key === " ") {
+    if ((event.key === "Enter" || event.key === " ") && !card.classList.contains("is-card-transitioning")) {
       event.preventDefault();
-      navigate(event);
+      scheduleCardOpen(card, url, 0);
     }
+  });
+
+  card.off("dblclick").on("dblclick", (event: MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    clearAllCardTimeouts(card);
+    clearCardOpenState(card);
+    toggleCardFavorite(card);
+  });
+
+  let pointerStartX = 0;
+  let pointerStartY = 0;
+
+  card.off("pointerdown").on("pointerdown", (event: PointerEvent) => {
+    pointerStartX = event.clientX;
+    pointerStartY = event.clientY;
+    card.dataset.longPressTriggered = "false";
+    clearCardTimeout(card, "hold");
+    ensureCardTimers(card).hold = window.setTimeout(() => {
+      card.dataset.longPressTriggered = "true";
+      showCardEasterEgg(card);
+    }, 1000);
+  });
+
+  card.off("pointermove").on("pointermove", (event: PointerEvent) => {
+    if (
+      Math.abs(event.clientX - pointerStartX) > 12 ||
+      Math.abs(event.clientY - pointerStartY) > 12
+    ) {
+      clearCardTimeout(card, "hold");
+    }
+  });
+
+  card.off("pointerup").on("pointerup", () => {
+    clearCardTimeout(card, "hold");
+  });
+  card.off("pointerleave").on("pointerleave", () => {
+    clearCardTimeout(card, "hold");
   });
 });
 
 _$$<HTMLAnchorElement>(
   [
+    ".apple-link",
+    ".home-hero-button",
+    ".career-button",
     ".project-card__readmore",
     ".section-link",
     ".project-card__links a",
@@ -215,22 +498,11 @@ _$$<HTMLAnchorElement>(
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
 
     const card = link.closest<HTMLElement>(
-      ".project-card, .note-card, .apple-project-tile, .about-proof-card, .archive-feature",
+      ".apple-showcase, .apple-tile, .project-card, .note-card, .apple-project-tile, .about-proof-card, .archive-feature",
     );
-    if (!card || card.classList.contains("is-card-flipping")) return;
-
+    if (!card) return;
     event.preventDefault();
-    card.classList.add("is-card-flipping");
-    document.body.classList.add("is-card-transitioning");
-
-    window.setTimeout(() => {
-      window.location.href = link.href;
-    }, 430);
-
-    window.setTimeout(() => {
-      card.classList.remove("is-card-flipping");
-      document.body.classList.remove("is-card-transitioning");
-    }, 860);
+    scheduleCardOpen(card, link.href, 240);
   });
 });
 

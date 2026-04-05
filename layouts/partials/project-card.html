@@ -18,20 +18,20 @@
     </h3>
     <p class="project-card__desc">{{ $description }}</p>
     {{- with $page.Params.tech_stack -}}
-      <div class="tag-list">
+      <div class="tag-list apple-card-detail apple-card-detail--bottom">
         {{- range . -}}
           <span class="tag">{{ . }}</span>
         {{- end -}}
       </div>
     {{- end -}}
     {{- with $page.Params.highlights -}}
-      <ul class="project-card__highlights">
+      <ul class="project-card__highlights apple-card-detail apple-card-detail--side">
         {{- range first 2 . -}}
           <li>{{ . }}</li>
         {{- end -}}
       </ul>
     {{- end -}}
-    <div class="project-card__footer">
+    <div class="project-card__footer apple-card-detail apple-card-detail--action">
       <a class="project-card__readmore" href="{{ $page.RelPermalink }}">{{ i18n "view_details" }}</a>
       {{- with $page.Params.links -}}
         <div class="project-card__links">

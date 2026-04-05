@@ -25,13 +25,23 @@
   <div class="apple-home" id="home-sections">
     {{- with $primaryProject -}}
       {{- $projectCover := .Params.cover | default .Params.banner | default $.Site.Params.banner -}}
-      <section class="apple-showcase apple-showcase--dark" data-aos="{{ $.Site.Params.animation.options.home.post }}">
+      <section class="apple-showcase apple-showcase--dark" data-card-url="{{ .RelPermalink }}" data-aos="{{ $.Site.Params.animation.options.home.post }}">
         <div class="apple-showcase__copy">
           <span class="apple-eyebrow">{{ i18n "selected_work" }}</span>
           <h2>{{ .Title }}</h2>
           <p class="apple-showcase__lead">{{ i18n "selected_work_desc" }}</p>
           <p>{{ .Params.description }}</p>
-          <div class="apple-actions">
+          <div class="tag-list apple-card-detail apple-card-detail--bottom apple-showcase__facts">
+            {{- with .Params.role -}}
+              <span class="tag">{{ . }}</span>
+            {{- end -}}
+            {{- with .Params.tech_stack -}}
+              {{- range first 3 . -}}
+                <span class="tag">{{ . }}</span>
+              {{- end -}}
+            {{- end -}}
+          </div>
+          <div class="apple-actions apple-card-detail apple-card-detail--action">
             <a class="apple-link apple-link--light" href="{{ .RelPermalink }}">{{ i18n "view_details" }}</a>
             {{- with .Params.links.demo -}}
               <a class="apple-link apple-link--light" href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "view_site" }}</a>
@@ -45,22 +55,22 @@
     {{- end -}}
 
     <section class="apple-grid apple-grid--two" data-aos="{{ .Site.Params.animation.options.home.widget }}">
-      <article class="apple-tile apple-tile--light apple-tile--about">
+      <article class="apple-tile apple-tile--light apple-tile--about" data-card-url="{{ "about/" | relLangURL }}">
         <span class="apple-eyebrow">{{ i18n "profile_kicker" }}</span>
         <h3>{{ i18n "home_about_title" }}</h3>
         <p>{{ $summary }}</p>
-        <div class="tag-list">
+        <div class="tag-list apple-card-detail apple-card-detail--bottom">
           {{- range first 4 $focus -}}
             <span class="tag">{{ . }}</span>
           {{- end -}}
         </div>
-        <a class="apple-link" href="{{ "about/" | relLangURL }}">{{ i18n "learn_more" }}</a>
+        <a class="apple-link apple-card-action" href="{{ "about/" | relLangURL }}">{{ i18n "learn_more" }}</a>
       </article>
 
-      <article class="apple-tile apple-tile--soft apple-tile--skills">
+      <article class="apple-tile apple-tile--soft apple-tile--skills" data-card-url="{{ "skills/" | relLangURL }}">
         <span class="apple-eyebrow">{{ i18n "capability_snapshot" }}</span>
         <h3>{{ i18n "home_skills_title" }}</h3>
-        <div class="apple-skill-groups">
+        <div class="apple-skill-groups apple-card-detail apple-card-detail--side">
           {{- range $skillCategories -}}
             <div class="apple-skill-group">
               <h4>{{ partial "helpers/lang-data.html" (dict "value" .name "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</h4>
@@ -68,16 +78,16 @@
             </div>
           {{- end -}}
         </div>
-        <a class="apple-link" href="{{ "skills/" | relLangURL }}">{{ i18n "explore_skills" }}</a>
+        <a class="apple-link apple-card-action" href="{{ "skills/" | relLangURL }}">{{ i18n "explore_skills" }}</a>
       </article>
     </section>
 
     <section class="apple-grid apple-grid--two" data-aos="{{ .Site.Params.animation.options.home.post }}">
-      <article class="apple-tile apple-tile--soft apple-tile--notes">
+      <article class="apple-tile apple-tile--soft apple-tile--notes" data-card-url="{{ "archives/" | relLangURL }}">
         <span class="apple-eyebrow">{{ i18n "writing_kicker" }}</span>
         <h3>{{ i18n "home_notes_title" }}</h3>
         <p class="apple-tile__intro">{{ i18n "latest_notes_desc" }}</p>
-        <div class="apple-note-list">
+        <div class="apple-note-list apple-card-detail apple-card-detail--side">
           {{- range $latestNotes -}}
             {{- $noteDescription := .Params.description | default (.Summary | plainify | truncate 120) -}}
             <article class="apple-note-item">
@@ -87,14 +97,14 @@
             </article>
           {{- end -}}
         </div>
-        <a class="apple-link" href="{{ "archives/" | relLangURL }}">{{ i18n "read_article" }}</a>
+        <a class="apple-link apple-card-action" href="{{ "archives/" | relLangURL }}">{{ i18n "read_article" }}</a>
       </article>
 
-      <article class="apple-tile apple-tile--dark apple-tile--journey">
+      <article class="apple-tile apple-tile--dark apple-tile--journey" data-card-url="{{ "learning/" | relLangURL }}">
         <span class="apple-eyebrow">{{ i18n "journey_kicker" }}</span>
         <h3>{{ i18n "home_journey_title" }}</h3>
         <p class="apple-tile__intro">{{ i18n "recent_journey" }}</p>
-        <div class="apple-journey-list">
+        <div class="apple-journey-list apple-card-detail apple-card-detail--side">
           {{- range $journeyPreview -}}
             <article class="apple-journey-item">
               <span>{{ .date }}</span>
@@ -103,7 +113,7 @@
             </article>
           {{- end -}}
         </div>
-        <a class="apple-link apple-link--light" href="{{ "learning/" | relLangURL }}">{{ i18n "view_all" }}</a>
+        <a class="apple-link apple-link--light apple-card-action" href="{{ "learning/" | relLangURL }}">{{ i18n "view_all" }}</a>
       </article>
     </section>
 
@@ -118,7 +128,14 @@
             <span class="apple-eyebrow">{{ .Params.period | default (.Date.Format "2006-01") }}</span>
             <h3>{{ .Title }}</h3>
             <p>{{ .Params.description }}</p>
-            <a class="apple-link" href="{{ .RelPermalink }}">{{ i18n "view_details" }}</a>
+            {{- with .Params.tech_stack -}}
+              <div class="tag-list apple-card-detail apple-card-detail--bottom">
+                {{- range first 3 . -}}
+                  <span class="tag">{{ . }}</span>
+                {{- end -}}
+              </div>
+            {{- end -}}
+            <a class="apple-link apple-card-action" href="{{ .RelPermalink }}">{{ i18n "view_details" }}</a>
           </div>
         </article>
       {{- end -}}
@@ -128,7 +145,7 @@
           <span class="apple-eyebrow">{{ i18n "contact" }}</span>
           <h3>{{ i18n "home_contact_title" }}</h3>
           <p>{{ i18n "home_contact_desc" }}</p>
-          <a class="apple-link" href="{{ "contact/" | relLangURL }}">{{ i18n "contact" }}</a>
+          <a class="apple-link apple-card-action" href="{{ "contact/" | relLangURL }}">{{ i18n "contact" }}</a>
         </div>
       </article>
     </section>
