@@ -20,11 +20,12 @@ $font-basic: $custom-basic-families, $basic-families, $local-basic-families;
 [data-theme="dark"] {
   #loader {
     .loading-bg {
-      background-color: rgba(37, 37, 37, 0.9);
+      background:
+        linear-gradient(180deg, rgba(14, 15, 18, 0.96), rgba(9, 10, 12, 0.94));
     }
 
     .spinner-box .loading-word {
-      color: var(--red-1, #ff5252);
+      color: rgba(245, 245, 247, 0.72);
     }
   }
 }
@@ -35,7 +36,8 @@ $font-basic: $custom-basic-families, $basic-families, $local-basic-families;
     z-index: 1000;
     width: 50%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.9);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(244, 246, 249, 0.94));
     transition: 0.8s;
   }
 
@@ -55,7 +57,8 @@ $font-basic: $custom-basic-families, $basic-families, $local-basic-families;
     transition: 0.5s;
 
     .loading-taichi {
-      opacity: 0.8;
+      opacity: 0.72;
+      filter: grayscale(1);
     }
 
     .rotate {
@@ -64,12 +67,13 @@ $font-basic: $custom-basic-families, $basic-families, $local-basic-families;
 
     .loading-word {
       position: absolute;
-      color: var(--red-1, #ff5252);
+      color: rgba(29, 29, 31, 0.62);
       top: calc(50% + 110px);
       left: 50%;
       transform: translate(-50%, -50%);
       font:
         700 1.2rem $font-basic;
+      letter-spacing: 0.08em;
     }
   }
 }

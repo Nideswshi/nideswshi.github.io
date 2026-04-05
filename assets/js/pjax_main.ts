@@ -136,6 +136,37 @@ _$$(".sidebar-common-btn").forEach((element) => {
   });
 });
 
+_$$(
+  ".project-card[data-card-url], .note-card[data-card-url], .apple-project-tile[data-card-url], .about-proof-card[data-card-url]",
+).forEach((element) => {
+  const card = element as HTMLElement;
+  const url = card.dataset.cardUrl;
+  if (!url) return;
+
+  card.style.cursor = "pointer";
+  card.setAttribute("tabindex", "0");
+
+  const navigate = (event?: Event) => {
+    const target = event?.target as HTMLElement | null;
+    if (
+      target?.closest(
+        "a, button, input, textarea, select, summary, .project-card__links, .project-card__footer",
+      )
+    ) {
+      return;
+    }
+    window.location.href = url;
+  };
+
+  card.off("click").on("click", navigate);
+  card.off("keydown").on("keydown", (event: KeyboardEvent) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      navigate(event);
+    }
+  });
+});
+
 (() => {
   const rootRealPath = getRealPath(window.location.pathname);
   _$$(".sidebar-menu-link-wrap").forEach((link) => {

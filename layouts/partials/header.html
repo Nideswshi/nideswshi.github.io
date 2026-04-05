@@ -1,6 +1,20 @@
 {{- $params := .Site.Params -}}
 {{- $lang := .Site.Language.Lang -}}
 {{- $profile := hugo.Data.profile -}}
+{{- $pageSlug := "" -}}
+{{- if .IsHome -}}
+  {{- $pageSlug = "home" -}}
+{{- else if eq .Type "archives" -}}
+  {{- $pageSlug = "archives" -}}
+{{- else if eq .Section "portfolio" -}}
+  {{- $pageSlug = "portfolio" -}}
+{{- else if .File -}}
+  {{- $pageSlug = .File.ContentBaseName -}}
+{{- else if .Type -}}
+  {{- $pageSlug = .Type -}}
+{{- else -}}
+  {{- $pageSlug = "default" -}}
+{{- end -}}
 {{- $homeHeadline := partial "helpers/lang-data.html" (dict "value" $profile.headline "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}
 {{- $homeStatus := partial "helpers/lang-data.html" (dict "value" $profile.status "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}
 {{- $homeLocation := partial "helpers/lang-data.html" (dict "value" $profile.location "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}
@@ -112,7 +126,7 @@
     </a>
   {{- end -}}
 </div>
-<header id="header" class="{{ if .IsHome }}header--home{{ end }}" aria-label="Site header">
+<header id="header" class="{{ if .IsHome }}header--home {{ end }}header--{{ $pageSlug }}" aria-label="Site header">
   {{- $headerImage := .Params.banner | default .Params.cover -}}
   {{- if and $headerImage (strings.HasPrefix $headerImage "rgb") -}}
     <picture></picture>

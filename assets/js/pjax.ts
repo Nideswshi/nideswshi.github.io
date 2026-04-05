@@ -192,6 +192,10 @@ window.addEventListener("pjax:success", () => {
 });
 window.addEventListener("pjax:complete", () => {
   document.body.classList.remove("is-pjax-loading");
+  document.body.classList.add("is-pjax-ready");
+  window.setTimeout(() => {
+    document.body.classList.remove("is-pjax-ready");
+  }, 480);
   _$("#header-nav")?.classList.remove("header-nav-hidden");
   const mode = window.localStorage.getItem("dark_mode");
   document.body.dispatchEvent(
@@ -213,6 +217,7 @@ window.addEventListener("pjax:complete", () => {
 });
 window.addEventListener("pjax:send", () => {
   document.body.classList.add("is-pjax-loading");
+  document.body.classList.remove("is-pjax-ready");
   // destroy panZoom
   if (window.__panZoomList) {
     window.__panZoomList.forEach((panZoom) => panZoom.destroy());

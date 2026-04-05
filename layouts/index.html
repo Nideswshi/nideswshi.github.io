@@ -110,7 +110,7 @@
     <section class="apple-grid apple-grid--three" data-aos="{{ .Site.Params.animation.options.home.post }}">
       {{- range after 1 $featuredProjects -}}
         {{- $cover := .Params.cover | default .Params.banner | default $.Site.Params.banner -}}
-        <article class="apple-project-tile">
+        <article class="apple-project-tile" data-card-url="{{ .RelPermalink }}">
           <div class="apple-project-tile__media">
             <img data-src="{{ $cover | relURL }}" data-sizes="auto" alt="{{ .Title }}" class="lazyload" />
           </div>
@@ -123,7 +123,7 @@
         </article>
       {{- end -}}
 
-      <article class="apple-project-tile apple-project-tile--contact">
+      <article class="apple-project-tile apple-project-tile--contact" data-card-url="{{ "contact/" | relLangURL }}">
         <div class="apple-project-tile__copy">
           <span class="apple-eyebrow">{{ i18n "contact" }}</span>
           <h3>{{ i18n "home_contact_title" }}</h3>

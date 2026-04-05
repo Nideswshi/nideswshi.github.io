@@ -51,7 +51,7 @@
     <section class="note-grid note-grid--editorial">
       {{- range after 1 $pages -}}
         {{- $cover := .Params.cover | default .Params.banner | default $.Site.Params.banner -}}
-        <article class="note-card" data-aos="{{ $.Site.Params.animation.options.archive.section }}">
+        <article class="note-card" data-card-url="{{ .RelPermalink }}" data-aos="{{ $.Site.Params.animation.options.archive.section }}">
           <a class="note-card__cover" href="{{ .RelPermalink }}" aria-label="{{ .Title }}">
             <img data-src="{{ $cover | relURL }}" data-sizes="auto" alt="{{ .Title }}" class="lazyload" />
           </a>

@@ -2,7 +2,7 @@
 {{- $cover := $page.Params.cover | default $page.Params.banner | default $.ctx.Site.Params.banner -}}
 {{- $summary := $page.Summary | plainify | truncate 120 -}}
 {{- $description := $page.Params.description | default $summary -}}
-<article class="project-card" data-aos="{{ $.ctx.Site.Params.animation.options.home.post }}">
+<article class="project-card" data-card-url="{{ $page.RelPermalink }}" data-aos="{{ $.ctx.Site.Params.animation.options.home.post }}">
   <a class="project-card__cover" href="{{ $page.RelPermalink }}" aria-label="{{ $page.Title }}">
     <img data-src="{{ $cover | relURL }}" data-sizes="auto" alt="{{ $page.Title }}" class="lazyload" />
   </a>

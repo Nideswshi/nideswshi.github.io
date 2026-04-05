@@ -102,7 +102,7 @@
 
     <section class="about-proof-grid" data-aos="{{ .Site.Params.animation.options.article.whole }}">
       {{- range first 1 $featuredProjects -}}
-        <article class="about-proof-card about-proof-card--project">
+        <article class="about-proof-card about-proof-card--project" data-card-url="{{ .RelPermalink }}">
           <span class="section-kicker">{{ i18n "about_recent_project" }}</span>
           <h3>{{ .Title }}</h3>
           <p>{{ .Params.description }}</p>
@@ -118,7 +118,7 @@
       {{- end -}}
 
       {{- range first 1 $latestNotes -}}
-        <article class="about-proof-card about-proof-card--note">
+        <article class="about-proof-card about-proof-card--note" data-card-url="{{ .RelPermalink }}">
           <span class="section-kicker">{{ i18n "about_recent_note" }}</span>
           <h3>{{ .Title }}</h3>
           <p>{{ .Params.description | default (.Summary | plainify | truncate 130) }}</p>
