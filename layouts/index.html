@@ -14,6 +14,8 @@
   {{- $latestNotes := first 3 $sortedNotes -}}
   {{- $skillCategories := first 3 hugo.Data.skills.categories -}}
   {{- $journeyPreview := first 3 hugo.Data.journey.items -}}
+  {{- $homeStats := first 3 $profile.stats -}}
+  {{- $homeStrengths := first 3 $profile.strengths -}}
   {{- $lang := .Site.Language.Lang -}}
   {{- $summary := partial "helpers/lang-data.html" (dict "value" $profile.summary "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}
   {{- $focus := partial "helpers/lang-data.html" (dict "value" $profile.focus "lang" $lang) | transform.Unmarshal (dict "format" "json") -}}
@@ -118,7 +120,24 @@
     </section>
 
     <section class="apple-grid apple-grid--three" data-aos="{{ .Site.Params.animation.options.home.post }}">
-      {{- range after 1 $featuredProjects -}}
+      {{- $secondaryProjects := slice -}}
+      {{- $seenProjects := slice -}}
+      {{- with $primaryProject -}}
+        {{- $seenProjects = $seenProjects | append .RelPermalink -}}
+      {{- end -}}
+      {{- range $sortedFeatured -}}
+        {{- if not (in $seenProjects .RelPermalink) -}}
+          {{- $secondaryProjects = $secondaryProjects | append . -}}
+          {{- $seenProjects = $seenProjects | append .RelPermalink -}}
+        {{- end -}}
+      {{- end -}}
+      {{- range $sortedPortfolio -}}
+        {{- if not (in $seenProjects .RelPermalink) -}}
+          {{- $secondaryProjects = $secondaryProjects | append . -}}
+          {{- $seenProjects = $seenProjects | append .RelPermalink -}}
+        {{- end -}}
+      {{- end -}}
+      {{- range first 5 $secondaryProjects -}}
         {{- $cover := .Params.cover | default .Params.banner | default $.Site.Params.banner -}}
         <article class="apple-project-tile" data-card-url="{{ .RelPermalink }}">
           <div class="apple-project-tile__media">
@@ -148,6 +167,22 @@
           <a class="apple-link apple-card-action" href="{{ "contact/" | relLangURL }}">{{ i18n "contact" }}</a>
         </div>
       </article>
+    </section>
+
+    <section class="home-insight-grid" data-aos="{{ .Site.Params.animation.options.home.widget }}">
+      {{- range $homeStats -}}
+        <article class="info-card home-insight-card">
+          <span class="info-card__label">{{ partial "helpers/lang-data.html" (dict "value" .value "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</span>
+          <h3>{{ partial "helpers/lang-data.html" (dict "value" .label "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</h3>
+        </article>
+      {{- end -}}
+      {{- range $homeStrengths -}}
+        <article class="info-card home-insight-card">
+          <span class="info-card__label">{{ i18n "strengths_kicker" }}</span>
+          <h3>{{ partial "helpers/lang-data.html" (dict "value" .title "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</h3>
+          <p>{{ partial "helpers/lang-data.html" (dict "value" .description "lang" $lang) | transform.Unmarshal (dict "format" "json") }}</p>
+        </article>
+      {{- end -}}
     </section>
   </div>
 {{- end -}}

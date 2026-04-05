@@ -3616,6 +3616,25 @@ html[data-theme="dark"] .card-easter-egg {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.home-insight-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.home-insight-card {
+  display: grid;
+  align-content: start;
+  gap: 0.9rem;
+  min-height: 220px;
+}
+
+.home-insight-card h3 {
+  margin: 0;
+  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+  line-height: 1.32;
+}
+
 .apple-tile {
   display: flex;
   flex-direction: column;
@@ -3703,6 +3722,41 @@ html[data-theme="dark"] .card-easter-egg {
     opacity 0.34s var(--card-transition-ease),
     transform 0.34s var(--card-transition-ease),
     filter 0.34s var(--card-transition-ease);
+}
+
+.project-card__body,
+.note-card__body,
+.apple-showcase__copy,
+.apple-tile > *,
+.apple-project-tile__copy,
+.archive-feature__copy,
+.resume-hero__copy > *,
+.resume-hero__panel > *,
+.info-card > *,
+.timeline-item__content > *,
+.home-insight-card > * {
+  transition:
+    transform 0.38s var(--card-transition-ease),
+    opacity 0.32s var(--card-transition-ease);
+  will-change: transform;
+}
+
+.project-card:hover .project-card__body,
+.note-card:hover .note-card__body,
+.apple-showcase:hover .apple-showcase__copy,
+.apple-tile:hover > *,
+.apple-project-tile:hover .apple-project-tile__copy,
+.archive-feature:hover .archive-feature__copy,
+.resume-hero:hover .resume-hero__copy > *,
+.resume-hero:hover .resume-hero__panel > *,
+.info-card:hover > *,
+.timeline-item__content:hover > *,
+.home-insight-card:hover > * {
+  transform: translate3d(
+    calc(var(--tilt-translate-x, 0px) / 3),
+    calc(var(--tilt-translate-y, 0px) / 3),
+    0
+  );
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -4005,7 +4059,8 @@ html[data-theme="dark"] .apple-project-tile--contact .apple-link {
 
   .apple-showcase,
   .apple-grid--two,
-  .apple-grid--three {
+  .apple-grid--three,
+  .home-insight-grid {
     grid-template-columns: 1fr;
   }
 
@@ -4021,7 +4076,8 @@ html[data-theme="dark"] .apple-project-tile--contact .apple-link {
 
   .project-grid,
   .note-grid,
-  .project-detail__summary-grid {
+  .project-detail__summary-grid,
+  .home-insight-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -4118,7 +4174,8 @@ html[data-theme="dark"] .apple-project-tile--contact .apple-link {
   .hero-metrics,
   .resume-grid,
   .contact-grid,
-  .timeline-item {
+  .timeline-item,
+  .home-insight-grid {
     grid-template-columns: 1fr;
   }
 
