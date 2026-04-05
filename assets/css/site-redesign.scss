@@ -25,6 +25,9 @@
   --studio-card-sheen: rgba(255, 255, 255, 0.18);
   --studio-card-spotlight: rgba(255, 255, 255, 0.54);
   --studio-card-spotlight-soft: rgba(95, 111, 135, 0.12);
+  --studio-glass-tint: rgba(244, 247, 251, 0.26);
+  --studio-glass-edge: rgba(255, 255, 255, 0.54);
+  --studio-glass-shadow: rgba(148, 160, 178, 0.18);
   --studio-spotlight-size: 122px;
   --studio-spotlight-size-sm: 86px;
   --studio-radius-xl: 32px;
@@ -59,6 +62,9 @@ html[data-theme="dark"] {
   --studio-card-sheen: rgba(255, 255, 255, 0.14);
   --studio-card-spotlight: rgba(255, 255, 255, 0.16);
   --studio-card-spotlight-soft: rgba(184, 192, 204, 0.08);
+  --studio-glass-tint: rgba(214, 221, 230, 0.08);
+  --studio-glass-edge: rgba(255, 255, 255, 0.16);
+  --studio-glass-shadow: rgba(0, 0, 0, 0.24);
   --studio-spotlight-size: 118px;
   --studio-spotlight-size-sm: 82px;
   --studio-grid: linear-gradient(rgba(173, 185, 204, 0.05) 1px, transparent 1px),
@@ -1229,7 +1235,7 @@ html[data-theme="dark"] .career-page--contact .contact-note {
   padding: 0.2rem 0;
   border: 0;
   border-radius: 999px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.02);
   color: var(--studio-accent-strong) !important;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -1306,6 +1312,7 @@ html[data-theme="dark"] .career-page--contact .contact-note {
   overflow: hidden;
   --card-spotlight-size: var(--studio-spotlight-size);
   --scroll-media-parallax-y: 0px;
+  --glass-hover-opacity: 0;
   transform:
     perspective(1200px)
     translate3d(var(--tilt-translate-x, 0), var(--tilt-translate-y, 0), 0)
@@ -1313,6 +1320,7 @@ html[data-theme="dark"] .career-page--contact .contact-note {
     rotateY(var(--tilt-rotate-y, 0));
   transform-style: preserve-3d;
   will-change: transform, box-shadow, opacity;
+  backdrop-filter: blur(12px) saturate(1.02);
   transition:
     transform var(--card-transition-duration) var(--card-transition-ease),
     box-shadow var(--card-transition-duration) var(--card-transition-ease),
@@ -1320,7 +1328,8 @@ html[data-theme="dark"] .career-page--contact .contact-note {
     background-color var(--card-transition-duration) var(--card-transition-ease),
     color var(--card-transition-duration) var(--card-transition-ease),
     opacity 560ms var(--card-transition-ease),
-    filter 560ms var(--card-transition-ease);
+    filter 560ms var(--card-transition-ease),
+    backdrop-filter 420ms var(--card-transition-ease);
 }
 
 body.motion-enhanced .project-card,
@@ -1593,8 +1602,13 @@ body.is-detail-landing .career-page--portfolio .project-grid > :nth-child(4) { a
 .timeline-item__content::after,
 .home-spec-card::after,
 .home-hero-button::after,
+.home-stage-link::after,
+.career-button::after,
 .apple-link::after,
-.about-link-item::after {
+.about-link-item::after,
+.project-card__links a::after,
+.section-link::after,
+.project-card__readmore::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1602,13 +1616,21 @@ body.is-detail-landing .career-page--portfolio .project-grid > :nth-child(4) { a
   z-index: 0;
   opacity: 0;
   background:
+    linear-gradient(135deg, var(--studio-glass-tint) 0%, transparent 38%, rgba(255, 255, 255, 0.1) 100%),
     radial-gradient(
       circle var(--card-spotlight-size, var(--studio-spotlight-size)) at var(--pointer-x, 50%) var(--pointer-y, 50%),
       var(--studio-card-spotlight) 0%,
       var(--studio-card-spotlight-soft) 16%,
       transparent 34%
     );
-  transition: opacity 220ms ease;
+  box-shadow:
+    inset 0 0 0 1px var(--studio-glass-edge),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(0px) saturate(1) grayscale(0);
+  transition:
+    opacity 220ms ease,
+    backdrop-filter 320ms var(--card-transition-ease),
+    box-shadow 320ms var(--card-transition-ease);
 }
 
 .project-card > *,
@@ -1660,6 +1682,7 @@ body.is-detail-landing .career-page--portfolio .project-grid > :nth-child(4) { a
 .project-card__links a:hover,
 .section-link:hover,
 .project-card__readmore:hover {
+  --glass-hover-opacity: 1;
   transform:
     perspective(1200px)
     translate3d(var(--tilt-translate-x, 0), calc(var(--tilt-translate-y, 0) - 4px), 0)
@@ -1668,8 +1691,11 @@ body.is-detail-landing .career-page--portfolio .project-grid > :nth-child(4) { a
     scale(1.012);
   box-shadow:
     var(--card-shadow-hover),
-    0 0 0 1px rgba(255, 255, 255, 0.42);
-  border-color: rgba(95, 111, 135, 0.22);
+    0 0 0 1px rgba(255, 255, 255, 0.42),
+    0 20px 44px var(--studio-glass-shadow);
+  border-color: rgba(95, 111, 135, 0.26);
+  filter: saturate(1.03) contrast(1.01);
+  backdrop-filter: blur(20px) saturate(1.18) grayscale(0.06);
 }
 
 .project-card:hover::before,
@@ -1706,9 +1732,18 @@ body.is-detail-landing .career-page--portfolio .project-grid > :nth-child(4) { a
 .timeline-item__content:hover::after,
 .home-spec-card:hover::after,
 .home-hero-button:hover::after,
+.home-stage-link:hover::after,
+.career-button:hover::after,
 .apple-link:hover::after,
-.about-link-item:hover::after {
-  opacity: 0.72;
+.about-link-item:hover::after,
+.project-card__links a:hover::after,
+.section-link:hover::after,
+.project-card__readmore:hover::after {
+  opacity: 0.84;
+  backdrop-filter: blur(24px) saturate(1.2) grayscale(0.08);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.52),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34);
 }
 
 .project-card.is-pointer-down,
@@ -3692,6 +3727,9 @@ html[data-theme="dark"] .card-easter-egg {
   align-items: center;
   gap: 0.3rem;
   width: fit-content;
+  padding: 0.18rem 0.2rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.02);
   color: #46566f !important;
   font-weight: 600;
   text-decoration: none;
