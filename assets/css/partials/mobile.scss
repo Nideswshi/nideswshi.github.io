@@ -8,13 +8,20 @@
   #mobile-nav {
     position: fixed;
     top: 0;
-    left: -($mobile-nav-width);
+    left: 0;
     width: $mobile-nav-width;
     height: 100%;
     background: var(--color-mobile-nav-background);
     z-index: 1001;
-    transition: 0.3s;
+    transform: translate3d(calc(-100% - 18px), 0, 0);
+    opacity: 0.01;
+    transition:
+      transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 220ms ease;
     overflow: auto;
+    will-change: transform;
+    backface-visibility: hidden;
+    contain: layout paint style;
 
     &::-webkit-scrollbar {
       width: 8px;
@@ -22,7 +29,8 @@
     }
 
     .mobile-nav-on & {
-      left: 0;
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
     }
   }
 }
