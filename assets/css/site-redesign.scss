@@ -285,19 +285,19 @@ html[data-theme="dark"] body::after {
 }
 
 :root {
-  --titanium-light-core: #b0b0ad;
-  --titanium-light-frost: #edeff2;
-  --titanium-light-shadow: #8f959d;
-  --titanium-light-deep: #c7ccd3;
+  --titanium-light-core: #cdb38f;
+  --titanium-light-frost: #f7ead4;
+  --titanium-light-shadow: #9f805b;
+  --titanium-light-deep: #dfc8a8;
   --titanium-page-texture: url("/images/textures/titanium-light-page.jpg");
-  --titanium-card-texture: url("/images/textures/titanium-light-card.jpg");
-  --titanium-sidebar-texture: url("/images/textures/titanium-light-sidebar.jpg");
+  --titanium-card-texture: url("/images/textures/titanium-light-card-v2.jpg");
+  --titanium-sidebar-texture: url("/images/textures/titanium-light-sidebar-v2.jpg");
   --titanium-page-texture-size: 680px 454px;
-  --titanium-card-texture-size: 340px 227px;
-  --titanium-sidebar-texture-size: 320px 214px;
+  --titanium-card-texture-size: 360px 240px;
+  --titanium-sidebar-texture-size: 420px 280px;
   --titanium-page-texture-blend: soft-light;
-  --titanium-card-texture-blend: overlay;
-  --titanium-sidebar-texture-blend: soft-light;
+  --titanium-card-texture-blend: soft-light;
+  --titanium-sidebar-texture-blend: overlay;
   --material-panel-surface:
     linear-gradient(180deg, rgba(248, 249, 251, 0.96), rgba(238, 241, 245, 0.95) 38%, rgba(223, 228, 234, 0.96) 100%),
     repeating-linear-gradient(
@@ -312,22 +312,22 @@ html[data-theme="dark"] body::after {
   --material-panel-shadow: 0 20px 46px rgba(118, 126, 136, 0.14);
   --material-panel-inset: rgba(255, 255, 255, 0.48);
   --material-card-surface:
-    linear-gradient(180deg, rgba(252, 253, 255, 0.96), rgba(241, 244, 247, 0.96) 42%, rgba(223, 228, 235, 0.96) 100%),
+    linear-gradient(180deg, rgba(255, 250, 242, 0.97), rgba(247, 236, 216, 0.97) 42%, rgba(229, 210, 183, 0.97) 100%),
     repeating-linear-gradient(
       106deg,
-      rgba(255, 255, 255, 0.54) 0 8px,
-      rgba(235, 239, 243, 0.24) 8px 18px,
-      rgba(198, 203, 210, 0.1) 18px 30px,
-      rgba(255, 255, 255, 0.2) 30px 46px
+      rgba(255, 248, 235, 0.58) 0 8px,
+      rgba(242, 226, 197, 0.26) 8px 18px,
+      rgba(209, 184, 149, 0.12) 18px 30px,
+      rgba(255, 245, 228, 0.22) 30px 46px
     );
   --material-card-surface-hover:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(243, 246, 249, 0.98) 42%, rgba(228, 233, 239, 0.98) 100%),
+    linear-gradient(180deg, rgba(255, 252, 246, 0.99), rgba(250, 239, 221, 0.99) 42%, rgba(235, 216, 189, 0.99) 100%),
     repeating-linear-gradient(
       104deg,
-      rgba(255, 255, 255, 0.66) 0 10px,
-      rgba(239, 243, 247, 0.32) 10px 22px,
-      rgba(198, 203, 210, 0.12) 22px 36px,
-      rgba(255, 255, 255, 0.24) 36px 54px
+      rgba(255, 248, 236, 0.68) 0 10px,
+      rgba(245, 229, 201, 0.34) 10px 22px,
+      rgba(208, 184, 150, 0.14) 22px 36px,
+      rgba(255, 245, 230, 0.26) 36px 54px
     );
   --material-card-outline: rgba(154, 161, 170, 0.24);
   --material-card-glass-shadow:
@@ -336,10 +336,10 @@ html[data-theme="dark"] body::after {
     inset 0 1px 0 rgba(255, 255, 255, 0.3),
     inset 0 -18px 28px rgba(177, 184, 194, 0.1);
   --material-menu-surface:
-    linear-gradient(180deg, rgba(252, 253, 255, 0.98), rgba(235, 239, 244, 0.98) 46%, rgba(212, 218, 226, 0.98) 100%),
-    linear-gradient(118deg, rgba(255, 255, 255, 0.56) 0%, rgba(209, 215, 223, 0.14) 46%, rgba(255, 255, 255, 0.18) 100%);
+    linear-gradient(180deg, rgba(255, 250, 242, 0.98), rgba(244, 231, 209, 0.98) 46%, rgba(221, 201, 170, 0.99) 100%),
+    linear-gradient(118deg, rgba(255, 250, 242, 0.58) 0%, rgba(220, 196, 160, 0.16) 46%, rgba(255, 244, 226, 0.18) 100%);
   --material-menu-active-surface:
-    linear-gradient(180deg, rgba(229, 233, 237, 0.99), rgba(180, 186, 194, 0.98) 48%, rgba(129, 136, 146, 0.98) 100%);
+    linear-gradient(180deg, rgba(236, 219, 192, 0.99), rgba(194, 163, 119, 0.98) 48%, rgba(141, 113, 73, 0.99) 100%);
   --material-menu-active-shadow:
     0 18px 36px rgba(102, 110, 121, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.42),
@@ -347,11 +347,11 @@ html[data-theme="dark"] body::after {
     inset 16px 0 24px rgba(255, 255, 255, 0.08),
     inset -18px 0 24px rgba(129, 136, 146, 0.12);
   --material-sidebar-surface:
-    linear-gradient(180deg, rgba(251, 252, 254, 0.98), rgba(234, 238, 243, 0.97) 38%, rgba(216, 221, 228, 0.98) 100%),
-    linear-gradient(122deg, rgba(255, 255, 255, 0.72) 0%, rgba(212, 218, 227, 0.16) 36%, rgba(255, 255, 255, 0.14) 56%, rgba(176, 183, 193, 0.16) 82%, rgba(255, 255, 255, 0.56) 100%);
+    linear-gradient(180deg, rgba(252, 247, 238, 0.99), rgba(242, 228, 203, 0.98) 38%, rgba(223, 201, 166, 0.99) 100%),
+    linear-gradient(122deg, rgba(255, 251, 241, 0.74) 0%, rgba(226, 202, 166, 0.18) 36%, rgba(255, 246, 229, 0.14) 56%, rgba(187, 157, 117, 0.18) 82%, rgba(255, 249, 239, 0.58) 100%);
   --material-sidebar-widget-surface:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(241, 244, 248, 0.88) 100%),
-    linear-gradient(112deg, rgba(255, 255, 255, 0.28), rgba(208, 215, 224, 0.08) 44%, rgba(255, 255, 255, 0.14) 100%);
+    linear-gradient(180deg, rgba(255, 248, 237, 0.82), rgba(245, 230, 204, 0.92) 100%),
+    linear-gradient(112deg, rgba(255, 250, 241, 0.30), rgba(220, 195, 155, 0.10) 44%, rgba(255, 248, 235, 0.16) 100%);
   --material-sidebar-stripe:
     repeating-linear-gradient(
       102deg,
@@ -366,13 +366,13 @@ html[data-theme="dark"] body::after {
     radial-gradient(circle at 84% 12%, rgba(190, 199, 210, 0.2), transparent 22%),
     linear-gradient(122deg, transparent 0%, rgba(255, 255, 255, 0.28) 24%, transparent 42%, rgba(169, 178, 189, 0.14) 64%, transparent 100%);
   --material-sidebar-frame-surface:
-    linear-gradient(180deg, rgba(252, 253, 255, 0.99), rgba(237, 241, 246, 0.98) 40%, rgba(218, 224, 231, 0.96) 100%),
+    linear-gradient(180deg, rgba(255, 250, 242, 0.99), rgba(244, 231, 210, 0.99) 40%, rgba(227, 205, 170, 0.97) 100%),
     repeating-linear-gradient(
       106deg,
-      rgba(255, 255, 255, 0.34) 0 10px,
-      rgba(219, 225, 233, 0.16) 10px 22px,
-      rgba(248, 250, 252, 0.18) 22px 36px,
-      rgba(189, 196, 206, 0.06) 36px 52px
+      rgba(255, 249, 238, 0.36) 0 10px,
+      rgba(228, 204, 168, 0.18) 10px 22px,
+      rgba(250, 239, 222, 0.18) 22px 36px,
+      rgba(197, 166, 126, 0.08) 36px 52px
     );
   --material-sidebar-frame-border: rgba(148, 156, 167, 0.32);
   --material-sidebar-frame-shadow:
@@ -384,49 +384,49 @@ html[data-theme="dark"] body::after {
 }
 
 html[data-theme="dark"] {
-  --titanium-dark-core: #65615b;
-  --titanium-dark-frost: #444753;
-  --titanium-dark-shadow: #171a1f;
-  --titanium-dark-deep: #242930;
+  --titanium-dark-core: #394654;
+  --titanium-dark-frost: #5c6b7e;
+  --titanium-dark-shadow: #02050a;
+  --titanium-dark-deep: #121821;
   --titanium-page-texture: url("/images/textures/titanium-dark-page.jpg");
-  --titanium-card-texture: url("/images/textures/titanium-dark-card.jpg");
-  --titanium-sidebar-texture: url("/images/textures/titanium-dark-sidebar.jpg");
+  --titanium-card-texture: url("/images/textures/titanium-dark-card-v2.jpg");
+  --titanium-sidebar-texture: url("/images/textures/titanium-dark-sidebar-v2.jpg");
   --titanium-page-texture-size: 680px 454px;
   --titanium-card-texture-size: 320px 214px;
-  --titanium-sidebar-texture-size: 300px 200px;
+  --titanium-sidebar-texture-size: 400px 267px;
   --titanium-page-texture-blend: overlay;
-  --titanium-card-texture-blend: soft-light;
-  --titanium-sidebar-texture-blend: overlay;
+  --titanium-card-texture-blend: overlay;
+  --titanium-sidebar-texture-blend: soft-light;
   --material-panel-surface:
-    linear-gradient(180deg, rgba(90, 87, 82, 0.16), rgba(56, 61, 69, 0.1) 34%, rgba(15, 17, 20, 0.97) 100%),
+    linear-gradient(180deg, rgba(64, 75, 89, 0.18), rgba(22, 28, 36, 0.1) 34%, rgba(3, 6, 10, 0.99) 100%),
     repeating-linear-gradient(
       104deg,
-      rgba(236, 240, 246, 0.08) 0 10px,
-      rgba(145, 153, 165, 0.04) 10px 22px,
-      rgba(72, 78, 88, 0.07) 22px 34px,
-      rgba(222, 228, 237, 0.03) 34px 52px
+      rgba(220, 228, 239, 0.08) 0 10px,
+      rgba(97, 111, 129, 0.05) 10px 22px,
+      rgba(19, 24, 32, 0.08) 22px 34px,
+      rgba(214, 223, 234, 0.03) 34px 52px
     ),
-    linear-gradient(128deg, rgba(230, 236, 243, 0.1) 0%, rgba(101, 97, 91, 0.08) 48%, rgba(68, 71, 83, 0.14) 100%);
+    linear-gradient(128deg, rgba(224, 232, 242, 0.1) 0%, rgba(61, 72, 87, 0.08) 48%, rgba(41, 51, 64, 0.14) 100%);
   --material-panel-border: rgba(198, 205, 214, 0.14);
   --material-panel-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
   --material-panel-inset: rgba(236, 241, 247, 0.08);
   --material-card-surface:
-    linear-gradient(180deg, rgba(100, 96, 91, 0.14), rgba(51, 56, 64, 0.08) 40%, rgba(12, 14, 18, 0.97) 100%),
+    linear-gradient(180deg, rgba(62, 73, 88, 0.18), rgba(20, 26, 34, 0.10) 40%, rgba(3, 6, 10, 0.99) 100%),
     repeating-linear-gradient(
       106deg,
-      rgba(239, 244, 250, 0.08) 0 8px,
-      rgba(145, 153, 165, 0.03) 8px 18px,
-      rgba(74, 81, 91, 0.06) 18px 30px,
-      rgba(236, 241, 247, 0.025) 30px 46px
+      rgba(220, 228, 239, 0.10) 0 8px,
+      rgba(97, 111, 129, 0.05) 8px 18px,
+      rgba(19, 24, 32, 0.08) 18px 30px,
+      rgba(214, 223, 234, 0.02) 30px 46px
     );
   --material-card-surface-hover:
-    linear-gradient(180deg, rgba(118, 113, 107, 0.16), rgba(58, 63, 71, 0.1) 40%, rgba(15, 17, 21, 0.98) 100%),
+    linear-gradient(180deg, rgba(70, 82, 98, 0.19), rgba(24, 31, 40, 0.11) 40%, rgba(4, 7, 12, 0.995) 100%),
     repeating-linear-gradient(
       104deg,
-      rgba(241, 246, 252, 0.1) 0 10px,
-      rgba(151, 160, 173, 0.04) 10px 22px,
-      rgba(76, 83, 94, 0.07) 22px 36px,
-      rgba(241, 246, 252, 0.03) 36px 54px
+      rgba(223, 231, 241, 0.11) 0 10px,
+      rgba(103, 117, 136, 0.05) 10px 22px,
+      rgba(20, 26, 34, 0.09) 22px 36px,
+      rgba(218, 226, 236, 0.03) 36px 54px
     );
   --material-card-outline: rgba(202, 209, 219, 0.12);
   --material-card-glass-shadow:
@@ -435,10 +435,10 @@ html[data-theme="dark"] {
     inset 0 1px 0 rgba(244, 248, 252, 0.1),
     inset 0 -18px 28px rgba(86, 95, 108, 0.12);
   --material-menu-surface:
-    linear-gradient(180deg, rgba(104, 100, 94, 0.16), rgba(48, 52, 59, 0.1) 46%, rgba(14, 16, 20, 0.97) 100%),
-    linear-gradient(118deg, rgba(239, 244, 250, 0.08) 0%, rgba(150, 159, 171, 0.04) 46%, rgba(243, 247, 252, 0.04) 100%);
+    linear-gradient(180deg, rgba(58, 69, 84, 0.18), rgba(18, 24, 31, 0.1) 46%, rgba(2, 5, 9, 0.99) 100%),
+    linear-gradient(118deg, rgba(220, 228, 239, 0.09) 0%, rgba(94, 108, 126, 0.05) 46%, rgba(225, 233, 243, 0.04) 100%);
   --material-menu-active-surface:
-    linear-gradient(180deg, rgba(171, 177, 186, 0.96), rgba(116, 123, 134, 0.94) 50%, rgba(66, 72, 81, 0.98) 100%);
+    linear-gradient(180deg, rgba(110, 124, 143, 0.95), rgba(57, 69, 84, 0.95) 50%, rgba(13, 18, 25, 0.995) 100%);
   --material-menu-active-shadow:
     0 18px 38px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(243, 247, 252, 0.16),
@@ -446,11 +446,11 @@ html[data-theme="dark"] {
     inset 16px 0 24px rgba(243, 247, 252, 0.04),
     inset -18px 0 24px rgba(0, 0, 0, 0.12);
   --material-sidebar-surface:
-    linear-gradient(180deg, rgba(100, 96, 91, 0.16), rgba(46, 50, 58, 0.12) 38%, rgba(11, 13, 16, 0.98) 100%),
-    linear-gradient(122deg, rgba(239, 244, 250, 0.12) 0%, rgba(151, 160, 173, 0.05) 36%, rgba(241, 246, 252, 0.04) 56%, rgba(86, 95, 108, 0.08) 82%, rgba(236, 241, 247, 0.05) 100%);
+    linear-gradient(180deg, rgba(57, 68, 83, 0.19), rgba(16, 22, 29, 0.12) 38%, rgba(2, 4, 8, 0.995) 100%),
+    linear-gradient(122deg, rgba(220, 228, 239, 0.12) 0%, rgba(94, 108, 126, 0.05) 36%, rgba(225, 233, 243, 0.04) 56%, rgba(26, 33, 42, 0.08) 82%, rgba(216, 224, 235, 0.05) 100%);
   --material-sidebar-widget-surface:
-    linear-gradient(180deg, rgba(78, 84, 94, 0.18), rgba(26, 30, 36, 0.12) 100%),
-    linear-gradient(112deg, rgba(237, 242, 248, 0.08), rgba(148, 157, 169, 0.03) 44%, rgba(240, 244, 249, 0.04) 100%);
+    linear-gradient(180deg, rgba(51, 62, 76, 0.19), rgba(12, 17, 24, 0.15) 100%),
+    linear-gradient(112deg, rgba(221, 229, 239, 0.09), rgba(94, 108, 126, 0.03) 44%, rgba(225, 232, 242, 0.04) 100%);
   --material-sidebar-stripe:
     repeating-linear-gradient(
       102deg,
@@ -465,13 +465,13 @@ html[data-theme="dark"] {
     radial-gradient(circle at 82% 12%, rgba(156, 166, 179, 0.12), transparent 22%),
     linear-gradient(122deg, transparent 0%, rgba(238, 244, 250, 0.12) 24%, transparent 42%, rgba(132, 143, 157, 0.1) 64%, transparent 100%);
   --material-sidebar-frame-surface:
-    linear-gradient(180deg, rgba(112, 107, 101, 0.16), rgba(44, 49, 56, 0.12) 40%, rgba(10, 12, 15, 0.99) 100%),
+    linear-gradient(180deg, rgba(62, 73, 88, 0.18), rgba(15, 21, 28, 0.13) 40%, rgba(2, 4, 8, 0.998) 100%),
     repeating-linear-gradient(
       106deg,
-      rgba(240, 245, 251, 0.12) 0 10px,
-      rgba(150, 159, 171, 0.05) 10px 22px,
-      rgba(74, 81, 92, 0.08) 22px 36px,
-      rgba(240, 245, 251, 0.03) 36px 52px
+      rgba(221, 229, 239, 0.12) 0 10px,
+      rgba(94, 108, 126, 0.05) 10px 22px,
+      rgba(20, 26, 35, 0.09) 22px 36px,
+      rgba(219, 227, 237, 0.03) 36px 52px
     );
   --material-sidebar-frame-border: rgba(206, 213, 222, 0.18);
   --material-sidebar-frame-shadow:
@@ -484,34 +484,34 @@ html[data-theme="dark"] {
 
 body {
   background:
-    radial-gradient(circle at 18% 14%, rgba(196, 202, 210, 0.22), transparent 20%),
-    radial-gradient(circle at 82% 8%, rgba(250, 251, 252, 0.88), transparent 22%),
+    radial-gradient(circle at 18% 14%, rgba(214, 188, 145, 0.24), transparent 20%),
+    radial-gradient(circle at 82% 8%, rgba(255, 247, 228, 0.92), transparent 22%),
     var(--titanium-page-texture),
-    linear-gradient(180deg, #f7f8fa 0%, #e6eaef 52%, #eef2f5 100%);
+    linear-gradient(180deg, #f8f1e6 0%, #ead9bf 52%, #f4ead8 100%);
   background-size: auto, auto, var(--titanium-page-texture-size), auto;
   background-blend-mode: normal, normal, var(--titanium-page-texture-blend), normal;
 }
 
 body::after {
   background:
-    radial-gradient(circle at 50% -4%, rgba(176, 176, 173, 0.18), transparent 28%),
-    radial-gradient(circle at 84% 22%, rgba(199, 204, 211, 0.2), transparent 18%);
+    radial-gradient(circle at 50% -4%, rgba(198, 165, 118, 0.22), transparent 28%),
+    radial-gradient(circle at 84% 22%, rgba(221, 194, 152, 0.18), transparent 18%);
 }
 
 html[data-theme="dark"] body {
   background:
-    radial-gradient(circle at 14% 18%, rgba(103, 111, 122, 0.2), transparent 20%),
-    radial-gradient(circle at 84% 10%, rgba(58, 66, 77, 0.22), transparent 24%),
+    radial-gradient(circle at 14% 18%, rgba(82, 99, 121, 0.2), transparent 20%),
+    radial-gradient(circle at 84% 10%, rgba(21, 30, 42, 0.28), transparent 24%),
     var(--titanium-page-texture),
-    linear-gradient(180deg, #0b0c0f 0%, #13161a 54%, #101216 100%);
+    linear-gradient(180deg, #02050a 0%, #090e14 54%, #05080d 100%);
   background-size: auto, auto, var(--titanium-page-texture-size), auto;
   background-blend-mode: normal, normal, var(--titanium-page-texture-blend), normal;
 }
 
 html[data-theme="dark"] body::after {
   background:
-    radial-gradient(circle at 50% -4%, rgba(176, 184, 194, 0.14), transparent 28%),
-    radial-gradient(circle at 84% 22%, rgba(101, 97, 91, 0.14), transparent 22%);
+    radial-gradient(circle at 50% -4%, rgba(118, 137, 160, 0.14), transparent 28%),
+    radial-gradient(circle at 84% 22%, rgba(35, 47, 63, 0.18), transparent 22%);
 }
 
 body,
@@ -4312,9 +4312,9 @@ html[data-theme="dark"] .sidebar-menu-link-wrap:hover .sidebar-menu-icon {
 #header.header--home {
   min-height: clamp(780px, 100vh, 1080px);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.54) 0%, rgba(255, 255, 255, 0.18) 36%, rgba(228, 233, 239, 0.58) 100%),
-    url("/images/backgrounds/home-hero-light.jpg"),
-    linear-gradient(180deg, #fbfcfe 0%, #eff3f7 100%);
+    linear-gradient(180deg, rgba(255, 249, 239, 0.42) 0%, rgba(250, 235, 208, 0.22) 34%, rgba(208, 173, 123, 0.54) 100%),
+    url("/images/backgrounds/home-hero-light-v2.jpg"),
+    linear-gradient(180deg, #fbf5e8 0%, #f0dfc0 100%);
   background-size: cover;
   background-position: center;
 }
@@ -4327,13 +4327,14 @@ html[data-theme="dark"] .sidebar-menu-link-wrap:hover .sidebar-menu-icon {
 
 #header.header--home::before {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(225, 231, 238, 0.14) 50%, rgba(212, 220, 228, 0.26) 100%),
-    radial-gradient(circle at 76% 24%, rgba(255, 255, 255, 0.65), transparent 18%),
-    radial-gradient(circle at 22% 18%, rgba(214, 220, 229, 0.2), transparent 22%),
+    linear-gradient(180deg, rgba(255, 248, 236, 0.08) 0%, rgba(233, 208, 169, 0.18) 50%, rgba(193, 150, 89, 0.28) 100%),
+    radial-gradient(circle at 74% 22%, rgba(255, 246, 227, 0.64), transparent 18%),
+    radial-gradient(circle at 18% 18%, rgba(224, 198, 157, 0.24), transparent 22%),
+    radial-gradient(circle at 64% 58%, rgba(181, 148, 104, 0.16), transparent 26%),
     repeating-linear-gradient(
       90deg,
-      rgba(120, 133, 153, 0.08) 0,
-      rgba(120, 133, 153, 0.08) 1px,
+      rgba(167, 132, 86, 0.09) 0,
+      rgba(167, 132, 86, 0.09) 1px,
       transparent 1px,
       transparent 240px
     );
@@ -4343,11 +4344,12 @@ html[data-theme="dark"] .sidebar-menu-link-wrap:hover .sidebar-menu-icon {
   inset: auto 0 0 0;
   height: clamp(180px, 20vw, 260px);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(122, 136, 158, 0.1) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(169, 132, 80, 0.18) 100%),
+    radial-gradient(circle at 72% 24%, rgba(250, 229, 189, 0.22), transparent 22%),
     repeating-linear-gradient(
       0deg,
-      rgba(122, 136, 158, 0.08) 0,
-      rgba(122, 136, 158, 0.08) 1px,
+      rgba(162, 131, 93, 0.08) 0,
+      rgba(162, 131, 93, 0.08) 1px,
       transparent 1px,
       transparent 58px
     );
@@ -5064,23 +5066,23 @@ html[data-theme="dark"] #header {
 
 html[data-theme="dark"] #header.header--home {
   background:
-    linear-gradient(180deg, rgba(7, 9, 13, 0.54) 0%, rgba(8, 10, 14, 0.24) 34%, rgba(7, 9, 13, 0.74) 100%),
-    url("/images/backgrounds/home-hero-dark.jpg"),
-    linear-gradient(180deg, #13171d 0%, #080a0d 100%);
+    linear-gradient(180deg, rgba(2, 5, 9, 0.46) 0%, rgba(4, 7, 11, 0.22) 34%, rgba(1, 3, 6, 0.86) 100%),
+    url("/images/backgrounds/home-hero-dark-v2.jpg"),
+    linear-gradient(180deg, #081018 0%, #010409 100%);
   background-size: cover;
   background-position: center;
 }
 
 html[data-theme="dark"] #header.header--home::before {
   background:
-    linear-gradient(180deg, rgba(9, 12, 16, 0.08) 0%, rgba(9, 12, 16, 0.16) 50%, rgba(9, 12, 16, 0.34) 100%),
-    radial-gradient(circle at 76% 24%, rgba(241, 246, 252, 0.1), transparent 18%),
-    radial-gradient(circle at 22% 18%, rgba(188, 198, 210, 0.09), transparent 22%),
-    radial-gradient(circle at 64% 58%, rgba(130, 142, 158, 0.08), transparent 26%),
+    linear-gradient(180deg, rgba(4, 7, 11, 0.08) 0%, rgba(4, 7, 11, 0.16) 50%, rgba(4, 7, 11, 0.42) 100%),
+    radial-gradient(circle at 78% 20%, rgba(212, 225, 241, 0.16), transparent 18%),
+    radial-gradient(circle at 20% 18%, rgba(84, 103, 128, 0.12), transparent 22%),
+    radial-gradient(circle at 66% 58%, rgba(44, 58, 78, 0.14), transparent 26%),
     repeating-linear-gradient(
       90deg,
-      rgba(228, 234, 242, 0.04) 0,
-      rgba(228, 234, 242, 0.04) 1px,
+      rgba(170, 190, 214, 0.05) 0,
+      rgba(170, 190, 214, 0.05) 1px,
       transparent 1px,
       transparent 240px
     );
@@ -5088,12 +5090,12 @@ html[data-theme="dark"] #header.header--home::before {
 
 html[data-theme="dark"] #header.header--home::after {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(9, 12, 16, 0.18) 100%),
-    radial-gradient(circle at 68% 34%, rgba(170, 180, 194, 0.07), transparent 22%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(4, 7, 11, 0.30) 100%),
+    radial-gradient(circle at 68% 34%, rgba(106, 126, 151, 0.12), transparent 22%),
     repeating-linear-gradient(
       0deg,
-      rgba(230, 236, 244, 0.04) 0,
-      rgba(230, 236, 244, 0.04) 1px,
+      rgba(170, 190, 214, 0.05) 0,
+      rgba(170, 190, 214, 0.05) 1px,
       transparent 1px,
       transparent 58px
     );
