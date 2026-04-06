@@ -178,7 +178,17 @@ interface AOSNode {
   };
 
   const init = (opts) => {
-    options = { ...options, ...opts };
+    const compactPerformanceMode = document.documentElement.classList.contains(
+      "performance-compact",
+    );
+    options = {
+      ...options,
+      ...opts,
+      disable:
+        opts.disable ||
+        compactPerformanceMode ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    };
     $aosElements = [..._$$("[data-aos]")].map((node) => ({
       node: node as HTMLElement,
     }));

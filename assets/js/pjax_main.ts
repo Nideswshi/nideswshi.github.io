@@ -246,6 +246,17 @@ const motionCardSelector = [
   ".home-spec-card",
 ].join(", ");
 
+const prefersReducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)",
+).matches;
+const canUseFinePointerInteractions = window.matchMedia(
+  "(hover: hover) and (pointer: fine)",
+).matches;
+const allowCardMotion = !prefersReducedMotion;
+const allowCardParallax = !prefersReducedMotion;
+const allowTiltMotion = !prefersReducedMotion && canUseFinePointerInteractions;
+const allowCardOpenTransition = !prefersReducedMotion;
+
 const cardNavigationCandidateSelector = [
   ".project-card",
   ".note-card",
@@ -365,6 +376,7 @@ const cardTimers = new WeakMap<
     cleanup?: number;
     hold?: number;
     easter?: number;
+    launch?: number;
   }
 >();
 
@@ -376,7 +388,7 @@ const ensureCardTimers = (card: HTMLElement) => {
 
 const clearCardTimeout = (
   card: HTMLElement,
-  key: "navigate" | "cleanup" | "hold" | "easter",
+  key: "navigate" | "cleanup" | "hold" | "easter" | "launch",
 ) => {
   const timers = ensureCardTimers(card);
   const value = timers[key];
@@ -391,6 +403,7 @@ const clearAllCardTimeouts = (card: HTMLElement) => {
   clearCardTimeout(card, "cleanup");
   clearCardTimeout(card, "hold");
   clearCardTimeout(card, "easter");
+  clearCardTimeout(card, "launch");
 };
 
 const getCardLabel = (card: HTMLElement) => {
@@ -439,12 +452,18 @@ const clearCardOpenState = (card: HTMLElement, clone?: HTMLElement | null) => {
   card.classList.remove("is-card-transitioning");
   card.classList.remove("is-card-flipping");
   card.classList.remove("is-card-pressing");
+  card.classList.remove("is-card-launching");
   document.body.classList.remove("is-card-opening");
   document.body.classList.remove("is-card-transitioning");
   clone?.remove();
 };
 
 const playCardOpenTransition = (card: HTMLElement, url: string) => {
+  if (!allowCardOpenTransition) {
+    window.location.href = url;
+    return;
+  }
+
   if (
     card.classList.contains("is-card-transitioning") ||
     document.body.classList.contains("is-card-opening")
@@ -466,6 +485,7 @@ const playCardOpenTransition = (card: HTMLElement, url: string) => {
   clone.classList.remove(
     "is-card-flipping",
     "is-card-pressing",
+    "is-card-launching",
     "is-card-transitioning",
     "is-source-opening",
     "is-favorited",
@@ -513,6 +533,11 @@ const playCardOpenTransition = (card: HTMLElement, url: string) => {
 };
 
 const scheduleCardOpen = (card: HTMLElement, url: string, delay = 620) => {
+  if (!allowCardOpenTransition) {
+    window.location.href = url;
+    return;
+  }
+
   if (
     card.classList.contains("is-card-transitioning") ||
     document.body.classList.contains("is-card-opening")
@@ -522,10 +547,19 @@ const scheduleCardOpen = (card: HTMLElement, url: string, delay = 620) => {
 
   clearCardTimeout(card, "navigate");
   clearCardTimeout(card, "cleanup");
+  clearCardTimeout(card, "launch");
   card.classList.remove("is-card-flipping");
+  card.classList.remove("is-card-launching");
   card.classList.add("is-card-pressing");
+
+  ensureCardTimers(card).launch = window.setTimeout(() => {
+    card.classList.add("is-card-launching");
+  }, 72);
+
   window.requestAnimationFrame(() => {
-    card.classList.add("is-card-flipping");
+    window.requestAnimationFrame(() => {
+      card.classList.add("is-card-flipping");
+    });
   });
 
   ensureCardTimers(card).navigate = window.setTimeout(() => {
@@ -540,10 +574,13 @@ const scheduleCardOpen = (card: HTMLElement, url: string, delay = 620) => {
   }, Math.max(delay + 120, 760));
 };
 
-const motionCards = _$$<HTMLElement>(motionCardSelector);
+const motionCards = Array.from(_$$<HTMLElement>(motionCardSelector));
 
 motionCards.forEach((card, index) => {
-  card.style.setProperty("--card-enter-delay", `${Math.min((index % 8) * 0.1, 0.7)}s`);
+  card.style.setProperty(
+    "--card-enter-delay",
+    `${Math.min((index % 8) * 0.1, 0.7)}s`,
+  );
 });
 
 const revealCardIfInView = (card: HTMLElement) => {
@@ -560,19 +597,18 @@ const revealCardIfInView = (card: HTMLElement) => {
   return false;
 };
 
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
 motionCards.forEach((card) => {
-  if (prefersReducedMotion) {
+  if (!allowCardMotion) {
     card.classList.add("is-card-visible");
   } else {
     revealCardIfInView(card);
   }
 });
 
-document.body.classList.add("motion-enhanced");
+document.body.classList.toggle("motion-enhanced", allowCardMotion);
+document.body.classList.toggle("motion-compact", !allowCardMotion);
 
-if (prefersReducedMotion) {
+if (!allowCardMotion) {
   motionCards.forEach((card) => card.classList.add("is-card-visible"));
 } else if ("IntersectionObserver" in window) {
   const revealObserver = new IntersectionObserver(
@@ -602,17 +638,27 @@ if (prefersReducedMotion) {
 let __cardParallaxRaf = 0;
 var __cardParallaxScrollHandler;
 var __cardParallaxResizeHandler;
+let __cardParallaxVisibilityObserver: IntersectionObserver | null = null;
+const activeParallaxCards = new Set<HTMLElement>();
 
 const updateCardParallax = () => {
-  motionCards.forEach((card) => {
+  const cards = activeParallaxCards.size
+    ? [...activeParallaxCards]
+    : motionCards.slice(0, 6);
+
+  cards.forEach((card) => {
     const rect = card.getBoundingClientRect();
     if (rect.bottom < -120 || rect.top > window.innerHeight + 120) {
       card.style.setProperty("--scroll-media-parallax-y", "0px");
       return;
     }
-    const distance = (rect.top + rect.height / 2 - window.innerHeight / 2) / window.innerHeight;
+    const distance =
+      (rect.top + rect.height / 2 - window.innerHeight / 2) / window.innerHeight;
     const mediaOffset = Math.max(-14, Math.min(14, -distance * 18));
-    card.style.setProperty("--scroll-media-parallax-y", `${mediaOffset.toFixed(2)}px`);
+    card.style.setProperty(
+      "--scroll-media-parallax-y",
+      `${mediaOffset.toFixed(2)}px`,
+    );
   });
   __cardParallaxRaf = 0;
 };
@@ -629,11 +675,47 @@ if (__cardParallaxResizeHandler) {
   window.off("resize", __cardParallaxResizeHandler);
 }
 
-__cardParallaxScrollHandler = requestCardParallax;
-__cardParallaxResizeHandler = requestCardParallax;
-window.on("scroll", __cardParallaxScrollHandler);
-window.on("resize", __cardParallaxResizeHandler);
-requestCardParallax();
+__cardParallaxVisibilityObserver?.disconnect();
+activeParallaxCards.clear();
+
+if (allowCardParallax) {
+  if ("IntersectionObserver" in window) {
+    __cardParallaxVisibilityObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const card = entry.target as HTMLElement;
+          if (entry.isIntersecting) {
+            activeParallaxCards.add(card);
+          } else {
+            activeParallaxCards.delete(card);
+            card.style.setProperty("--scroll-media-parallax-y", "0px");
+          }
+        });
+        requestCardParallax();
+      },
+      {
+        rootMargin: "20% 0px 20% 0px",
+        threshold: 0,
+      },
+    );
+
+    motionCards.forEach((card) => {
+      __cardParallaxVisibilityObserver?.observe(card);
+    });
+  } else {
+    motionCards.forEach((card) => activeParallaxCards.add(card));
+  }
+
+  __cardParallaxScrollHandler = requestCardParallax;
+  __cardParallaxResizeHandler = requestCardParallax;
+  window.on("scroll", __cardParallaxScrollHandler, { passive: true });
+  window.on("resize", __cardParallaxResizeHandler);
+  requestCardParallax();
+} else {
+  motionCards.forEach((card) =>
+    card.style.setProperty("--scroll-media-parallax-y", "0px"),
+  );
+}
 
 const navigationCards = motionCards.filter((card) => {
   if (!card.matches(cardNavigationCandidateSelector)) {
@@ -710,7 +792,7 @@ navigationCards.forEach((card) => {
       return;
     }
 
-    if (useTransition) {
+    if (useTransition && allowCardOpenTransition) {
       scheduleCardOpen(card, url);
       return;
     }
@@ -836,6 +918,22 @@ _$$<HTMLElement>(
     ".project-card__readmore",
   ].join(", "),
 ).forEach((element) => {
+  const resetTransform = () => {
+    element.style.removeProperty("--tilt-rotate-x");
+    element.style.removeProperty("--tilt-rotate-y");
+    element.style.removeProperty("--tilt-translate-x");
+    element.style.removeProperty("--tilt-translate-y");
+    element.style.removeProperty("--pointer-x");
+    element.style.removeProperty("--pointer-y");
+    element.classList.remove("is-pointer-down");
+    element.classList.remove("is-tilt-active");
+  };
+
+  if (!allowTiltMotion) {
+    resetTransform();
+    return;
+  }
+
   const maxRotate = element.matches(
     ".home-hero-button, .career-button, .apple-link, .project-card__links a, .section-link, .project-card__readmore",
   )
@@ -847,40 +945,131 @@ _$$<HTMLElement>(
     ? 10
     : 20;
 
-  const resetTransform = () => {
-    element.style.removeProperty("--tilt-rotate-x");
-    element.style.removeProperty("--tilt-rotate-y");
-    element.style.removeProperty("--tilt-translate-x");
-    element.style.removeProperty("--tilt-translate-y");
-    element.style.removeProperty("--pointer-x");
-    element.style.removeProperty("--pointer-y");
-    element.classList.remove("is-pointer-down");
+  let pointerRaf = 0;
+  let elementRect: DOMRect | null = null;
+  let isPointerHovering = false;
+  let targetRotateX = 0;
+  let targetRotateY = 0;
+  let targetTranslateX = 0;
+  let targetTranslateY = 0;
+  let currentRotateX = 0;
+  let currentRotateY = 0;
+  let currentTranslateX = 0;
+  let currentTranslateY = 0;
+  let targetPointerX = 50;
+  let targetPointerY = 50;
+  let currentPointerX = 50;
+  let currentPointerY = 50;
+
+  const applyTiltMotion = () => {
+    currentRotateX += (targetRotateX - currentRotateX) * 0.18;
+    currentRotateY += (targetRotateY - currentRotateY) * 0.18;
+    currentTranslateX += (targetTranslateX - currentTranslateX) * 0.18;
+    currentTranslateY += (targetTranslateY - currentTranslateY) * 0.18;
+    currentPointerX += (targetPointerX - currentPointerX) * 0.18;
+    currentPointerY += (targetPointerY - currentPointerY) * 0.18;
+
+    element.style.setProperty(
+      "--tilt-rotate-x",
+      `${currentRotateX.toFixed(2)}deg`,
+    );
+    element.style.setProperty(
+      "--tilt-rotate-y",
+      `${currentRotateY.toFixed(2)}deg`,
+    );
+    element.style.setProperty(
+      "--tilt-translate-x",
+      `${currentTranslateX.toFixed(2)}px`,
+    );
+    element.style.setProperty(
+      "--tilt-translate-y",
+      `${currentTranslateY.toFixed(2)}px`,
+    );
+    element.style.setProperty(
+      "--pointer-x",
+      `${currentPointerX.toFixed(2)}%`,
+    );
+    element.style.setProperty(
+      "--pointer-y",
+      `${currentPointerY.toFixed(2)}%`,
+    );
+
+    const stillAnimating =
+      Math.abs(targetRotateX - currentRotateX) > 0.06 ||
+      Math.abs(targetRotateY - currentRotateY) > 0.06 ||
+      Math.abs(targetTranslateX - currentTranslateX) > 0.06 ||
+      Math.abs(targetTranslateY - currentTranslateY) > 0.06 ||
+      Math.abs(targetPointerX - currentPointerX) > 0.08 ||
+      Math.abs(targetPointerY - currentPointerY) > 0.08;
+
+    if (!stillAnimating && !isPointerHovering) {
+      pointerRaf = 0;
+      resetTransform();
+      return;
+    }
+
+    pointerRaf = window.requestAnimationFrame(applyTiltMotion);
   };
+
+  const ensureTiltFrame = () => {
+    if (pointerRaf) return;
+    pointerRaf = window.requestAnimationFrame(applyTiltMotion);
+  };
+
+  element.off("pointerenter").on("pointerenter", () => {
+    isPointerHovering = true;
+    elementRect = element.getBoundingClientRect();
+    element.classList.add("is-tilt-active");
+    ensureTiltFrame();
+  });
 
   element.off("pointermove").on("pointermove", (event: Event) => {
     const mouseEvent = event as PointerEvent;
-    const rect = element.getBoundingClientRect();
+    const rect = elementRect || element.getBoundingClientRect();
+    elementRect = rect;
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
     const percentX = (mouseEvent.clientX - centerX) / (rect.width / 2 || 1);
     const percentY = (mouseEvent.clientY - centerY) / (rect.height / 2 || 1);
 
-    element.style.setProperty("--tilt-rotate-x", `${(-percentY * maxRotate).toFixed(2)}deg`);
-    element.style.setProperty("--tilt-rotate-y", `${(percentX * maxRotate).toFixed(2)}deg`);
-    element.style.setProperty("--tilt-translate-x", `${(percentX * maxTranslate).toFixed(2)}px`);
-    element.style.setProperty("--tilt-translate-y", `${(percentY * maxTranslate).toFixed(2)}px`);
-    element.style.setProperty("--pointer-x", `${(((mouseEvent.clientX - rect.left) / (rect.width || 1)) * 100).toFixed(2)}%`);
-    element.style.setProperty("--pointer-y", `${(((mouseEvent.clientY - rect.top) / (rect.height || 1)) * 100).toFixed(2)}%`);
+    targetRotateX = -percentY * maxRotate;
+    targetRotateY = percentX * maxRotate;
+    targetTranslateX = percentX * maxTranslate;
+    targetTranslateY = percentY * maxTranslate;
+    targetPointerX = ((mouseEvent.clientX - rect.left) / (rect.width || 1)) * 100;
+    targetPointerY =
+      ((mouseEvent.clientY - rect.top) / (rect.height || 1)) * 100;
+    ensureTiltFrame();
   });
 
-  element.off("mousedown").on("mousedown", () => {
+  element.off("pointerdown").on("pointerdown", () => {
     element.classList.add("is-pointer-down");
+    elementRect = element.getBoundingClientRect();
   });
-  element.off("mouseup").on("mouseup", () => {
+  element.off("pointerup").on("pointerup", () => {
     element.classList.remove("is-pointer-down");
   });
-  element.off("mouseleave").on("mouseleave", resetTransform);
-  element.off("blur").on("blur", resetTransform);
+  element.off("pointerleave").on("pointerleave", () => {
+    isPointerHovering = false;
+    elementRect = null;
+    targetRotateX = 0;
+    targetRotateY = 0;
+    targetTranslateX = 0;
+    targetTranslateY = 0;
+    targetPointerX = 50;
+    targetPointerY = 50;
+    ensureTiltFrame();
+  });
+  element.off("blur").on("blur", () => {
+    isPointerHovering = false;
+    targetRotateX = 0;
+    targetRotateY = 0;
+    targetTranslateX = 0;
+    targetTranslateY = 0;
+    targetPointerX = 50;
+    targetPointerY = 50;
+    ensureTiltFrame();
+  });
 });
 
 (() => {
@@ -920,21 +1109,26 @@ if (sidebarTop) {
 }
 
 var __sidebarTopScrollHandler;
+let __sidebarTopScrollRaf = 0;
 
 if (__sidebarTopScrollHandler) {
   window.off("scroll", __sidebarTopScrollHandler);
 }
 
 __sidebarTopScrollHandler = () => {
-  const sidebarTop = _$(".sidebar-top")!;
-  if (document.documentElement.scrollTop < 10) {
-    sidebarTop.style.opacity = "0";
-  } else {
-    sidebarTop.style.opacity = "1";
-  }
+  if (__sidebarTopScrollRaf) return;
+  __sidebarTopScrollRaf = window.requestAnimationFrame(() => {
+    __sidebarTopScrollRaf = 0;
+    const sidebarTop = _$(".sidebar-top")!;
+    if (document.documentElement.scrollTop < 10) {
+      sidebarTop.style.opacity = "0";
+    } else {
+      sidebarTop.style.opacity = "1";
+    }
+  });
 };
 
-window.on("scroll", __sidebarTopScrollHandler);
+window.on("scroll", __sidebarTopScrollHandler, { passive: true });
 
 // toc
 _$$("#mobile-nav #TableOfContents li").forEach((element) => {

@@ -75,6 +75,27 @@ window.throttle = (func: (...args: any[]) => void, limit: number) => {
   window._$ = (selector: string) => document.querySelector(selector);
   window._$$ = (selector: string) => document.querySelectorAll(selector);
 
+  const deviceNavigator = navigator as Navigator & {
+    deviceMemory?: number;
+    connection?: {
+      saveData?: boolean;
+    };
+  };
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  const compactPerformanceMode =
+    prefersReducedMotion || Boolean(deviceNavigator.connection?.saveData);
+
+  document.documentElement.classList.toggle(
+    "performance-reduced",
+    prefersReducedMotion,
+  );
+  document.documentElement.classList.toggle(
+    "performance-compact",
+    compactPerformanceMode,
+  );
+
   // dark_mode
   const themeButton = document.createElement("a");
   themeButton.className = "nav-icon dark-mode-btn";
@@ -119,18 +140,39 @@ window.throttle = (func: (...args: any[]) => void, limit: number) => {
   );
 
   let oldScrollTop = 0;
-  document.addEventListener("scroll", () => {
+  let headerScrollRaf = 0;
+
+  const syncHeaderNavState = () => {
+    headerScrollRaf = 0;
     let scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
+      window.scrollY ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop;
     const diffY = scrollTop - oldScrollTop;
     window.diffY = diffY;
+
+    if (Math.abs(diffY) < 6) {
+      return;
+    }
+
     oldScrollTop = scrollTop;
-    if (diffY < 0) {
+
+    if (diffY < 0 || scrollTop < 24) {
       _$("#header-nav")?.classList.remove("header-nav-hidden");
     } else {
       _$("#header-nav")?.classList.add("header-nav-hidden");
     }
-  });
+  };
+
+  document.addEventListener(
+    "scroll",
+    () => {
+      if (headerScrollRaf) return;
+      headerScrollRaf = window.requestAnimationFrame(syncHeaderNavState);
+    },
+    { passive: true },
+  );
+  syncHeaderNavState();
 
   if (window.Pace) {
     Pace.on("done", () => {

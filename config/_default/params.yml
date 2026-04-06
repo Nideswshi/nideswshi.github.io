@@ -71,7 +71,7 @@ subtitle:
     en: "A new horizon, a blog full of love and kindness"
     ja: "落ち着きと節度を大切にした、長期運用の個人技術ポートフォリオ。"
 
-banner: "images/site-banner-aurora.svg"   #设置背景图，可使用图片API
+banner: "images/backgrounds/home-hero.svg"   #设置背景图，可使用图片API
 # You can also write it in the form of the following url
 # banner: "https://example.com"
 

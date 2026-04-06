@@ -41,7 +41,11 @@ function loadScripts(scripts: HTMLScriptElement[], index: number) {
       });
   }
 }
-if (window.Pjax) {
+const pjaxEnabled =
+  Boolean(window.Pjax) &&
+  !document.documentElement.classList.contains("performance-compact");
+
+if (pjaxEnabled && window.Pjax) {
   Pjax.prototype.getElements = function () {
     const i18nLanguages = window.siteConfig.i18n_languages;
     const baseUrl = window.siteConfig.base;
@@ -112,6 +116,7 @@ if (window.Pjax) {
     return pjaxLinks;
   };
 }
+pjaxEnabled &&
 window.Pjax &&
   new window.Pjax({
     selectors: [
@@ -156,79 +161,82 @@ window.Pjax &&
       },
     },
     cacheBust: false,
+});
+
+if (pjaxEnabled) {
+  window.addEventListener("pjax:success", () => {
+    _$$("script[data-pjax]").forEach((element) => {
+      const {
+        textContent,
+        parentNode,
+        id,
+        className,
+        type,
+        src,
+        dataset,
+        integrity,
+        crossOrigin,
+      } = element as HTMLScriptElement;
+      const code = textContent || "";
+      const script = document.createElement("script");
+
+      id && (script.id = id);
+      className && (script.className = className);
+      type && (script.type = type);
+      dataset.pjax !== undefined && (script.dataset.pjax = "");
+      integrity && (script.integrity = integrity);
+      crossOrigin && (script.crossOrigin = crossOrigin);
+
+      if (src) {
+        script.src = src;
+        script.async = false; // Force synchronous loading of peripheral JS
+      } else if (code) {
+        script.textContent = code;
+      }
+      parentNode?.replaceChild(script, element);
+    });
   });
-
-window.addEventListener("pjax:success", () => {
-  _$$("script[data-pjax]").forEach((element) => {
-    const {
-      textContent,
-      parentNode,
-      id,
-      className,
-      type,
-      src,
-      dataset,
-      integrity,
-      crossOrigin,
-    } = element as HTMLScriptElement;
-    const code = textContent || "";
-    const script = document.createElement("script");
-
-    id && (script.id = id);
-    className && (script.className = className);
-    type && (script.type = type);
-    dataset.pjax !== undefined && (script.dataset.pjax = "");
-    integrity && (script.integrity = integrity);
-    crossOrigin && (script.crossOrigin = crossOrigin);
-
-    if (src) {
-      script.src = src;
-      script.async = false; // Force synchronous loading of peripheral JS
-    } else if (code) {
-      script.textContent = code;
+  window.addEventListener("pjax:complete", () => {
+    document.body.classList.remove("is-pjax-loading");
+    document.body.classList.add("is-pjax-ready");
+    document.body.classList.remove("is-card-transitioning");
+    window.setTimeout(() => {
+      document.body.classList.remove("is-pjax-ready");
+    }, 480);
+    _$("#header-nav")?.classList.remove("header-nav-hidden");
+    const mode = window.localStorage.getItem("dark_mode");
+    document.body.dispatchEvent(
+      new CustomEvent("reimu:theme-set", {
+        detail: {
+          isDark:
+            mode === "true" ||
+            (mode === "auto" &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches),
+          mode: mode || "auto",
+        },
+      })
+    );
+    // destroy waline
+    if (window.walineInstance) {
+      window.walineInstance.destroy();
+      window.walineInstance = null;
     }
-    parentNode?.replaceChild(script, element);
   });
-});
-window.addEventListener("pjax:complete", () => {
-  document.body.classList.remove("is-pjax-loading");
-  document.body.classList.add("is-pjax-ready");
-  document.body.classList.remove("is-card-transitioning");
-  window.setTimeout(() => {
+  window.addEventListener("pjax:send", () => {
+    document.body.classList.add("is-pjax-loading");
     document.body.classList.remove("is-pjax-ready");
-  }, 480);
-  _$("#header-nav")?.classList.remove("header-nav-hidden");
-  const mode = window.localStorage.getItem("dark_mode");
-  document.body.dispatchEvent(
-    new CustomEvent("reimu:theme-set", {
-      detail: {
-        isDark:
-          mode === "true" ||
-          (mode === "auto" &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches),
-        mode: mode || "auto",
-      },
-    })
-  );
-  // destroy waline
-  if (window.walineInstance) {
-    window.walineInstance.destroy();
-    window.walineInstance = null;
-  }
-});
-window.addEventListener("pjax:send", () => {
-  document.body.classList.add("is-pjax-loading");
-  document.body.classList.remove("is-pjax-ready");
-  // destroy panZoom
-  if (window.__panZoomList) {
-    window.__panZoomList.forEach((panZoom) => panZoom.destroy());
-    window.__panZoomList = [];
-  }
-});
-window.addEventListener("pjax:success", () => {
-  document.body.classList.remove("is-pjax-loading");
-  document.body.classList.remove("is-card-transitioning");
-});
-if (window.startLoading) window.addEventListener("pjax:send", startLoading!);
-if (window.endLoading) window.addEventListener("pjax:complete", endLoading!);
-if (window.aosInit) window.addEventListener("pjax:success", aosInit!);
+    // destroy panZoom
+    if (window.__panZoomList) {
+      window.__panZoomList.forEach((panZoom) => panZoom.destroy());
+      window.__panZoomList = [];
+    }
+  });
+  window.addEventListener("pjax:success", () => {
+    document.body.classList.remove("is-pjax-loading");
+    document.body.classList.remove("is-card-transitioning");
+  });
+  if (window.startLoading) window.addEventListener("pjax:send", startLoading!);
+  if (window.endLoading)
+    window.addEventListener("pjax:complete", endLoading!);
+  if (window.aosInit) window.addEventListener("pjax:success", aosInit!);
+}
