@@ -176,6 +176,8 @@ const initSidebarDrawer = () => {
 
   let collapseTimer = 0;
   let drawerStateRaf = 0;
+  let drawerExpanded = content.classList.contains("sidebar-is-expanded");
+  let pendingDrawerExpanded: boolean | null = null;
   const desktopSidebarMedia = window.matchMedia("(min-width: 1200px)");
 
   const clearCollapseTimer = () => {
@@ -185,11 +187,24 @@ const initSidebarDrawer = () => {
   };
 
   const commitDrawerState = (expanded: boolean) => {
+    if (pendingDrawerExpanded === expanded) {
+      return;
+    }
+    if (!drawerStateRaf && drawerExpanded === expanded) {
+      return;
+    }
     if (drawerStateRaf) {
       window.cancelAnimationFrame(drawerStateRaf);
     }
 
+    pendingDrawerExpanded = expanded;
     drawerStateRaf = window.requestAnimationFrame(() => {
+      drawerStateRaf = 0;
+      pendingDrawerExpanded = null;
+      if (drawerExpanded === expanded) {
+        return;
+      }
+      drawerExpanded = expanded;
       content.classList.toggle("sidebar-is-expanded", expanded);
     });
   };
@@ -271,10 +286,14 @@ const prefersReducedMotion = window.matchMedia(
 const canUseFinePointerInteractions = window.matchMedia(
   "(hover: hover) and (pointer: fine)",
 ).matches;
+const useSubtleTouchFeedback = window.matchMedia(
+  "(hover: none), (pointer: coarse)",
+).matches;
 const allowCardMotion = !prefersReducedMotion;
 const allowCardParallax = !prefersReducedMotion;
 const allowTiltMotion = !prefersReducedMotion && canUseFinePointerInteractions;
 const allowCardOpenTransition = !prefersReducedMotion;
+const cardOpenDelay = useSubtleTouchFeedback ? 360 : 440;
 
 const cardNavigationCandidateSelector = [
   ".project-card",
@@ -396,6 +415,7 @@ const cardTimers = new WeakMap<
     hold?: number;
     easter?: number;
     launch?: number;
+    feedback?: number;
   }
 >();
 
@@ -407,7 +427,7 @@ const ensureCardTimers = (card: HTMLElement) => {
 
 const clearCardTimeout = (
   card: HTMLElement,
-  key: "navigate" | "cleanup" | "hold" | "easter" | "launch",
+  key: "navigate" | "cleanup" | "hold" | "easter" | "launch" | "feedback",
 ) => {
   const timers = ensureCardTimers(card);
   const value = timers[key];
@@ -423,6 +443,7 @@ const clearAllCardTimeouts = (card: HTMLElement) => {
   clearCardTimeout(card, "hold");
   clearCardTimeout(card, "easter");
   clearCardTimeout(card, "launch");
+  clearCardTimeout(card, "feedback");
 };
 
 const getCardLabel = (card: HTMLElement) => {
@@ -432,6 +453,67 @@ const getCardLabel = (card: HTMLElement) => {
     card.getAttribute("aria-label") ||
     "this card"
   );
+};
+
+const getCardInteractionType = (card: HTMLElement) => {
+  if (card.matches(".project-card, .apple-project-tile")) return "project";
+  if (card.matches(".note-card, .archive-feature")) return "article";
+  if (card.matches(".apple-tile")) return "section";
+  if (card.matches(".info-card, .skill-category-card, .home-spec-card")) {
+    return "info";
+  }
+  return "generic";
+};
+
+const getCardActionCopy = (
+  card: HTMLElement,
+  action: "tap" | "open" | "launch" | "favorite_on" | "favorite_off" | "hold",
+) => {
+  const type = getCardInteractionType(card);
+  const copyMap = {
+    project: {
+      tap: "Preview project",
+      open: "Open project",
+      launch: "Opening project",
+      favorite_on: "Saved project card",
+      favorite_off: "Removed project save",
+      hold: "Long press unlocked a hidden note",
+    },
+    article: {
+      tap: "Preview article",
+      open: "Open article",
+      launch: "Opening article",
+      favorite_on: "Saved article card",
+      favorite_off: "Removed article save",
+      hold: "Long press unlocked a hidden note",
+    },
+    section: {
+      tap: "Explore section",
+      open: "Open section",
+      launch: "Opening section",
+      favorite_on: "Saved section card",
+      favorite_off: "Removed section save",
+      hold: "Long press unlocked a hidden note",
+    },
+    info: {
+      tap: "Inspect details",
+      open: "Open details",
+      launch: "Opening details",
+      favorite_on: "Saved info card",
+      favorite_off: "Removed info save",
+      hold: "Long press unlocked a hidden note",
+    },
+    generic: {
+      tap: "Preview card",
+      open: "Open card",
+      launch: "Opening card",
+      favorite_on: "Saved card",
+      favorite_off: "Removed saved card",
+      hold: "Long press unlocked a hidden note",
+    },
+  } as const;
+
+  return copyMap[type][action];
 };
 
 const ensureFavoriteBadge = (card: HTMLElement) => {
@@ -445,6 +527,66 @@ const ensureFavoriteBadge = (card: HTMLElement) => {
   return badge;
 };
 
+const ensureCardActionHint = (card: HTMLElement) => {
+  let hint = card.querySelector<HTMLElement>(".card-action-hint");
+  if (!hint) {
+    hint = document.createElement("div");
+    hint.className = "card-action-hint";
+    hint.setAttribute("aria-hidden", "true");
+    card.appendChild(hint);
+  }
+  return hint;
+};
+
+const primeCardTitle = (card: HTMLElement, duration = 420) => {
+  card.classList.add("is-title-primed");
+  window.setTimeout(() => {
+    if (
+      !card.classList.contains("is-card-arming") &&
+      !card.classList.contains("is-card-launching") &&
+      !card.classList.contains("is-card-transitioning")
+    ) {
+      card.classList.remove("is-title-primed");
+    }
+  }, duration);
+};
+
+const showCardActionHint = (
+  card: HTMLElement,
+  text: string,
+  duration = 1200,
+) => {
+  const hint = ensureCardActionHint(card);
+  hint.textContent = text;
+  card.classList.add("is-card-engaged");
+  clearCardTimeout(card, "feedback");
+  const effectiveDuration = useSubtleTouchFeedback
+    ? Math.min(duration, 820)
+    : duration;
+  ensureCardTimers(card).feedback = window.setTimeout(() => {
+    card.classList.remove("is-card-engaged");
+  }, effectiveDuration);
+};
+
+const spawnCardClickRipple = (
+  card: HTMLElement,
+  point?: { clientX: number; clientY: number },
+) => {
+  const rect = card.getBoundingClientRect();
+  const ripple = document.createElement("span");
+  ripple.className = "card-click-ripple";
+  const x = point ? point.clientX - rect.left : rect.width / 2;
+  const y = point ? point.clientY - rect.top : rect.height / 2;
+  const size =
+    Math.max(rect.width, rect.height) * (useSubtleTouchFeedback ? 0.92 : 1.24);
+  ripple.style.left = `${x}px`;
+  ripple.style.top = `${y}px`;
+  ripple.style.width = `${size}px`;
+  ripple.style.height = `${size}px`;
+  card.appendChild(ripple);
+  window.setTimeout(() => ripple.remove(), 720);
+};
+
 const showCardEasterEgg = (card: HTMLElement) => {
   let easter = card.querySelector<HTMLElement>(".card-easter-egg");
   if (!easter) {
@@ -454,6 +596,7 @@ const showCardEasterEgg = (card: HTMLElement) => {
   }
   easter.textContent = `One more thing · ${getCardLabel(card)} is designed to feel lighter, faster, and more deliberate.`;
   card.classList.add("is-easter-visible");
+  showCardActionHint(card, getCardActionCopy(card, "hold"), 1800);
   clearCardTimeout(card, "easter");
   ensureCardTimers(card).easter = window.setTimeout(() => {
     card.classList.remove("is-easter-visible");
@@ -463,6 +606,13 @@ const showCardEasterEgg = (card: HTMLElement) => {
 const toggleCardFavorite = (card: HTMLElement) => {
   ensureFavoriteBadge(card);
   card.classList.toggle("is-favorited");
+  showCardActionHint(
+    card,
+    card.classList.contains("is-favorited")
+      ? getCardActionCopy(card, "favorite_on")
+      : getCardActionCopy(card, "favorite_off"),
+    1200,
+  );
 };
 
 const clearCardOpenState = (card: HTMLElement, clone?: HTMLElement | null) => {
@@ -472,6 +622,9 @@ const clearCardOpenState = (card: HTMLElement, clone?: HTMLElement | null) => {
   card.classList.remove("is-card-flipping");
   card.classList.remove("is-card-pressing");
   card.classList.remove("is-card-launching");
+  card.classList.remove("is-card-arming");
+  card.classList.remove("is-card-engaged");
+  card.classList.remove("is-title-primed");
   document.body.classList.remove("is-card-opening");
   document.body.classList.remove("is-card-transitioning");
   clone?.remove();
@@ -499,6 +652,10 @@ const playCardOpenTransition = (card: HTMLElement, url: string) => {
   const targetHeight = Math.min(window.innerHeight - margin * 2, Math.max(rect.height, window.innerHeight * 0.84));
   const targetLeft = (window.innerWidth - targetWidth) / 2;
   const targetTop = (window.innerHeight - targetHeight) / 2;
+  const startScaleX = rect.width / targetWidth;
+  const startScaleY = rect.height / targetHeight;
+  const startTranslateX = rect.left - targetLeft;
+  const startTranslateY = rect.top - targetTop;
 
   clone.classList.add("card-transition-clone");
   clone.classList.remove(
@@ -510,11 +667,12 @@ const playCardOpenTransition = (card: HTMLElement, url: string) => {
     "is-favorited",
     "is-easter-visible",
   );
-  clone.style.top = `${rect.top}px`;
-  clone.style.left = `${rect.left}px`;
-  clone.style.width = `${rect.width}px`;
-  clone.style.height = `${rect.height}px`;
+  clone.style.top = `${targetTop}px`;
+  clone.style.left = `${targetLeft}px`;
+  clone.style.width = `${targetWidth}px`;
+  clone.style.height = `${targetHeight}px`;
   clone.style.borderRadius = computed.borderRadius;
+  clone.style.transform = `translate3d(${startTranslateX}px, ${startTranslateY}px, 0) scale(${startScaleX}, ${startScaleY})`;
   document.body.appendChild(clone);
 
   card.classList.add("is-source-opening");
@@ -524,11 +682,8 @@ const playCardOpenTransition = (card: HTMLElement, url: string) => {
     document.body.classList.add("is-card-transitioning");
     document.body.classList.add("is-card-opening");
     clone.classList.add("is-opening");
-    clone.style.top = `${targetTop}px`;
-    clone.style.left = `${targetLeft}px`;
-    clone.style.width = `${targetWidth}px`;
-    clone.style.height = `${targetHeight}px`;
     clone.style.borderRadius = "28px";
+    clone.style.transform = "translate3d(0, 0, 0) scale(1, 1)";
   });
 
   try {
@@ -544,14 +699,14 @@ const playCardOpenTransition = (card: HTMLElement, url: string) => {
 
   ensureCardTimers(card).navigate = window.setTimeout(() => {
     window.location.href = url;
-  }, 520);
+  }, 460);
 
   ensureCardTimers(card).cleanup = window.setTimeout(() => {
     clearCardOpenState(card, clone);
-  }, 1200);
+  }, 900);
 };
 
-const scheduleCardOpen = (card: HTMLElement, url: string, delay = 620) => {
+const scheduleCardOpen = (card: HTMLElement, url: string, delay = cardOpenDelay) => {
   if (!allowCardOpenTransition) {
     window.location.href = url;
     return;
@@ -570,10 +725,13 @@ const scheduleCardOpen = (card: HTMLElement, url: string, delay = 620) => {
   card.classList.remove("is-card-flipping");
   card.classList.remove("is-card-launching");
   card.classList.add("is-card-pressing");
+  card.classList.add("is-card-arming");
+  card.classList.add("is-title-primed");
+  showCardActionHint(card, getCardActionCopy(card, "launch"), Math.max(760, delay));
 
   ensureCardTimers(card).launch = window.setTimeout(() => {
     card.classList.add("is-card-launching");
-  }, 72);
+  }, 56);
 
   window.requestAnimationFrame(() => {
     window.requestAnimationFrame(() => {
@@ -589,8 +747,10 @@ const scheduleCardOpen = (card: HTMLElement, url: string, delay = 620) => {
     if (!card.classList.contains("is-source-opening")) {
       card.classList.remove("is-card-flipping");
       card.classList.remove("is-card-pressing");
+      card.classList.remove("is-card-arming");
+      card.classList.remove("is-title-primed");
     }
-  }, Math.max(delay + 120, 760));
+  }, Math.max(delay + 90, 620));
 };
 
 const motionCards = Array.from(_$$<HTMLElement>(motionCardSelector));
@@ -626,6 +786,7 @@ motionCards.forEach((card) => {
 
 document.body.classList.toggle("motion-enhanced", allowCardMotion);
 document.body.classList.toggle("motion-compact", !allowCardMotion);
+document.body.classList.toggle("touch-feedback-subtle", useSubtleTouchFeedback);
 
 if (!allowCardMotion) {
   motionCards.forEach((card) => card.classList.add("is-card-visible"));
@@ -770,6 +931,7 @@ nonNavigableMotionCards.forEach((card) => {
   card.off("pointerdown").on("pointerdown", (event: PointerEvent) => {
     pointerStartX = event.clientX;
     pointerStartY = event.clientY;
+    spawnCardClickRipple(card, event);
     clearCardTimeout(card, "hold");
     ensureCardTimers(card).hold = window.setTimeout(() => {
       showCardEasterEgg(card);
@@ -836,6 +998,14 @@ navigationCards.forEach((card) => {
     }
 
     event.preventDefault();
+    primeCardTitle(card, useSubtleTouchFeedback ? 300 : 420);
+    showCardActionHint(
+      card,
+      event.metaKey || event.ctrlKey
+        ? "Open in new tab"
+        : getCardActionCopy(card, "open"),
+      760,
+    );
     openCardNavigation(event.metaKey || event.ctrlKey);
   });
 
@@ -845,6 +1015,9 @@ navigationCards.forEach((card) => {
       !card.classList.contains("is-card-transitioning")
     ) {
       event.preventDefault();
+      primeCardTitle(card, 420);
+      showCardActionHint(card, getCardActionCopy(card, "open"), 760);
+      spawnCardClickRipple(card);
       openCardNavigation();
     }
   });
@@ -864,6 +1037,9 @@ navigationCards.forEach((card) => {
     pointerStartX = event.clientX;
     pointerStartY = event.clientY;
     card.dataset.longPressTriggered = "false";
+    spawnCardClickRipple(card, event);
+    primeCardTitle(card, useSubtleTouchFeedback ? 260 : 360);
+    showCardActionHint(card, getCardActionCopy(card, "tap"), 700);
     clearCardTimeout(card, "hold");
     ensureCardTimers(card).hold = window.setTimeout(() => {
       card.dataset.longPressTriggered = "true";
@@ -909,7 +1085,7 @@ _$$<HTMLAnchorElement>(
     );
     if (!card) return;
     event.preventDefault();
-    scheduleCardOpen(card, link.href, 620);
+    scheduleCardOpen(card, link.href, cardOpenDelay);
   });
 });
 
